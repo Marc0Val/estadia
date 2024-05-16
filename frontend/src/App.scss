@@ -1,0 +1,158 @@
+$principal-color: #1f4aa7;
+$secondary-color: #ce3112;
+$third-color: #077191;
+$gray-color: #e9ecef;
+.titulo {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+.main-container {
+  display: flex;
+}
+.content {
+  flex-grow: 1;
+  margin-left: 250px; /* Ajuste para el sidebar */
+  transition: margin-left 0.3s;
+  // background-color: $gray-color;
+  min-height: 100vh;
+}
+.page-content {
+  padding: 20px;
+  margin-top: 50px; /* Ajuste para el navbar */
+  // background-color: $third-color;
+}
+@media (max-width: 768px) {
+  .content {
+    margin-left: 0;
+  }
+}
+// estilos para el contenedor del login
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: $gray-color;
+}
+/* Estilos para el contenedor del formulario (login) */
+.login-container {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+  width: 300px;
+  text-align: center;
+}
+.login-form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.links {
+  margin-top: 20px;
+}
+.links a {
+  color: $third-color;
+  text-decoration: none;
+  margin-right: 10px;
+}
+/* Animación de caída */
+.animated-drop {
+  animation: drop 0.5s;
+}
+@keyframes drop {
+  0% {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+// // estilos para el sidebar
+.sidebar {
+  width: 250px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: $principal-color;
+  color: #fff;
+  transition: transform 0.3s ease;
+  transform: translateX(-100%);
+}
+.lii {
+  color: $gray-color;
+  text-decoration: none;
+  display: block;
+  font-size: 1.1em;
+}
+.sidebar.open {
+  transform: translateX(0);
+}
+.sidebar-header {
+  padding: 20px;
+  background-color: $gray-color;
+}
+.sidebar ul.components {
+  padding: 20px 0;
+}
+.sidebar ul li {
+  padding: 10px;
+  font-size: 1.1em;
+  list-style: none;
+}
+.sidebar ul li a {
+  color: #fff;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+}
+.sidebar ul li i {
+  margin-right: 10px;
+}
+.sidebar ul li:hover {
+  background: $gray-color;
+  color: red;
+}
+.btn-primary {
+  margin-top: 50px
+}
+
+@media (min-width: 768px) {
+  .sidebar {
+    transform: translateX(0);
+  }
+  .sidebar.open {
+    transform: translateX(-100%);
+  }
+  .content {
+    margin-left: 250px;
+  }
+  .btn-primary {
+    margin-top: 50px
+  }
+}
+// estilos para el navbar
+.navbar {
+  padding: 0 20px;
+  background-color: red;
+  background-color: $principal-color;
+  height: 50px;
+  margin-left: 250px;
+}
+.navbar .icon {
+  color: $gray-color;
+  font-size: 24px;
+}
+@media (max-width: 768px) {
+  .navbar {
+    margin-left: 0;
+  }
+}
+
