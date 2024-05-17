@@ -1,21 +1,22 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { FaHome, FaUser, FaSignOutAlt } from "react-icons/fa";
 
 
-function Navbar() {
+const Navbar = () => {
   return (
     <nav className="navbar fixed-top">
-      <Link to="/home">
+      <NavLink to="/admin">
         <FaHome className="icon" />
-      </Link>
-      <Link to="/profile">
+      </NavLink>
+      <NavLink to="/profile">
         <FaUser className="icon" />
-      </Link>
-      <Link to="/">
+      </NavLink>
+      <NavLink to="/">
         <FaSignOutAlt className="icon" />
-      </Link>
+      </NavLink>
     </nav>
+    // <h1>Jalo?</h1>
   );
 }
 

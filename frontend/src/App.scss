@@ -2,27 +2,24 @@ $principal-color: #1f4aa7;
 $secondary-color: #ce3112;
 $third-color: #077191;
 $gray-color: #e9ecef;
+html {
+  background-color: $gray-color;
+}
 .titulo {
   font-size: 30px;
   font-weight: bold;
   margin-bottom: 20px;
 }
-.main-container {
-  display: flex;
-}
 .content {
-  flex-grow: 1;
-  margin-left: 250px; /* Ajuste para el sidebar */
-  transition: margin-left 0.3s;
-  // background-color: $gray-color;
-  min-height: 100vh;
+  // separación del contenido con el sidebar
+  margin-left: 250px;
+  background-color: $gray-color;
+  // flex-grow: 1;
+  .contenedor {
+    margin-top: 5rem;
+  }
 }
-.page-content {
-  padding: 20px;
-  margin-top: 50px; /* Ajuste para el navbar */
-  // background-color: $third-color;
-}
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
   .content {
     margin-left: 0;
   }
@@ -44,6 +41,20 @@ $gray-color: #e9ecef;
   margin: 0 auto;
   width: 300px;
   text-align: center;
+  .btn2 {
+    display: inline-block;
+    background-color: blue;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-top: 20px;
+  }
+  .btn2:disabled {
+    background-color: #ccc;
+    color: #fff;
+    transition: background-color 0.5s;
+  }
 }
 .login-form input {
   width: 100%;
@@ -76,6 +87,7 @@ $gray-color: #e9ecef;
 }
 // // estilos para el sidebar
 .sidebar {
+  display: block;
   width: 250px;
   position: fixed;
   top: 0;
@@ -85,9 +97,20 @@ $gray-color: #e9ecef;
   color: #fff;
   transition: transform 0.3s ease;
   transform: translateX(-100%);
+  .sidebarImg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 3rem;
+    img {
+      width: 200%;
+      height: 200%;
+    }
+  }
 }
 .lii {
-  color: $gray-color;
+  color: white;
   text-decoration: none;
   display: block;
   font-size: 1.1em;
@@ -121,21 +144,19 @@ $gray-color: #e9ecef;
   color: red;
 }
 .btn-primary {
-  margin-top: 50px
+  display: block;
+  position: fixed;
+  background-color: red;
+  bottom: 0;
 }
 
 @media (min-width: 768px) {
   .sidebar {
     transform: translateX(0);
+    z-index: 1;
   }
   .sidebar.open {
     transform: translateX(-100%);
-  }
-  .content {
-    margin-left: 250px;
-  }
-  .btn-primary {
-    margin-top: 50px
   }
 }
 // estilos para el navbar
@@ -147,12 +168,15 @@ $gray-color: #e9ecef;
   margin-left: 250px;
 }
 .navbar .icon {
-  color: $gray-color;
+  color: white;
   font-size: 24px;
+}
+.navbar .icon:hover {
+  cursor: pointer;
+  color: $secondary-color;
 }
 @media (max-width: 768px) {
   .navbar {
     margin-left: 0;
   }
 }
-

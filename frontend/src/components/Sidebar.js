@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-function Sidebar() {
+const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -14,99 +14,105 @@ function Sidebar() {
         <i className="fas fa-bars"></i>
       </button>
       <div className={`sidebar ${isOpen ? "open" : ""}`}>
-        <div className="sidebar-header"></div>
+        <div className="sidebar-header">
+          {/* <div className="text-center sidebarImg grow">
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyWhythVZp0TMHYz3yUUxnwy4-b435Hphl28hQbVwKvUdQ-nPxZyRvmYJDYDkqUT83rAQ&usqp=CAU"
+              alt="logo"
+            />
+          </div> */}
+        </div>
+        <button
+          className="btn btn-danger d-md-none"
+          onClick={toggleSidebar}
+          style={{ marginTop: "10px" }}
+        >
+          <i className="fas fa-times"></i>
+        </button>
         <ul className="list-unstyled components">
-          <Link to="/personal" className="lii">
+          <NavLink to="/admin/" className="lii">
             <li>
               <i className="fas fa-user"></i>
               Personal
             </li>
-          </Link>
-          <Link to="/clientes" className="lii">
+          </NavLink>
+          <NavLink to="/admin/clientes" className="lii">
             <li>
               <i className="fas fa-users"></i>
               Clientes
             </li>
-          </Link>
-          <Link to="/documentos" className="lii">
+          </NavLink>
+
+          <NavLink to="/admin/documentos" className="lii">
             <li>
               <i className="fas fa-file-alt"></i>
               Documentos
             </li>
-          </Link>
-          <Link to="/fotos" className="lii">
-            <li>
-              <i className="fas fa-camera"></i>
-              Fotos
-            </li>
-          </Link>
-          <Link to="/proveedores" className="lii">
+          </NavLink>
+          <NavLink to="/admin/proveedores" className="lii">
             <li>
               <i className="fas fa-truck"></i>
               Proveedores
             </li>
-          </Link>
-          <Link to="/contactos" className="lii">
+          </NavLink>
+          <NavLink to="/admin/contactos" className="lii">
             <li>
               <i className="fas fa-address-book"></i>
               Contactos
             </li>
-          </Link>
-          <Link to="/categorias" className="lii">
+          </NavLink>
+          <NavLink to="/admin/categorias" className="lii">
             <li>
               <i className="fas fa-list"></i>
               Categorías
             </li>
-          </Link>
-          <Link to="/productos" className="lii">
+          </NavLink>
+          <NavLink to="/admin/productos" className="lii">
             <li>
               <i className="fas fa-box"></i>
               Productos
             </li>
-          </Link>
-          <Link to="/servicios" className="lii">
+          </NavLink>
+          <NavLink to="/admin/servicios" className="lii">
             <li>
               <i className="fas fa-concierge-bell"></i>
               Servicios
             </li>
-          </Link>
-          <Link to="/ordenes-de-servicio" className="lii">
+          </NavLink>
+          <NavLink to="/admin/ordenes-de-servicio" className="lii">
             <li>
               <i className="fas fa-tools"></i>
               Ordenes de Servicio
             </li>
-          </Link>
-          <Link to="/cotizaciones" className="lii">
+          </NavLink>
+          <NavLink to="/admin/cotizaciones" className="lii">
             <li>
               <i className="fas fa-file-invoice-dollar"></i>
               Cotizaciones
             </li>
-          </Link>
-          <Link to="/ordenes-de-compra" className="lii">
+          </NavLink>
+          <NavLink to="/admin/ordenes-de-compra" className="lii">
             <li>
               <i className="fas fa-shopping-cart"></i>
               Ordenes de Compra
             </li>
-          </Link>
-          <Link to="/activos-de-clientes" className="lii">
+          </NavLink>
+          <NavLink to="/admin/activos-de-clientes" className="lii">
             <li>
               <i className="fas fa-wallet"></i>
               Activos de Clientes
             </li>
-          </Link>
-          <Link to="/polizas" className="lii">
+          </NavLink>
+          <NavLink to="/admin/polizas" className="lii">
             <li>
               <i className="fas fa-file-contract"></i>
               Pólizas
             </li>
-          </Link>
+          </NavLink>
         </ul>
-        <button className="btn d-md-none" onClick={toggleSidebar}>
-          <i className="fas fa-times"></i>
-        </button>
       </div>
     </div>
   );
-}
+};
 
 export default Sidebar;

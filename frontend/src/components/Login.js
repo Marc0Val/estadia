@@ -61,7 +61,7 @@ function Login() {
         </div>
         <button
           type="submit"
-          className="btn btn-primary"
+          className="btn2"
           disabled={!email || !password}
         >
           <FaSignInAlt />
@@ -77,7 +77,6 @@ function Login() {
         </Link>
       </div>
     </div>
-    // </div>
   );
 }
 
