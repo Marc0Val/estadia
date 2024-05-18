@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 // paginas a usar
 import PersonalPage from "./pages/PersonalPage";
 import ActiveCustomerPage from "./pages/ActiveCustomerPage";
@@ -19,7 +19,7 @@ import ServicesPage from "./pages/ServicesPage";
 
 const Admin = () => {
   return (
-    <div className="flex">
+    <div className="contenedor">
       <Sidebar />
       <div className="content">
         <Navbar />

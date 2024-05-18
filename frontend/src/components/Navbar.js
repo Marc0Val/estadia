@@ -1,23 +1,45 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { FaHome, FaUser, FaSignOutAlt } from "react-icons/fa";
-
+import { FaHome, FaSignOutAlt } from "react-icons/fa";
+// usar sweetalert2 para el cierre de sesion
+import Swal from "sweetalert2";
 
 const Navbar = () => {
+  // funcion para cerrar sesion
+  const cerrarSesion = () => {
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "Estás por cerrar sesión",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, cerrar sesión",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // redireccionar a la pagina principal
+        window.location.href = "/";
+      }
+    });
+  };
+
   return (
     <nav className="navbar fixed-top">
-      <NavLink to="/admin">
-        <FaHome className="icon" />
-      </NavLink>
-      <NavLink to="/profile">
-        <FaUser className="icon" />
-      </NavLink>
-      <NavLink to="/">
-        <FaSignOutAlt className="icon" />
-      </NavLink>
+      <div className="container-fluid">
+        <NavLink to="/admin" className="navbar-brand">
+          <FaHome className="me-2" />
+          Inicio
+        </NavLink>
+        <ul className="nav justify-content-end">
+          <li>
+            <button type="button" className="btn" title="Cerrar Sesion">
+              <FaSignOutAlt className="icon" onClick={cerrarSesion} />
+            </button>
+          </li>
+        </ul>
+      </div>
     </nav>
-    // <h1>Jalo?</h1>
   );
-}
+};
 
 export default Navbar;

@@ -1,54 +1,72 @@
-// const express = require('express');
-// const mysql = require('mysql');
-// const bcrypt = require('bcryptjs');
-// const bodyParser = require('body-parser');
-// const cors = require('cors');
+const express = require("express");
+const mysql = require("mysql");
+const bcrypt = require("bcryptjs");
+const bodyParser = require("body-parser");
+const cors = require("cors");
 
-// const app = express();
-// app.use(cors());
-// app.use(bodyParser.json());
+const app = express();
+app.use(cors());
+app.use(bodyParser.json());
 
-// const db = mysql.createConnection({
-//   host: 'localhost',
-//   user: 'root',
-//   password: '',
-//   database: 'login'
-// });
+const db = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "microtest",
+});
 
-// db.connect(err => {
-//   if (err) throw err;
-//   console.log('Conexión a la base de datos MySQL establecida.');
-// });
+db.connect((err) => {
+  if (err) throw err;
+  console.log("Conexión a la base de datos MySQL establecida.");
+});
+// ruta para insertar un nuevo registro en la tabla personal
+app.post("/personal", (req, res) => {
+  const nombre = req.body.nombre;
+  const apellidos = req.body.apellidos;
+  const direccion = req.body.direccion;
+  const notificar = req.body.notificar;
+  const contrasena = req.body.contrasena;
 
-// app.post('/register', (req, res) => {
-//   const { username, password } = req.body;
-//   const hashedPassword = bcrypt.hashSync(password, 10);
-//   const sql = 'INSERT INTO usuario (username, password) VALUES (?, ?)';
-//   db.query(sql, [username, hashedPassword], (err, result) => {
-//     if (err) throw err;
-//     res.send('Usuario registrado');
-//   });
-// });
+  const sql =
+    "INSERT INTO personal (nombre, apellidos, direccion, notificar, contrasena) VALUES (?,?,?,?,?)";
+  db.query(
+    sql,
+    [nombre, apellidos, direccion, notificar, contrasena],
+    (err, result) => {
+      if (err) throw err;
+      res.send("Registro insertado");
+    }
+  );
+});
 
-// app.post('/login', (req, res) => {
-//   const { username, password } = req.body;
-//   const sql = 'SELECT * FROM usuario WHERE username = ?';
-//   db.query(sql, [username], (err, results) => {
-//     if (err) throw err;
-//     if (results.length > 0) {
-//       const user = results[0];
-//       if (bcrypt.compareSync(password, user.password)) {
-//         res.send('Login exitoso');
-//       } else {
-//         res.status(401).send('Contraseña incorrecta');
-//       }
-//     } else {
-//       res.status(404).send('Usuario no encontrado');
-//     }
-//   });
-// });
+// ruta para obtener todos los registros de la tabla personal
+app.get("/personal", (req, res) => {
+  const sql = "SELECT * FROM personal";
+  db.query(sql, (err, result) => {
+    if (err) throw err;
+    res.send(result);
+  });
+});
 
-// const PORT = 3001;
-// app.listen(PORT, () => {
-//   console.log(`Servidor corriendo en el puerto ${PORT}`);
-// });
+//ruta para obetner todos los registros de la tabla clientes
+app.get("/clientes", (req, res) => {
+  const sql = "SELECT * FROM clientes";
+  db.query(sql, (err, result) => {
+    if (err) throw err;
+    res.send(result);
+  });
+});
+
+// ruta para obtener los registros de la tabla categoria
+app.get("/categoria", (req, res) => {
+  const sql = "SELECT * FROM categoria";
+  db.query(sql, (err, result) => {
+    if (err) throw err;
+    res.send(result);
+  });
+});
+
+const PORT = 3001;
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en el puerto ${PORT}`);
+});

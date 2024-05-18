@@ -10,20 +10,30 @@ html {
   font-weight: bold;
   margin-bottom: 20px;
 }
+.subtitulo {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
 .content {
   // separación del contenido con el sidebar
   margin-left: 250px;
-  background-color: $gray-color;
-  // flex-grow: 1;
+  background-color: white;
   .contenedor {
     margin-top: 5rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    background-color: white;
   }
 }
-@media screen and (max-width: 768px) {
+// hacer que el contenido se ajuste al tamaño de la pantalla cuando sea igual a 768px
+@media (max-width: 768px) {
   .content {
     margin-left: 0;
   }
 }
+
 // estilos para el contenedor del login
 .login-page {
   display: flex;
@@ -71,7 +81,7 @@ html {
   text-decoration: none;
   margin-right: 10px;
 }
-/* Animación de caída */
+/* Animación de caída solo del login*/
 .animated-drop {
   animation: drop 0.5s;
 }
@@ -179,4 +189,25 @@ html {
   .navbar {
     margin-left: 0;
   }
+}
+
+// estilos para el componetne de la tabla
+.table-responsive {
+  margin: 20px auto;
+  max-width: 90%;
+}
+
+.table th,
+.table td {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.table th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+}
+
+.table-hover tbody tr:hover {
+  background-color: $gray-color;
 }

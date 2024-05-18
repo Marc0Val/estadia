@@ -32,7 +32,7 @@ const Sidebar = () => {
         <ul className="list-unstyled components">
           <NavLink to="/admin/" className="lii">
             <li>
-              <i className="fas fa-user"></i>
+              <i className="fas fa-users"></i>
               Personal
             </li>
           </NavLink>
