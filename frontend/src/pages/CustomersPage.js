@@ -109,7 +109,7 @@ const PersonalPage = () => {
         icono="fas fa-plus"
         contenidoModal={
           <form onSubmit={handleSubmit}>
-            <div className="mb-3">
+            <div className="contenedor mb-3">
               <label htmlFor="nombreComercial" className="form-label">
                 <strong>Nombre Comercial*</strong>
               </label>

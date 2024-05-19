@@ -4,6 +4,7 @@
 
 import React, { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const BotonModal = ({ nombreBoton, icono, contenidoModal }) => {
   const [show, setShow] = useState(false);
@@ -18,7 +19,7 @@ const BotonModal = ({ nombreBoton, icono, contenidoModal }) => {
         <i className={icono}></i> {nombreBoton}
       </Button>
 
-      <Modal show={show} onHide={() => setShow(false)}>
+      <Modal show={show} onHide={() => setShow(false)} size="lg" centered>
         <Modal.Header closeButton>
           <Modal.Title>{nombreBoton}</Modal.Title>
         </Modal.Header>
