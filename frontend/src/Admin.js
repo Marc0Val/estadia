@@ -16,6 +16,7 @@ import ProvidersPage from "./pages/ProvidersPage";
 import PurchaseOrderPage from "./pages/PurchaseOrderPage";
 import QuotesPage from "./pages/QuotesPage";
 import ServicesPage from "./pages/ServicesPage";
+import ServiceOrdersPage from "./pages/ServiceOrdersPage";
 
 const Admin = () => {
   return (
@@ -36,7 +37,8 @@ const Admin = () => {
           <Route path="/proveedores" element={<ProvidersPage />} />
           <Route path="/ordenes-de-compra" element={<PurchaseOrderPage />} />
           <Route path="/cotizaciones" element={<QuotesPage />} />
-          <Route path="/ordenes-de-servicio" element={<ServicesPage />} />
+          <Route path="/servicios" element={<ServicesPage />} />
+          <Route path="/ordenes-de-compra" element={<ServiceOrdersPage />} />
         </Routes>
       </div>
     </div>
