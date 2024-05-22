@@ -1,7 +1,3 @@
-// crea un componente llamado BotonModal
-// este sera una boton que al hacer click abrira una ventana modal
-// este recibira como propiedades el nombre del boton, icono, y el contenido del modal
-
 import React, { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -11,11 +7,7 @@ const BotonModal = ({ nombreBoton, icono, contenidoModal }) => {
 
   return (
     <>
-      <Button
-        variant="primary"
-        onClick={() => setShow(true)}
-        className="btn btn-primary"
-      >
+      <Button variant="info" onClick={() => setShow(true)}>
         <i className={icono}></i> {nombreBoton}
       </Button>
 

@@ -3,12 +3,21 @@ import TablaInfo from "../components/TablaInfo";
 
 const ServiceOrdersPage = () => {
   const [data, setData] = useState([]);
-  const columnNames = ["Folio", "Programado", "Inicio", "Fin", "Cliente", "Personal", "Estado", "PDF"];
+  const columnNames = [
+    "Folio",
+    "Programada",
+    "Inicio",
+    "Fin",
+    "Cliente",
+    "Personal",
+    "Estado",
+    "PDF",
+  ];
 
   return (
     <div className="contenedor container-fluid">
       <p className="subtitulo">
-        <i className="fas fa-boxes"></i> Ordenes de servicio
+        <i className="fas fa-clipboard-list"></i> Ordenes de Servicio
       </p>
       <hr />
       <TablaInfo

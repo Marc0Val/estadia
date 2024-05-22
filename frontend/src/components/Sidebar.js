@@ -42,13 +42,13 @@ const Sidebar = () => {
               Clientes
             </li>
           </NavLink>
-
-          <NavLink to="/admin/documentos" className="lii">
+          {/* Deshabil por el momento 21/05/2024 */}
+          {/* <NavLink to="/admin/documentos" className="lii">
             <li>
               <i className="fas fa-file-alt"></i>
               Documentos
             </li>
-          </NavLink>
+          </NavLink> */}
           <NavLink to="/admin/proveedores" className="lii">
             <li>
               <i className="fas fa-truck"></i>
@@ -79,7 +79,7 @@ const Sidebar = () => {
               Servicios
             </li>
           </NavLink>
-          <NavLink to="/admin/ordenes-de-servicio" className="lii">
+          <NavLink to="/admin/ordenesdservicio" className="lii">
             <li>
               <i className="fas fa-tools"></i>
               Ordenes de Servicio
@@ -103,12 +103,13 @@ const Sidebar = () => {
               Activos de Clientes
             </li>
           </NavLink>
-          <NavLink to="/admin/polizas" className="lii">
+          {/* Deshabil por el momento 21/05/2024 */}
+          {/* <NavLink to="/admin/polizas" className="lii">
             <li>
               <i className="fas fa-file-contract"></i>
               Pólizas
             </li>
-          </NavLink>
+          </NavLink> */}
         </ul>
       </div>
     </div>

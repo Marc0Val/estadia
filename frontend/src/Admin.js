@@ -10,7 +10,8 @@ import ContactsPage from "./pages/ContactsPage";
 import CustomersPage from "./pages/CustomersPage";
 import DocumentPage from "./pages/DocumentPage";
 import OrderServicePage from "./pages/OrderServicePage";
-import PolicyPage from "./pages/PolicyPage";
+// deshabil hasta el momento 21/05/2024
+// import PolicyPage from "./pages/PolicyPage";
 import ProductsPage from "./pages/ProductsPage";
 import ProvidersPage from "./pages/ProvidersPage";
 import PurchaseOrderPage from "./pages/PurchaseOrderPage";
@@ -31,14 +32,15 @@ const Admin = () => {
           <Route path="/contactos" element={<ContactsPage />} />
           <Route path="/clientes" element={<CustomersPage />} />
           <Route path="/documentos" element={<DocumentPage />} />
-          <Route path="/ordenes-de-servicio" element={<OrderServicePage />} />
-          <Route path="/polizas" element={<PolicyPage />} />
+          {/* <Route path="/ordenes-de-servicio" element={<OrderServicePage />} /> */}
+          {/* <Route path="/polizas" element={<PolicyPage />} /> */}
           <Route path="/productos" element={<ProductsPage />} />
           <Route path="/proveedores" element={<ProvidersPage />} />
           <Route path="/ordenes-de-compra" element={<PurchaseOrderPage />} />
           <Route path="/cotizaciones" element={<QuotesPage />} />
           <Route path="/servicios" element={<ServicesPage />} />
-          <Route path="/ordenes-de-compra" element={<ServiceOrdersPage />} />
+          {/* <Route path="/ordenes-de-compra" element={<ServiceOrdersPage />} /> */}
+          <Route path="/ordenesdservicio" element={<ServiceOrdersPage />} />
         </Routes>
       </div>
     </div>
