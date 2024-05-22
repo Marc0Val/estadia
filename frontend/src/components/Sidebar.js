@@ -1,11 +1,18 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { Collapse } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
+  };
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
   };
 
   return (
@@ -110,6 +117,35 @@ const Sidebar = () => {
               Pólizas
             </li>
           </NavLink> */}
+          <button
+            className="btn btn-link"
+            onClick={toggleDropdown}
+            style={{
+              textDecoration: "none",
+              color: "#fff",
+              backgroundColor: "transparent",
+              border: "none",
+              width: "100%",
+              textAlign: "left",
+              cursor: "pointer",
+            }}
+          >
+            <i className="fas fa-cogs"></i>Configuraciones
+          </button>
+          <Collapse in={isDropdownOpen}>
+            <ul className="list-unstyled">
+              <NavLink to="/admin/configuraciones" className="lii">
+                <li>
+                  <i className="fas fa-cog"></i>Generales
+                </li>
+              </NavLink>
+              <NavLink to="/admin/roles" className="lii">
+                <li>
+                  <i className="fas fa-cog"></i>Roles y Permisos
+                </li>
+              </NavLink>
+            </ul>
+          </Collapse>
         </ul>
       </div>
     </div>

@@ -18,6 +18,8 @@ import PurchaseOrderPage from "./pages/PurchaseOrderPage";
 import QuotesPage from "./pages/QuotesPage";
 import ServicesPage from "./pages/ServicesPage";
 import ServiceOrdersPage from "./pages/ServiceOrdersPage";
+import SettingsPage from "./pages/ConfigPages/SettingsPage";
+import RolPage from "./pages/ConfigPages/RolPage";
 
 const Admin = () => {
   return (
@@ -41,6 +43,8 @@ const Admin = () => {
           <Route path="/servicios" element={<ServicesPage />} />
           {/* <Route path="/ordenes-de-compra" element={<ServiceOrdersPage />} /> */}
           <Route path="/ordenesdservicio" element={<ServiceOrdersPage />} />
+          <Route path="/configuraciones" element={<SettingsPage />} />
+          <Route path="/roles" element={<RolPage />} />
         </Routes>
       </div>
     </div>
