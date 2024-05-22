@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { FaSignInAlt } from "react-icons/fa";
+import logo from "../assets/logo.png";
 
 function Login() {
   // posible logica de inicio de sesion
@@ -36,6 +37,9 @@ function Login() {
   };
   return (
     <div className="login-container animated-drop">
+      <div className="animated-drop">
+        <img src={logo} alt="logo" />
+      </div>
       <strong>Autenticarse para iniciar sesión</strong>
       <hr />
       <form onSubmit={handleSubmit} className="login-form">
@@ -59,11 +63,7 @@ function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button
-          type="submit"
-          className="btn2"
-          disabled={!email || !password}
-        >
+        <button type="submit" className="btn2" disabled={!email || !password}>
           <FaSignInAlt />
           Acceder
         </button>

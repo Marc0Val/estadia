@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Collapse } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import logo from "../assets/logo.png";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,18 +22,14 @@ const Sidebar = () => {
         <i className="fas fa-bars"></i>
       </button>
       <div className={`sidebar ${isOpen ? "open" : ""}`}>
-        <div className="sidebar-header">
-          {/* <div className="text-center sidebarImg grow">
-            <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyWhythVZp0TMHYz3yUUxnwy4-b435Hphl28hQbVwKvUdQ-nPxZyRvmYJDYDkqUT83rAQ&usqp=CAU"
-              alt="logo"
-            />
-          </div> */}
+        <div className="sidebar-header pt-3">
+          <img src={logo} alt="logo" className="grow"/>
         </div>
+        <hr />
         <button
           className="btn btn-danger d-md-none"
           onClick={toggleSidebar}
-          style={{ marginTop: "10px" }}
+          style={{ marginTop: "40px" }}
         >
           <i className="fas fa-times"></i>
         </button>

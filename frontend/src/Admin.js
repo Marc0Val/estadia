@@ -20,6 +20,7 @@ import ServicesPage from "./pages/ServicesPage";
 import ServiceOrdersPage from "./pages/ServiceOrdersPage";
 import SettingsPage from "./pages/ConfigPages/SettingsPage";
 import RolPage from "./pages/ConfigPages/RolPage";
+import FormularioOrdenServicio from "./pages/Forms/FormularioordenServicio";
 
 const Admin = () => {
   return (
@@ -45,6 +46,10 @@ const Admin = () => {
           <Route path="/ordenesdservicio" element={<ServiceOrdersPage />} />
           <Route path="/configuraciones" element={<SettingsPage />} />
           <Route path="/roles" element={<RolPage />} />
+          <Route
+            path="/formulario-orden-servicio"
+            element={<FormularioOrdenServicio />}
+          />
         </Routes>
       </div>
     </div>

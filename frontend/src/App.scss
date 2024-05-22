@@ -1,7 +1,8 @@
 .modal-90w {
   width: 100%;
   max-width: none;
-}$principal-color: #1f4aa7;
+}
+$principal-color: #1f4aa7;
 $secondary-color: #ce3112;
 $third-color: #077191;
 $gray-color: #e9ecef;
@@ -19,7 +20,6 @@ html {
   margin-bottom: 20px;
 }
 .content {
-  // separación del contenido con el sidebar
   margin-left: 250px;
   background-color: white;
   .contenedor {
@@ -30,7 +30,6 @@ html {
     background-color: white;
   }
 }
-// hacer que el contenido se ajuste al tamaño de la pantalla cuando sea igual a 768px
 @media (max-width: 768px) {
   .content {
     margin-left: 0;
@@ -110,16 +109,20 @@ html {
   color: #fff;
   transition: transform 0.3s ease;
   transform: translateX(-100%);
-  .sidebarImg {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    padding: 3rem;
+  .sidebar-header {
+    width: 250px;
+    height: 70px;
+    background: $gray-color;
+    text-align: center;
     img {
-      width: 200%;
-      height: 200%;
+      width: 80px;
+      height: 50px;
     }
+  }
+}
+@media (max-width: 768px) {
+  .sidebar .sidebar-header {
+    display: none;
   }
 }
 .lii {
@@ -130,10 +133,6 @@ html {
 }
 .sidebar.open {
   transform: translateX(0);
-}
-.sidebar-header {
-  padding: 20px;
-  background-color: $gray-color;
 }
 .sidebar ul.components {
   padding: 20px 0;
@@ -213,4 +212,16 @@ html {
 
 .table-hover tbody tr:hover {
   background-color: $gray-color;
+}
+
+// hoover personalizado
+.grow {
+  transition: 0.5s, color 0.1s;
+  -webkit-transition: 0.5s, color 0.1s;
+  -moz-transition: 0.5s, color 0.1s;
+}
+.grow:hover {
+  transform: scale3d(1.5, 1.5, 0.3);
+  -webkit-transform: scale3d(1.5, 1.5, 0.3);
+  -moz-transform: scale3d(1.5, 1.5, 0.3);
 }

@@ -9,6 +9,7 @@ LA LOGICA DE INSERTAR VA EN LOS COMPONENTES FORMULARIOS XD
 dependencias front:
 npm install axios
 npm install react-router-dom
+npm install react-datepicker --save
 
 dependencias backend:
 (son las que use en pruebas, solo tomar cuenta las de frontend hasta 16/05/2024)
