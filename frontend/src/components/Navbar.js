@@ -27,8 +27,7 @@ const Navbar = () => {
     <nav className="navbar fixed-top">
       <div className="container-fluid">
         <NavLink to="/admin" className="navbar-brand">
-          <FaHome className="me-2" />
-          Inicio
+          <FaHome className="me-2 lii" />
         </NavLink>
         <ul className="nav justify-content-end">
           <li>
