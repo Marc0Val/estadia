@@ -30,12 +30,7 @@ const ProductsPage = () => {
           />
         }
       />
-      <TablaInfo
-        rows={data.length}
-        columns={columnNames}
-        data={data}
-        totalRecords={data.length}
-      />
+      <TablaInfo columns={columnNames} data={data} totalRecords={data.length} />
     </div>
   );
 };

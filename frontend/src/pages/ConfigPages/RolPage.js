@@ -6,6 +6,13 @@ import FormularioRol from "../../components/Forms/FormularioRol";
 const RolPage = () => {
   const [data, setData] = useState([]);
   const columnNames = ["Rol", "Usuario"];
+  // informacion de prueba que muestre 2 roles y cuantos usarios tiene cada uno
+  useEffect(() => {
+    setData([
+      { Rol: "Administrador", Usuario: 3 },
+      { Rol: "Usuario", Usuario: 5 },
+    ]);
+  }, []);
 
   return (
     <div className="contenedor container-fluid">
@@ -19,13 +26,7 @@ const RolPage = () => {
         contenidoModal={<FormularioRol />}
       />
       <hr />
-      {/*crear tabla para roles y usuarios sin el componente*/}
-      <TablaInfo
-        rows={data.length}
-        columns={columnNames}
-        data={data}
-        totalRecords={data.length}
-      />
+      <TablaInfo columns={columnNames} data={data} totalRecords={data.length} />
     </div>
   );
 };

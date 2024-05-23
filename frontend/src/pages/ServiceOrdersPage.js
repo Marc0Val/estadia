@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import TablaInfo from "../components/TablaInfo";
+import Header from "../components/Header";
 
 const ServiceOrdersPage = () => {
   const [data, setData] = useState([]);
@@ -20,12 +21,9 @@ const ServiceOrdersPage = () => {
         <i className="fas fa-clipboard-list"></i> Ordenes de Servicio
       </p>
       <hr />
-      <TablaInfo
-        rows={data.length}
-        columns={columnNames}
-        data={data}
-        totalRecords={data.length}
-      />
+      <Header />
+
+      <TablaInfo columns={columnNames} data={data} totalRecords={data.length} />
     </div>
   );
 };

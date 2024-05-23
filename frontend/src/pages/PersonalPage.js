@@ -9,7 +9,6 @@ import Header from "../components/Header";
 const PersonalPage = () => {
   const [data, setData] = useState([]);
   const columnNames = ["idCodigo", "Nombre", "Celular", "Rol", "Estado"];
-
   return (
     <div className="contenedor container-fluid">
       <p className="subtitulo">
@@ -25,12 +24,7 @@ const PersonalPage = () => {
           />
         }
       />
-      <TablaInfo
-        rows={data.length}
-        columns={columnNames}
-        data={data}
-        totalRecords={data.length}
-      />
+      <TablaInfo columns={columnNames} data={data} totalRecords={data.length} />
     </div>
   );
 };
