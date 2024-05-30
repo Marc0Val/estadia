@@ -23,7 +23,7 @@ const Sidebar = () => {
       </button>
       <div className={`sidebar ${isOpen ? "open" : ""}`}>
         <div className="sidebar-header pt-3">
-          <img src={logo} alt="logo" className="grow"/>
+          <img src={logo} alt="logo" className="grow" />
         </div>
         <hr />
         <button
@@ -83,7 +83,7 @@ const Sidebar = () => {
               Servicios
             </li>
           </NavLink>
-          <NavLink to="/admin/ordenesdservicio" className="lii">
+          <NavLink to="/admin/ordenes-servicio" className="lii">
             <li>
               <i className="fas fa-tools"></i>
               Ordenes de Servicio

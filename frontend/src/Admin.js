@@ -43,7 +43,7 @@ const Admin = () => {
           <Route path="/cotizaciones" element={<QuotesPage />} />
           <Route path="/servicios" element={<ServicesPage />} />
           {/* <Route path="/ordenes-de-compra" element={<ServiceOrdersPage />} /> */}
-          <Route path="/ordenesdservicio" element={<ServiceOrdersPage />} />
+          <Route path="/ordenes-servicio" element={<ServiceOrdersPage />} />
           <Route path="/configuraciones" element={<SettingsPage />} />
           <Route path="/roles" element={<RolPage />} />
           <Route
