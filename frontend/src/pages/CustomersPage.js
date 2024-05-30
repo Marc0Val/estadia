@@ -17,6 +17,27 @@ const PersonalPage = () => {
     "telefono",
     "portal",
   ];
+  // informacion de prueba solo 1
+  useEffect(() => {
+    const fetchData = async () => {
+      setData([
+        {
+          idCodigo: 1,
+          empresa: "Empresa 1",
+          ciudad: "Ciudad 1",
+          contacto: "Contacto 1",
+          correo: "test@test.com",
+          telefono: "1234567890",
+          portal: "www.test.com",
+        },
+      ]);
+    }
+
+    fetchData();
+  }
+  , []);
+  
+
   return (
     <div className="contenedor container-fluid">
       <p className="subtitulo">

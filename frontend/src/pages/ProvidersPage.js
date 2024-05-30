@@ -9,6 +9,29 @@ import Header from "../components/Header";
 const ProvidersPage = () => {
   const [data, setData] = useState([]);
   const columnNames = ["idCodigo", "empresa", "ciudad", "contacto", "telefono"];
+  // informacion de prueba
+  useEffect(() => {
+    const fetchData = async () => {
+      setData([
+        {
+          idCodigo: 1,
+          empresa: "Empresa 1",
+          ciudad: "Ciudad 1",
+          contacto: "Contacto 1",
+          telefono: "1234567890",
+        },
+        {
+          idCodigo: 2,
+          empresa: "Empresa 2",
+          ciudad: "Ciudad 2",
+          contacto: "Contacto 2",
+          telefono: "0987654321",
+        },
+      ]);
+    };
+
+    fetchData();
+  }, []);
   return (
     <div className="contenedor container-fluid">
       <p className="subtitulo">

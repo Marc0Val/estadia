@@ -1,7 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { FaHome, FaSignOutAlt } from "react-icons/fa";
-// usar sweetalert2 para el cierre de sesion
+import { FaHome, FaSignOutAlt } from "react-icons/fa"
 import Swal from "sweetalert2";
 
 const Navbar = () => {

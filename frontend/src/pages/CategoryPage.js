@@ -9,6 +9,24 @@ import Header from "../components/Header";
 const CategoryPage = () => {
   const [data, setData] = useState([]);
   const columnNames = ["NombreCategoria"];
+  // informacion de prueba
+  useEffect(() => {
+    const fetchData = async () => {
+      setData([
+        {
+          NombreCategoria: "Categoria 1",
+        },
+        {
+          NombreCategoria: "Categoria 2",
+        },
+        {
+          NombreCategoria: "Categoria 3",
+        },
+      ]);
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className="contenedor container-fluid">

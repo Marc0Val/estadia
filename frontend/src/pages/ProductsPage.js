@@ -14,6 +14,47 @@ const ProductsPage = () => {
     "Stock",
     "Proveedor",
   ];
+  // informacion de prueba
+  useEffect(() => {
+    const fetchData = async () => {
+      setData([
+        {
+          idCodigo: 1,
+          Unidad: "Unidad 1",
+          Nombre: "Producto 1",
+          Precio: "10.00",
+          Stock: "100",
+          Proveedor: "Proveedor 1",
+        },
+        {
+          idCodigo: 2,
+          Unidad: "Unidad 2",
+          Nombre: "Producto 2",
+          Precio: "20.00",
+          Stock: "200",
+          Proveedor: "Proveedor 2",
+        },
+        {
+          idCodigo: 3,
+          Unidad: "Unidad 3",
+          Nombre: "Producto 3",
+          Precio: "30.00",
+          Stock: "300",
+          Proveedor: "Proveedor 3",
+        },
+        {
+          idCodigo: 4,
+          Unidad: "Unidad 4",
+          Nombre: "Producto 4",
+          Precio: "40.00",
+          Stock: "400",
+          Proveedor: "Proveedor 4",
+        },
+      ]);
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className="contenedor container-fluid">

@@ -9,6 +9,44 @@ import Header from "../components/Header";
 const PersonalPage = () => {
   const [data, setData] = useState([]);
   const columnNames = ["idCodigo", "Nombre", "Celular", "Rol", "Estado"];
+  // informacion de prueba
+  useEffect(() => {
+    const fetchData = async () => {
+      setData([
+        {
+          idCodigo: 1,
+          Nombre: "Juan Perez",
+          Celular: "1234567890",
+          Rol: "Administrador",
+          Estado: "Activo",
+        },
+        {
+          idCodigo: 2,
+          Nombre: "Maria Lopez",
+          Celular: "0987654321",
+          Rol: "Cajero",
+          Estado: "Activo",
+        },
+        {
+          idCodigo: 3,
+          Nombre: "Pedro Ramirez",
+          Celular: "6789012345",
+          Rol: "Cajero",
+          Estado: "Inactivo",
+        },
+        {
+          idCodigo: 4,
+          Nombre: "Ana Rodriguez",
+          Celular: "5432167890",
+          Rol: "Administrador",
+          Estado: "Activo",
+        },
+      ]);
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div className="contenedor container-fluid">
       <p className="subtitulo">

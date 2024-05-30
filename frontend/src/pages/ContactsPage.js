@@ -9,6 +9,36 @@ import Header from "../components/Header";
 const ContactsPage = () => {
   const [data, setData] = useState([]);
   const columnNames = ["idCodigo", "Nombre", "Celular", "Celular", "Telefono"];
+  // informacion de prueba
+  useEffect(() => {
+    const fetchData = async () => {
+      setData([
+        {
+          idCodigo: 1,
+          Nombre: "Juan Perez",
+          Celular: "1234567890",
+          Correo: "test@test.com",
+          Telefono: "1234567890",
+        },
+        {
+          idCodigo: 2,
+          Nombre: "Maria Lopez",
+          Celular: "0987654321",
+          Correo: "test@test.com",
+          Telefono: "0987654321",
+        },
+        {
+          idCodigo: 3,
+          Nombre: "Pedro Ramirez",
+          Celular: "6789012345",
+          Correo: "test@test.com",
+          Telefono: "6789012345",
+        },
+      ]);
+    };
+    fetchData();
+  }, []);
+
   return (
     <div className="contenedor container-fluid">
       <p className="subtitulo">
