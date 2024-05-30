@@ -21,6 +21,7 @@ import ServiceOrdersPage from "./pages/ServiceOrdersPage";
 import SettingsPage from "./pages/ConfigPages/SettingsPage";
 import RolPage from "./pages/ConfigPages/RolPage";
 import FormularioOrdenServicio from "./pages/Forms/FormularioordenServicio";
+import FormularioCotizacion from "./pages/Forms/FormularioCotizacion";
 
 const Admin = () => {
   return (
@@ -49,6 +50,10 @@ const Admin = () => {
           <Route
             path="/formulario-orden-servicio"
             element={<FormularioOrdenServicio />}
+          />
+          <Route
+            path="/formulario-cotizacion"
+            element={<FormularioCotizacion />}
           />
         </Routes>
       </div>

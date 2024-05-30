@@ -296,7 +296,7 @@ const FormularioOrdenServicio = () => {
               <p className="subtitulo">Orden de Servicio</p>
             </div>
             <div class="card-body">
-              <p className="text-center">
+              <p className="text-center subtitulo">
                 <i className="fas fa-calendar-alt"></i>
                 {formData.fechaProgramada.toDateString()}
               </p>
@@ -341,7 +341,10 @@ const FormularioOrdenServicio = () => {
                   <i className="fas fa-undo-alt"></i> Limpiar
                 </Button>
                 {/* regresar btn btn-outline-secondary */}
-                <NavLink to="/admin/ordenes-servicio" className="btn btn-outline-secondary">
+                <NavLink
+                  to="/admin/ordenes-servicio"
+                  className="btn btn-outline-secondary"
+                >
                   <i className="fas fa-arrow-left"></i> Regresar
                 </NavLink>
               </div>

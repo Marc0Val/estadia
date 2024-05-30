@@ -63,7 +63,7 @@ const QuotesPage = () => {
       <Header
         botonAgregar={
           <a
-            href="/admin/"
+            href="/admin/formulario-cotizacion"
             className="btn btn-info"
             role="button"
           >
