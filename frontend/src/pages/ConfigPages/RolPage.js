@@ -21,7 +21,7 @@ const RolPage = () => {
       </p>
       <hr />
       <BotonModal
-        nombreBoton="Nuevo Personal"
+        nombreBoton="Agregar Rol"
         icono="fas fa-plus"
         contenidoModal={<FormularioRol />}
       />

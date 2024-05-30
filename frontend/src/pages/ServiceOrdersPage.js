@@ -70,7 +70,18 @@ const ServiceOrdersPage = () => {
         <i className="fas fa-clipboard-list"></i> Ordenes de Servicio
       </p>
       <hr />
-      <Header />
+
+      <Header
+        botonAgregar={
+          <a
+            href="/admin/formulario-orden-servicio"
+            className="btn btn-info"
+            role="button"
+          >
+            <i className="fas fa-plus"></i> Nueva Orden
+          </a>
+        }
+      />
 
       <TablaInfo columns={columnNames} data={data} totalRecords={data.length} />
     </div>

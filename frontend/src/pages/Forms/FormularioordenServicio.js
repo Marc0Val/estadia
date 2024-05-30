@@ -94,12 +94,17 @@ const FormularioOrdenServicio = () => {
                 <Form.Label>
                   <strong>Cliente</strong>
                 </Form.Label>
+
                 <Form.Control
-                  type="text"
+                  as="select"
                   name="cliente"
                   value={formData.cliente}
                   onChange={handleChange}
-                />
+                >
+                  <option>Seleccione</option>
+                  {/* ejemplo */}
+                  <option>Cliente 1</option>
+                </Form.Control>
               </Form.Group>
             </Col>
             <Col>
@@ -154,10 +159,7 @@ const FormularioOrdenServicio = () => {
                   value={formData.servicio}
                   onChange={handleChange}
                   required
-                >
-                  <option>Seleccione</option>
-                  {/* Opciones del servicio */}
-                </Form.Control>
+                ></Form.Control>
               </Form.Group>
             </Col>
             <Col>
@@ -232,7 +234,6 @@ const FormularioOrdenServicio = () => {
               <option>
                 Productos - Refacciones - Materiales para servicio
               </option>
-              {/* Opciones de productos */}
             </Form.Control>
             <Button variant="primary">Agregar</Button>
           </InputGroup>
@@ -247,6 +248,7 @@ const FormularioOrdenServicio = () => {
               onChange={handleChange}
             />
           </Form.Group>
+
           <Form.Group controlId="formActividades" className="mb-3">
             <Form.Label>
               <strong>Actividades</strong> (Max. 4000 caracteres)
@@ -300,7 +302,7 @@ const FormularioOrdenServicio = () => {
               </Form.Group>
             </Col>
           </Row>
-          <Button variant="primary" type="submit">
+          <Button variant="success" type="submit">
             Guardar Orden
           </Button>
           <Button variant="secondary" type="reset" className="ms-2">

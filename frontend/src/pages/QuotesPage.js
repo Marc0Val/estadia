@@ -60,7 +60,17 @@ const QuotesPage = () => {
         <i className="fas fa-file-invoice-dollar"></i> Cotizaciones
       </p>
       <hr />
-      <Header />
+      <Header
+        botonAgregar={
+          <a
+            href="/admin/"
+            className="btn btn-info"
+            role="button"
+          >
+            <i className="fas fa-plus"></i> Nueva Cotizacion
+          </a>
+        }
+      />
       <TablaInfo columns={columnNames} data={data} totalRecords={data.length} />
     </div>
   );
