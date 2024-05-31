@@ -63,7 +63,7 @@ const PurchaseOrderPage = () => {
       <Header
         botonAgregar={
           <a
-            href="/admin/"
+            href="/admin/formulario-orden-compra"
             className="btn btn-info"
             role="button"
           >
