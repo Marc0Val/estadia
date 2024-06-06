@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { FaSignInAlt } from "react-icons/fa";
 import logo from "../assets/logo.png";
+import BotonModal from "./Buttons/BotonModal";
+import FormularioPersonal from "./Forms/FormularioPersonal";
 
 function Login() {
   // posible logica de inicio de sesion
@@ -64,17 +66,35 @@ function Login() {
           />
         </div>
         <button type="submit" className="btn2" disabled={!email || !password}>
-          <FaSignInAlt />
+          {/* <FaSignInAlt /> */}
           Acceder
         </button>
       </form>
       <div className="links d-flex justify-content-between">
-        <Link to="/forgot-password" className="btn btn-link">
-          <strong>Olvidé mi contraseña</strong>
-        </Link>
-        <Link to="/register" className="btn btn-link">
-          <strong>Crear nueva cuenta</strong>
-        </Link>
+        <BotonModal
+          nombreBoton="Recuperar contraseña"
+          // icono="fas fa-key"
+          contenidoModal={
+            <div>
+              <h1>Info solo de prueba</h1>
+              <strong>Recuperar contraseña</strong>
+              <hr />
+              <input
+                type="email"
+                placeholder="Correo"
+                className="form-control"
+              />
+              <button className="btn2">
+                <i className="fas fa-key"></i> Recuperar
+              </button>
+            </div>
+          }
+        />
+        <BotonModal
+          nombreBoton="Crear nueva cuenta"
+          // icono="fas fa-user-plus"
+          contenidoModal={<FormularioPersonal />}
+        />
       </div>
     </div>
   );

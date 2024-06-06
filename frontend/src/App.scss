@@ -77,6 +77,18 @@ html {
     color: #fff;
     transition: background-color 0.5s;
   }
+  // ahora estilo pero para todos los botones que haya en ese contenedor
+  button {
+    background-color: transparent;
+    border: none;
+    // texto color azul
+    color: $azul2;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  button:hover {
+    background-color: transparent;
+  }
 }
 .login-form input {
   width: 100%;
@@ -93,6 +105,7 @@ html {
   text-decoration: none;
   margin-right: 10px;
 }
+
 /* Animación de caída solo del login*/
 .animated-drop {
   animation: drop 0.5s;
