@@ -77,11 +77,9 @@ html {
     color: #fff;
     transition: background-color 0.5s;
   }
-  // ahora estilo pero para todos los botones que haya en ese contenedor
   button {
     background-color: transparent;
     border: none;
-    // texto color azul
     color: $azul2;
     cursor: pointer;
     margin-top: 20px;
