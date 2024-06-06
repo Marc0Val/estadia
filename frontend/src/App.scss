@@ -126,8 +126,6 @@ html {
   top: 0;
   left: 0;
   height: 100%;
-  // background: $principal-color;
-  // background-color: degradado 90deg
   background: linear-gradient(90deg, $azul1, $azul2);
   color: #fff;
   transition: transform 0.3s ease;
@@ -197,8 +195,6 @@ html {
 // estilos para el navbar
 .navbar {
   padding: 0 20px;
-  // background-color: $azul1
-  // background-color: degradado de derecha a izquierda azul1 a azul2
   background: linear-gradient(180deg, $azul1, $azul2);
   height: 50px;
   margin-left: 250px;
