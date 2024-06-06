@@ -28,7 +28,7 @@ const Sidebar = () => {
         <button
           className="btn btn-danger d-md-none"
           onClick={toggleSidebar}
-          style={{ marginTop: "40px" }}
+          style={{ marginTop: "52px" }}
         >
           <i className="fas fa-times"></i>
         </button>

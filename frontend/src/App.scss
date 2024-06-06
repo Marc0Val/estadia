@@ -156,9 +156,14 @@ html {
   transform: translateX(0);
 }
 .sidebar ul.components {
+  display: flex;
+  flex-direction: column;
   padding: 20px 0;
   overflow-y: auto;
   height: calc(100vh - 70px);
+}
+.sidebar ul.components li {
+  flex: 1;
 }
 .sidebar ul li {
   padding: 10px;
