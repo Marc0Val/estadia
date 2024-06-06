@@ -157,6 +157,8 @@ html {
 }
 .sidebar ul.components {
   padding: 20px 0;
+  overflow-y: auto;
+  height: calc(100vh - 70px);
 }
 .sidebar ul li {
   padding: 10px;
