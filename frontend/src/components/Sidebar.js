@@ -25,7 +25,6 @@ const Sidebar = () => {
         <div className="sidebar-header pt-3">
           <img src={logo} alt="logo" className="grow" />
         </div>
-        <hr />
         <button
           className="btn btn-danger d-md-none"
           onClick={toggleSidebar}
