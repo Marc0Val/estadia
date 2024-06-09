@@ -152,7 +152,16 @@ html {
   text-decoration: none;
   display: block;
   font-size: 1.1em;
+  &.active {
+    background-color: $gray-color;
+    color: $secondary-color;
+    border-radius: 20px 20px 20px 20px;
+    -moz-border-radius: 20px 20px 20px 20px;
+    -webkit-border-radius: 20px 20px 20px 20px;
+    border: 0px solid #000000;
+  }
 }
+
 .sidebar.open {
   transform: translateX(0);
 }
@@ -186,7 +195,7 @@ html {
 }
 
 .sidebar ul li:hover {
-  background: $gray-color;
+  background: #e9ecefa6;
   transition: background 1s;
   color: $secondary-color;
 }

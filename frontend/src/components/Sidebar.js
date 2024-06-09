@@ -45,13 +45,6 @@ const Sidebar = () => {
               Clientes
             </li>
           </NavLink>
-          {/* Deshabil por el momento 21/05/2024 */}
-          {/* <NavLink to="/admin/documentos" className="lii">
-            <li>
-              <i className="fas fa-file-alt"></i>
-              Documentos
-            </li>
-          </NavLink> */}
           <NavLink to="/admin/proveedores" className="lii">
             <li>
               <i className="fas fa-truck"></i>
@@ -106,13 +99,6 @@ const Sidebar = () => {
               Activos de Clientes
             </li>
           </NavLink>
-          {/* Deshabil por el momento 21/05/2024 */}
-          {/* <NavLink to="/admin/polizas" className="lii">
-            <li>
-              <i className="fas fa-file-contract"></i>
-              Pólizas
-            </li>
-          </NavLink> */}
           <button
             className="btn btn-link"
             onClick={toggleDropdown}
