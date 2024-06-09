@@ -129,7 +129,12 @@ const Sidebar = () => {
             <i className="fas fa-cogs"></i>Configuraciones
           </button>
           <Collapse in={isDropdownOpen}>
-            <ul className="list-unstyled">
+            <ul
+              className="list-unstyled"
+              style={{
+                marginLeft: "20px",
+              }}
+            >
               <NavLink to="/admin/configuraciones" className="lii">
                 <li>
                   <i className="fas fa-cog"></i>Generales
