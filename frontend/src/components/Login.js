@@ -74,6 +74,7 @@ function Login() {
               backgroundColor: "blue",
             },
           }}
+          title="Iniciar sesión"
         >
           {/* <FaSignInAlt /> */}
           Acceder
