@@ -12,6 +12,8 @@ import { NavLink } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import FormularioClientes from "../../components/Forms/FormularioClientes";
+import BotonModal from "../../components/Buttons/BotonModal";
 
 const FormularioOrdenServicio = () => {
   const [formData, setFormData] = useState({
@@ -94,7 +96,16 @@ const FormularioOrdenServicio = () => {
               <Col>
                 <Form.Group controlId="formCliente">
                   <Form.Label>
-                    <strong>Cliente</strong>
+                    <div className="d-flex">
+                      <div className="mx-3">
+                        <strong>Cliente:</strong>
+                      </div>
+                      <BotonModal
+                        icono="fas fa-user-plus"
+                        contenidoModal={<FormularioClientes />}
+                        titulo={"Agregar Cliente"}
+                      />
+                    </div>
                   </Form.Label>
                   <Form.Control
                     as="select"
@@ -102,9 +113,7 @@ const FormularioOrdenServicio = () => {
                     value={formData.cliente}
                     onChange={handleChange}
                   >
-                    <option>Seleccione</option>
-                    {/* ejemplo */}
-                    <option>Cliente 1</option>
+                    <option>Selecciona un cliente</option>
                   </Form.Control>
                 </Form.Group>
               </Col>
@@ -234,6 +243,7 @@ const FormularioOrdenServicio = () => {
                 value={formData.producto}
                 onChange={handleChange}
               >
+                
                 <option>
                   Productos - Refacciones - Materiales para servicio
                 </option>

@@ -12,6 +12,8 @@ import { NavLink } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import FormularioProveedores from "../../components/Forms/FormularioProveedores";
+import BotonModal from "../../components/Buttons/BotonModal";
 
 const FormularioOrdenCompra = () => {
   const today = new Date();
@@ -86,9 +88,15 @@ const FormularioOrdenCompra = () => {
             <Row className="mb-3">
               <Col>
                 <Form.Group controlId="formProveedor">
-                  <Form.Label>
-                    <strong>Proveedor</strong>
+                  <Form.Label className="mx-3">
+                    <strong>Proveedor:</strong>
                   </Form.Label>
+                  <BotonModal
+                    // nombreBoton="Agregar Proveedor"
+                    icono="fas fa-plus"
+                    contenidoModal={<FormularioProveedores />}
+                    titulo="Agregar Proveedor"
+                  />
                   <Form.Control
                     as="select"
                     name="proveedor"
