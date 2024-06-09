@@ -40,6 +40,7 @@ const CategoryPage = () => {
             nombreBoton="Nueva Categoria"
             icono="fas fa-plus"
             contenidoModal={<FormularioCategoria />}
+            titulo="Agregar Categoria"
           />
         }
       />

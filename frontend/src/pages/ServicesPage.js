@@ -49,6 +49,7 @@ const ServicesPage = () => {
             nombreBoton="Nuevo Servicio"
             icono="fas fa-plus"
             contenidoModal={<FormularioServicios />}
+            titulo="Agregar Servicio"
           />
         }
       />

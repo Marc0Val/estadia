@@ -66,6 +66,11 @@ const PurchaseOrderPage = () => {
             href="/admin/formulario-orden-compra"
             className="btn btn-info"
             role="button"
+            style={{
+              backgroundColor: "#0d6efd",
+              color: "white",
+            }}
+            title="Crear Nueva Orden"
           >
             <i className="fas fa-plus"></i> Nueva Orden
           </a>

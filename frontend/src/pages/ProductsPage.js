@@ -68,6 +68,7 @@ const ProductsPage = () => {
             nombreBoton="Nuevo Producto"
             icono="fas fa-plus"
             contenidoModal={<FormularioProducto />}
+            titulo="Agregar Nuevo Producto"
           />
         }
       />

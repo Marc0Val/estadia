@@ -10,7 +10,11 @@ const BotonModal = ({ nombreBoton, icono, contenidoModal, titulo }) => {
       <Button
         variant="info"
         onClick={() => setShow(true)}
-        title={titulo}
+        title={titulo || nombreBoton}
+        style={{
+          backgroundColor: "#0d6efd",
+          color:"white"
+        }}
       >
         <i className={icono}></i> {nombreBoton}
       </Button>
