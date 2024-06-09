@@ -6,6 +6,7 @@ import { FaSignInAlt } from "react-icons/fa";
 import logo from "../assets/logo.png";
 import BotonModal from "./Buttons/BotonModal";
 import FormularioPersonal from "./Forms/FormularioPersonal";
+import FormularioRecoverContraseña from "./Forms/FormularioRecoverContraseña";
 
 function Login() {
   // posible logica de inicio de sesion
@@ -84,9 +85,7 @@ function Login() {
         <BotonModal
           icono="fas fa-key"
           contenidoModal={
-            <div>
-              <h1>Info solo de prueba</h1>
-            </div>
+            <FormularioRecoverContraseña/>
           }
           titulo="Recuperar contraseña"
         />
