@@ -44,6 +44,7 @@ const ProvidersPage = () => {
             nombreBoton="Nuevo Proveedor"
             icono="fas fa-plus"
             contenidoModal={<FormularioProveedores />}
+            titulo="Agregar Proveedor"
           />
         }
       />

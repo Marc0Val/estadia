@@ -51,6 +51,7 @@ const ContactsPage = () => {
             nombreBoton="Nuevo Contacto"
             icono="fas fa-plus"
             contenidoModal={<FormularioContactos />}
+            titulo="Agregar Contacto"
           />
         }
       />

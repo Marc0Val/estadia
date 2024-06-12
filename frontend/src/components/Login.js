@@ -6,6 +6,7 @@ import { FaSignInAlt } from "react-icons/fa";
 import logo from "../assets/logo.png";
 import BotonModal from "./Buttons/BotonModal";
 import FormularioPersonal from "./Forms/FormularioPersonal";
+import FormularioRecoverContraseña from "./Forms/FormularioRecoverContraseña";
 
 function Login() {
   // posible logica de inicio de sesion
@@ -65,35 +66,33 @@ function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="submit" className="btn2" disabled={!email || !password}>
+        <button
+          type="submit"
+          className="btn2"
+          disabled={!email || !password}
+          style={{
+            hover: {
+              backgroundColor: "blue",
+            },
+          }}
+          title="Iniciar sesión"
+        >
           {/* <FaSignInAlt /> */}
           Acceder
         </button>
       </form>
       <div className="links d-flex justify-content-between">
         <BotonModal
-          nombreBoton="Recuperar contraseña"
-          // icono="fas fa-key"
+          icono="fas fa-key"
           contenidoModal={
-            <div>
-              <h1>Info solo de prueba</h1>
-              <strong>Recuperar contraseña</strong>
-              <hr />
-              <input
-                type="email"
-                placeholder="Correo"
-                className="form-control"
-              />
-              <button className="btn2">
-                <i className="fas fa-key"></i> Recuperar
-              </button>
-            </div>
+            <FormularioRecoverContraseña/>
           }
+          titulo="Recuperar contraseña"
         />
         <BotonModal
-          nombreBoton="Crear nueva cuenta"
-          // icono="fas fa-user-plus"
+          icono="fas fa-user-plus"
           contenidoModal={<FormularioPersonal />}
+          titulo="Registro"
         />
       </div>
     </div>

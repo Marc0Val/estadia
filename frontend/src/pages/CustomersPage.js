@@ -50,6 +50,7 @@ const PersonalPage = () => {
             nombreBoton="Nuevo Cliente"
             icono="fas fa-plus"
             contenidoModal={<FormularioClientes />}
+            titulo="Agregar Cliente"
           />
         }
       />

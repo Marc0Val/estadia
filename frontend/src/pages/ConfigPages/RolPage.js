@@ -24,6 +24,7 @@ const RolPage = () => {
         nombreBoton="Agregar Rol"
         icono="fas fa-plus"
         contenidoModal={<FormularioRol />}
+        titulo="Agregar Nuevo Rol"
       />
       <hr />
       <TablaInfo columns={columnNames} data={data} totalRecords={data.length} />

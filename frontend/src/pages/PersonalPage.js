@@ -59,6 +59,7 @@ const PersonalPage = () => {
             nombreBoton="Nuevo Personal"
             icono="fas fa-plus"
             contenidoModal={<FormularioPersonal />}
+            titulo="Agregar Nuevo Personal"
           />
         }
       />

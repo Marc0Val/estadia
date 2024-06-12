@@ -14,6 +14,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import { Table } from "react-bootstrap";
+import FormularioClientes from "../../components/Forms/FormularioClientes";
+import BotonModal from "../../components/Buttons/BotonModal";
 
 const FormularioCotizacion = () => {
   const today = new Date();
@@ -80,9 +82,15 @@ const FormularioCotizacion = () => {
             <div className="shadow p-3 mb-5 bg-body rounded">
               <Col>
                 <Form.Group controlId="formCliente">
-                  <Form.Label>
-                    <strong>Cliente</strong>
+                  <Form.Label className="mx-3">
+                    <strong>Cliente: </strong>
                   </Form.Label>
+                  <BotonModal
+                    // nombreBoton="Nuevo Cliente"
+                    icono="fas fa-user-plus"
+                    contenidoModal={<FormularioClientes />}
+                    titulo="Nuevo Cliente"
+                  />
                   <Form.Control
                     as="select"
                     name="cliente"
