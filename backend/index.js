@@ -18,19 +18,19 @@ const app = express();
 
 app.use(express.json());
 
-// Add all the routes
-app.use(indexRoutes);
-app.use(usersRoutes);
-app.use(clientsRoutes);
-app.use(categoriesRoutes);
-app.use(suppliersRoutes);
-app.use(contactsRoutes);
-app.use(productsRoutes);
-app.use(servicesRoutes);
-app.use(servicesOrdersRoutes);
-app.use(quotesRoutes);
-app.use(purchaseOrdersRoutes);
-app.use(clientAssetsRoutes);
+// Add all the routes with "/api" prefix
+app.use("/api", indexRoutes);
+app.use("/api", usersRoutes);
+app.use("/api", clientsRoutes);
+app.use("/api", categoriesRoutes);
+app.use("/api", suppliersRoutes);
+app.use("/api", contactsRoutes);
+app.use("/api", productsRoutes);
+app.use("/api", servicesRoutes);
+app.use("/api", servicesOrdersRoutes);
+app.use("/api", quotesRoutes);
+app.use("/api", purchaseOrdersRoutes);
+app.use("/api", clientAssetsRoutes);
 
 app.listen(PORT);
 console.log("Server is running on port", PORT);
