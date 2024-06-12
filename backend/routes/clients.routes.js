@@ -19,7 +19,7 @@ router.get("/clients", getClients);
 //* Get one client
 router.get("/clients/:id", getClient);
 
-//* CReate new client
+//* Create new client
 router.post(
   "/clients",
   [validateEmail("email"), validateEmail("contact_email"), validateRequest],
