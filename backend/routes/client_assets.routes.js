@@ -9,19 +9,19 @@ import {
 
 const router = Router();
 
-// Get all client assets
+//* Get all client assets
 router.get("/client-assets", getClientAssets);
 
-// Get a client asset by ID
+//* Get a client asset by ID
 router.get("/client-assets/:id", getClientAsset);
 
-// Create a new client asset
+//* Create a new client asset
 router.post("/client-assets", createClientAsset);
 
-// Update a client asset by ID
+//* Update a client asset by ID
 router.put("/client-assets/:id", updateClientAsset);
 
-// Delete a client asset by ID
+//* Delete a client asset by ID
 router.delete("/client-assets/:id", deleteClientAsset);
 
 export default router;

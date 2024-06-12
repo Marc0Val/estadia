@@ -9,19 +9,19 @@ import {
 
 const router = Router();
 
-// Get all service orders
+//* Get all service orders
 router.get("/service-orders", getServiceOrders);
 
-// Get a service order by ID
+//* Get a service order by ID
 router.get("/service-orders/:id", getServiceOrder);
 
-// Create a new service order
+//* Create a new service order
 router.post("/service-orders", createServiceOrder);
 
-// Update a service order by ID
+//* Update a service order by ID
 router.put("/service-orders/:id", updateServiceOrder);
 
-// Delete a service order by ID
+//* Delete a service order by ID
 router.delete("/service-orders/:id", deleteServiceOrder);
 
 export default router;

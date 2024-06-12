@@ -1,5 +1,6 @@
 import { pool } from "../db.js";
 
+//* Get all suppliers
 export const getSuppliers = async (req, res) => {
   try {
     const [result] = await pool.query(
@@ -11,6 +12,7 @@ export const getSuppliers = async (req, res) => {
   }
 };
 
+//* Get one supplier
 export const getSupplier = async (req, res) => {
   try {
     const [result] = await pool.query(
@@ -26,6 +28,7 @@ export const getSupplier = async (req, res) => {
   }
 };
 
+//* Create new supplier
 export const createSupplier = async (req, res) => {
   try {
     const {
@@ -85,6 +88,7 @@ export const createSupplier = async (req, res) => {
   }
 };
 
+//* Update a supplier
 export const updateSupplier = async (req, res) => {
   try {
     const result = await pool.query(
@@ -97,6 +101,7 @@ export const updateSupplier = async (req, res) => {
   }
 };
 
+//* Delete a supplier
 export const deleteSupplier = async (req, res) => {
   try {
     const [result] = await pool.query(

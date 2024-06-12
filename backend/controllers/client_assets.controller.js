@@ -1,6 +1,6 @@
 import { pool } from "../db.js";
 
-// Get all client assets
+//* Get all client assets
 export const getClientAssets = async (req, res) => {
   try {
     const [result] = await pool.query("SELECT * FROM client_assets");
@@ -11,7 +11,7 @@ export const getClientAssets = async (req, res) => {
   }
 };
 
-// Get a client asset by ID
+//* Get a client asset by ID
 export const getClientAsset = async (req, res) => {
   try {
     const [result] = await pool.query(
@@ -29,7 +29,7 @@ export const getClientAsset = async (req, res) => {
   }
 };
 
-// Create a new client asset
+//* Create a new client asset
 export const createClientAsset = async (req, res) => {
   try {
     const {
@@ -46,13 +46,13 @@ export const createClientAsset = async (req, res) => {
       [product_id, client_id, name, description, serial, inventory_number]
     );
 
-    res.json({ id: result.insertId });
+    res.json({ id: result.insertId, name, description, serial });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
 };
 
-// Update a client asset
+//* Update a client asset
 export const updateClientAsset = async (req, res) => {
   try {
     const result = await pool.query(
@@ -66,7 +66,7 @@ export const updateClientAsset = async (req, res) => {
   }
 };
 
-// Delete a client asset
+//* Delete a client asset
 export const deleteClientAsset = async (req, res) => {
   try {
     const [result] = await pool.query(

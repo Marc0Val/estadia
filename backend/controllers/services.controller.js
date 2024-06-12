@@ -1,6 +1,6 @@
 import { pool } from "../db.js";
 
-// Get all services
+//* Get all services
 export const getServices = async (req, res) => {
   try {
     const [result] = await pool.query(
@@ -13,7 +13,7 @@ export const getServices = async (req, res) => {
   }
 };
 
-// Get a service by ID
+//* Get a service by ID
 export const getService = async (req, res) => {
   try {
     const [result] = await pool.query(
@@ -31,7 +31,7 @@ export const getService = async (req, res) => {
   }
 };
 
-// Create a new service
+//* Create a new service
 export const createService = async (req, res) => {
   try {
     const { name, category_id, sale_price, description, sat_unit, sat_code } =
@@ -48,7 +48,7 @@ export const createService = async (req, res) => {
   }
 };
 
-// Update a service
+//* Update a service
 export const updateService = async (req, res) => {
   try {
     const result = await pool.query(
@@ -62,7 +62,7 @@ export const updateService = async (req, res) => {
   }
 };
 
-// Delete a service
+//* Delete a service
 export const deleteService = async (req, res) => {
   try {
     const [result] = await pool.query(

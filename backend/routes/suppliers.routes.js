@@ -10,7 +10,7 @@ import {
 
 const router = Router();
 
-// Middleware de validación
+// Validation middleware
 const validateEmail = (field) => {
   return body(field)
     .optional()
@@ -26,28 +26,27 @@ const validateRequest = (req, res, next) => {
   next();
 };
 
-//* Rutas para la tabla `suppliers`
-// Obtener todos los proveedores
+//* Get all suppliers
 router.get("/suppliers", getSuppliers);
 
-// Obtener un proveedor
+//* Get a supplier by ID
 router.get("/suppliers/:id", getSupplier);
 
-// Insertar un proveedor
+//* Insert a new supplier
 router.post(
   "/suppliers",
   [validateEmail("email"), validateEmail("contact_email"), validateRequest],
   createSupplier
 );
 
-// Actualizar un proveedor
+//* Update a supplier by ID
 router.put(
   "/suppliers/:id",
   [validateEmail("email"), validateEmail("contact_email"), validateRequest],
   updateSupplier
 );
 
-// Eliminar un proveedor
+//* Delete a supplier by ID
 router.delete("/suppliers/:id", deleteSupplier);
 
 export default router;

@@ -1,6 +1,6 @@
 import { pool } from "../db.js";
 
-// Get all service orders
+//* Get all service orders
 export const getServiceOrders = async (req, res) => {
   try {
     const [result] = await pool.query(
@@ -13,7 +13,7 @@ export const getServiceOrders = async (req, res) => {
   }
 };
 
-// Get a service order by ID
+//* Get a service order by ID
 export const getServiceOrder = async (req, res) => {
   try {
     const [result] = await pool.query(
@@ -31,7 +31,7 @@ export const getServiceOrder = async (req, res) => {
   }
 };
 
-// Create a new service order
+//* Create a new service order
 export const createServiceOrder = async (req, res) => {
   try {
     const {
@@ -73,13 +73,13 @@ export const createServiceOrder = async (req, res) => {
       ]
     );
 
-    res.json({ id: result.insertId });
+    res.json({ id: result.insertId, scheduled_date, additional_info });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
 };
 
-// Update a service order
+//* Update a service order
 export const updateServiceOrder = async (req, res) => {
   try {
     const result = await pool.query(
@@ -93,7 +93,7 @@ export const updateServiceOrder = async (req, res) => {
   }
 };
 
-// Delete a service order
+//* Delete a service order
 export const deleteServiceOrder = async (req, res) => {
   try {
     const [result] = await pool.query(

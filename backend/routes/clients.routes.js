@@ -13,27 +13,27 @@ import {
 
 const router = Router();
 
-// Obtener todos los clientes
+//* Get all clients
 router.get("/clients", getClients);
 
-// Obtener un cliente
+//* Get one client
 router.get("/clients/:id", getClient);
 
-// Insertar un cliente
+//* CReate new client
 router.post(
   "/clients",
   [validateEmail("email"), validateEmail("contact_email"), validateRequest],
   createClient
 );
 
-// Actualizar un cliente
+//* Update a client
 router.put(
   "/clients/:id",
   [validateEmail("email"), validateEmail("contact_email"), validateRequest],
   updateClient
 );
 
-// Eliminar un cliente
+//* Delete a client
 router.delete("/clients/:id", deleteClient);
 
 export default router;

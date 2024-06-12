@@ -1,6 +1,6 @@
 import { pool } from "../db.js";
 
-// Get all contacts
+//* Get all contacts
 export const getContacts = async (req, res) => {
   try {
     const [result] = await pool.query(
@@ -13,7 +13,7 @@ export const getContacts = async (req, res) => {
   }
 };
 
-// Get a contact by ID
+//* Get a contact by ID
 export const getContact = async (req, res) => {
   try {
     const [result] = await pool.query(
@@ -31,7 +31,7 @@ export const getContact = async (req, res) => {
   }
 };
 
-// Create a new contact
+//* Create a new contact
 export const createContact = async (req, res) => {
   try {
     const {
@@ -79,7 +79,7 @@ export const createContact = async (req, res) => {
   }
 };
 
-// Update a contact
+//* Update a contact
 export const updateContact = async (req, res) => {
   try {
     const result = await pool.query(
@@ -93,7 +93,7 @@ export const updateContact = async (req, res) => {
   }
 };
 
-// Delete a contact
+//* Delete a contact
 export const deleteContact = async (req, res) => {
   try {
     const [result] = await pool.query(

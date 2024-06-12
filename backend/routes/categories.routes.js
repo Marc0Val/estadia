@@ -12,16 +12,16 @@ const router = Router();
 //* Get all users
 router.get("/categories", getCategories);
 
-//* Get one user
+//* Get a user by ID
 router.get("/categories/:id", getCategory);
 
-//* Insert users
+//* Insert a new user
 router.post("/categories", createCategory);
 
-//* Update user
+//* Update a user by ID
 router.put("/categories/:id", updateCategory);
 
-//* Delete user
+//* Delete a user by ID
 router.delete("/categories/:id", deleteCategory);
 
 export default router;

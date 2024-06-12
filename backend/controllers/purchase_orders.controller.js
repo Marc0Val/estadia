@@ -1,6 +1,6 @@
 import { pool } from "../db.js";
 
-// Get all purchase orders
+//* Get all purchase orders
 export const getPurchaseOrders = async (req, res) => {
   try {
     const [result] = await pool.query(
@@ -13,7 +13,7 @@ export const getPurchaseOrders = async (req, res) => {
   }
 };
 
-// Get a purchase order by ID
+//* Get a purchase order by ID
 export const getPurchaseOrder = async (req, res) => {
   try {
     const [result] = await pool.query(
@@ -31,7 +31,7 @@ export const getPurchaseOrder = async (req, res) => {
   }
 };
 
-// Create a new purchase order
+//* Create a new purchase order
 export const createPurchaseOrder = async (req, res) => {
   try {
     const {
@@ -50,13 +50,13 @@ export const createPurchaseOrder = async (req, res) => {
       [supplier_id, product_id, quantity, price, iva, validity, files, notes]
     );
 
-    res.json({ id: result.insertId });
+    res.json({ id: result.insertId, price, notes });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
 };
 
-// Update a purchase order
+//* Update a purchase order
 export const updatePurchaseOrder = async (req, res) => {
   try {
     const result = await pool.query(
@@ -70,7 +70,7 @@ export const updatePurchaseOrder = async (req, res) => {
   }
 };
 
-// Delete a purchase order
+//* Delete a purchase order
 export const deletePurchaseOrder = async (req, res) => {
   try {
     const [result] = await pool.query(

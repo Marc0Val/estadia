@@ -9,19 +9,19 @@ import {
 
 const router = Router();
 
-// Get all quotes
+//* Get all quotes
 router.get("/quotes", getQuotes);
 
-// Get a quote by ID
+//* Get a quote by ID
 router.get("/quotes/:id", getQuote);
 
-// Create a new quote
+//* Create a new quote
 router.post("/quotes", createQuote);
 
-// Update a quote by ID
+//* Update a quote by ID
 router.put("/quotes/:id", updateQuote);
 
-// Delete a quote by ID
+//* Delete a quote by ID
 router.delete("/quotes/:id", deleteQuote);
 
 export default router;

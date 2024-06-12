@@ -1,5 +1,6 @@
 import { pool } from "../db.js";
 
+//* Get all clients
 export const getClients = async (req, res) => {
   try {
     const [result] = await pool.query(
@@ -12,6 +13,7 @@ export const getClients = async (req, res) => {
   }
 };
 
+//* Get one client
 export const getClient = async (req, res) => {
   try {
     const [result] = await pool.query(
@@ -29,6 +31,7 @@ export const getClient = async (req, res) => {
   }
 };
 
+//* Create new client
 export const createClient = async (req, res) => {
   try {
     const {
@@ -82,6 +85,7 @@ export const createClient = async (req, res) => {
   }
 };
 
+//* Update client
 export const updateClient = async (req, res) => {
   try {
     const result = await pool.query(
@@ -95,6 +99,7 @@ export const updateClient = async (req, res) => {
   }
 };
 
+//* Delete client
 export const deleteClient = async (req, res) => {
   try {
     const [result] = await pool.query(

@@ -1,6 +1,6 @@
 import { pool } from "../db.js";
 
-// Get all quotes
+//* Get all quotes
 export const getQuotes = async (req, res) => {
   try {
     const [result] = await pool.query(
@@ -13,7 +13,7 @@ export const getQuotes = async (req, res) => {
   }
 };
 
-// Get a quote by ID
+//* Get a quote by ID
 export const getQuote = async (req, res) => {
   try {
     const [result] = await pool.query(
@@ -31,7 +31,7 @@ export const getQuote = async (req, res) => {
   }
 };
 
-// Create a new quote
+//* Create a new quote
 export const createQuote = async (req, res) => {
   try {
     const {
@@ -61,13 +61,13 @@ export const createQuote = async (req, res) => {
       ]
     );
 
-    res.json({ id: result.insertId });
+    res.json({ id: result.insertId, price, notes });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
 };
 
-// Update a quote
+//* Update a quote
 export const updateQuote = async (req, res) => {
   try {
     const result = await pool.query("UPDATE quotes SET ? WHERE id_quote = ?", [
@@ -81,7 +81,7 @@ export const updateQuote = async (req, res) => {
   }
 };
 
-// Delete a quote
+//* Delete a quote
 export const deleteQuote = async (req, res) => {
   try {
     const [result] = await pool.query("DELETE FROM quotes WHERE id_quote = ?", [

@@ -13,23 +13,23 @@ import {
 
 const router = Router();
 
-// Obtener todos los usuarios
+//* Get all users
 router.get("/personal", getUsers);
 
-// Obtener un usuario
+//* Get a user by ID
 router.get("/personal/:id", getUser);
 
-// Insertar un usuario
+//* Insert a new user
 router.post("/personal", [validateEmail("email"), validateRequest], createUser);
 
-// Actualizar un usuario
+//* Update a user by ID
 router.put(
   "/personal/:id",
   [validateEmail("email"), validateRequest],
   updateUser
 );
 
-// Eliminar un usuario
+//* Delete a user by ID
 router.delete("/personal/:id", deleteUser);
 
 export default router;

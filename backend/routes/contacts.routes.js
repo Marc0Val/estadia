@@ -13,27 +13,27 @@ import {
 
 const router = Router();
 
-// Obtener todos los contactos
+//* Get all contacts
 router.get("/contacts", getContacts);
 
-// Obtener un contacto por su ID
+//* Get a contact by ID
 router.get("/contacts/:id", getContact);
 
-// Crear un nuevo contacto con validación de email
+//* Create a new contact with email validation
 router.post(
   "/contacts",
   [validateEmail("email"), validateRequest],
   createContact
 );
 
-// Actualizar un contacto por su ID con validación de email
+//* Update a contact by ID with email validation
 router.put(
   "/contacts/:id",
   [validateEmail("email"), validateRequest],
   updateContact
 );
 
-// Eliminar un contacto por su ID
+//* Delete a contact by ID
 router.delete("/contacts/:id", deleteContact);
 
 export default router;

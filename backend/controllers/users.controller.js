@@ -1,5 +1,6 @@
 import { pool } from "../db.js";
 
+//* Get all users
 export const getUsers = async (req, res) => {
   try {
     const [result] = await pool.query(
@@ -12,6 +13,7 @@ export const getUsers = async (req, res) => {
   }
 };
 
+//* Get one user
 export const getUser = async (req, res) => {
   try {
     const [result] = await pool.query(
@@ -29,6 +31,7 @@ export const getUser = async (req, res) => {
   }
 };
 
+//* Create new user
 export const createUser = async (req, res) => {
   try {
     const {
@@ -70,6 +73,7 @@ export const createUser = async (req, res) => {
   }
 };
 
+//* Update a user
 export const updateUser = async (req, res) => {
   try {
     const result = await pool.query(
@@ -83,6 +87,7 @@ export const updateUser = async (req, res) => {
   }
 };
 
+//* Delete a user
 export const deleteUser = async (req, res) => {
   try {
     const [result] = await pool.query(

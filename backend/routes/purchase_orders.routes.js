@@ -9,19 +9,19 @@ import {
 
 const router = Router();
 
-// Get all purchase orders
+//* Get all purchase orders
 router.get("/purchase-orders", getPurchaseOrders);
 
-// Get a purchase order by ID
+//* Get a purchase order by ID
 router.get("/purchase-orders/:id", getPurchaseOrder);
 
-// Create a new purchase order
+//* Create a new purchase order
 router.post("/purchase-orders", createPurchaseOrder);
 
-// Update a purchase order by ID
+//* Update a purchase order by ID
 router.put("/purchase-orders/:id", updatePurchaseOrder);
 
-// Delete a purchase order by ID
+//* Delete a purchase order by ID
 router.delete("/purchase-orders/:id", deletePurchaseOrder);
 
 export default router;

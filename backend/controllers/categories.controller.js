@@ -1,5 +1,6 @@
 import { pool } from "../db.js";
 
+//* Get all categories
 export const getCategories = async (req, res) => {
   try {
     const [result] = await pool.query(
@@ -12,6 +13,7 @@ export const getCategories = async (req, res) => {
   }
 };
 
+//* Get one category
 export const getCategory = async (req, res) => {
   try {
     const [result] = await pool.query(
@@ -29,6 +31,7 @@ export const getCategory = async (req, res) => {
   }
 };
 
+//* Create new category
 export const createCategory = async (req, res) => {
   try {
     const { name } = req.body;
@@ -44,6 +47,7 @@ export const createCategory = async (req, res) => {
   }
 };
 
+//* Update category
 export const updateCategory = async (req, res) => {
   try {
     const result = await pool.query(
@@ -57,6 +61,7 @@ export const updateCategory = async (req, res) => {
   }
 };
 
+//* Delete category
 export const deleteCategory = async (req, res) => {
   try {
     const [result] = await pool.query(
