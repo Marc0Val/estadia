@@ -121,11 +121,11 @@ const Sidebar = () => {
                 marginLeft: "20px",
               }}
             >
-              <NavLink to="/admin/configuraciones" className="lii">
+              {/* <NavLink to="/admin/configuraciones" className="lii">
                 <li>
                   <i className="fas fa-cog"></i>Generales
                 </li>
-              </NavLink>
+              </NavLink> */}
               <NavLink to="/admin/roles" className="lii">
                 <li>
                   <i className="fas fa-cog"></i>Roles y Permisos

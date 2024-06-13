@@ -3,17 +3,19 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 
 const FormularioPersonal = () => {
   const [formData, setFormData] = useState({
-    nombre: "",
-    apellido: "",
-    rol: "",
-    titulo: "",
-    correo: "",
-    celular: "",
-    telefono: "",
-    direccion: "",
-    notificar: false,
-    contraseña: "",
-    confirmarContraseña: "",
+    name: "",
+    last_name: "",
+    role: "",
+    title: "",
+    email: "",
+    cell_number: "",
+    country: "",
+    state: "",
+    city: "",
+    phone: "",
+    address: "",
+    password: "",
+    confirmPassword: "",
   });
 
   const handleChange = (e) => {
@@ -32,17 +34,19 @@ const FormularioPersonal = () => {
 
   const handleReset = () => {
     setFormData({
-      nombre: "",
-      apellido: "",
-      rol: "",
-      titulo: "",
-      correo: "",
-      celular: "",
-      telefono: "",
-      direccion: "",
-      notificar: false,
-      contraseña: "",
-      confirmarContraseña: "",
+      name: "",
+      last_name: "",
+      role: "",
+      title: "",
+      email: "",
+      cell_number: "",
+      country: "",
+      state: "",
+      city: "",
+      phone: "",
+      address: "",
+      password: "",
+      confirmPassword: "",
     });
   };
 
@@ -58,28 +62,28 @@ const FormularioPersonal = () => {
       <hr />
       <Row className="mb-3">
         <Col>
-          <Form.Group controlId="formNombre">
+          <Form.Group controlId="formName">
             <Form.Label>
               <strong>Nombre *</strong>
             </Form.Label>
             <Form.Control
               type="text"
-              name="nombre"
-              value={formData.nombre}
+              name="name"
+              value={formData.name}
               onChange={handleChange}
               required
             />
           </Form.Group>
         </Col>
         <Col>
-          <Form.Group controlId="formApellido">
+          <Form.Group controlId="formLastName">
             <Form.Label>
               <strong>Apellido *</strong>
             </Form.Label>
             <Form.Control
               type="text"
-              name="apellido"
-              value={formData.apellido}
+              name="last_name"
+              value={formData.last_name}
               onChange={handleChange}
               required
             />
@@ -88,35 +92,32 @@ const FormularioPersonal = () => {
       </Row>
       <Row className="mb-3">
         <Col>
-          <Form.Group controlId="formRol">
+          <Form.Group controlId="formRole">
             <Form.Label>
               <strong>Rol *</strong>
             </Form.Label>
             <Form.Control
               as="select"
-              name="rol"
-              value={formData.rol}
+              name="role"
+              value={formData.role}
               onChange={handleChange}
               required
             >
-              <option value="">
-                Seleccione un rol(estos tienen que venir de la base de datos xd
-                o los disponibles)
-              </option>
+              <option value="">Seleccione un rol</option>
               <option value="Administrador">Administrador</option>
               <option value="Vendedor">Vendedor</option>
             </Form.Control>
           </Form.Group>
         </Col>
         <Col>
-          <Form.Group controlId="formTitulo">
+          <Form.Group controlId="formTitle">
             <Form.Label>
-              <strong>Titulo</strong>
+              <strong>Título</strong>
             </Form.Label>
             <Form.Control
               type="text"
-              name="titulo"
-              value={formData.titulo}
+              name="title"
+              value={formData.title}
               onChange={handleChange}
             />
           </Form.Group>
@@ -124,28 +125,28 @@ const FormularioPersonal = () => {
       </Row>
       <Row className="mb-3">
         <Col>
-          <Form.Group controlId="formCorreo">
+          <Form.Group controlId="formEmail">
             <Form.Label>
               <strong>Correo *</strong>
             </Form.Label>
             <Form.Control
               type="email"
-              name="correo"
-              value={formData.correo}
+              name="email"
+              value={formData.email}
               onChange={handleChange}
               required
             />
           </Form.Group>
         </Col>
         <Col>
-          <Form.Group controlId="formCelular">
+          <Form.Group controlId="formCellNumber">
             <Form.Label>
               <strong>Celular *</strong>
             </Form.Label>
             <Form.Control
               type="tel"
-              name="celular"
-              value={formData.celular}
+              name="cell_number"
+              value={formData.cell_number}
               onChange={handleChange}
               required
             />
@@ -154,27 +155,27 @@ const FormularioPersonal = () => {
       </Row>
       <Row className="mb-3">
         <Col>
-          <Form.Group controlId="formTelefono">
+          <Form.Group controlId="formPhone">
             <Form.Label>
-              <strong>Telefono</strong>
+              <strong>Teléfono</strong>
             </Form.Label>
             <Form.Control
               type="tel"
-              name="telefono"
-              value={formData.telefono}
+              name="phone"
+              value={formData.phone}
               onChange={handleChange}
             />
           </Form.Group>
         </Col>
         <Col>
-          <Form.Group controlId="formDireccion">
+          <Form.Group controlId="formAddress">
             <Form.Label>
-              <strong>Direccion *</strong>
+              <strong>Dirección *</strong>
             </Form.Label>
             <Form.Control
               type="text"
-              name="direccion"
-              value={formData.direccion}
+              name="address"
+              value={formData.address}
               onChange={handleChange}
               required
             />
@@ -183,12 +184,40 @@ const FormularioPersonal = () => {
       </Row>
       <Row className="mb-3">
         <Col>
-          <Form.Group controlId="formNotificar">
-            <Form.Check
-              type="checkbox"
-              label="Notificar"
-              name="notificar"
-              checked={formData.notificar}
+          <Form.Group controlId="formCountry">
+            <Form.Label>
+              <strong>País</strong>
+            </Form.Label>
+            <Form.Control
+              type="text"
+              name="country"
+              value={formData.country}
+              onChange={handleChange}
+            />
+          </Form.Group>
+        </Col>
+        <Col>
+          <Form.Group controlId="formState">
+            <Form.Label>
+              <strong>Estado</strong>
+            </Form.Label>
+            <Form.Control
+              type="text"
+              name="state"
+              value={formData.state}
+              onChange={handleChange}
+            />
+          </Form.Group>
+        </Col>
+        <Col>
+          <Form.Group controlId="formCity">
+            <Form.Label>
+              <strong>Ciudad</strong>
+            </Form.Label>
+            <Form.Control
+              type="text"
+              name="city"
+              value={formData.city}
               onChange={handleChange}
             />
           </Form.Group>
@@ -196,14 +225,14 @@ const FormularioPersonal = () => {
       </Row>
       <Row className="mb-3">
         <Col>
-          <Form.Group controlId="formContraseña">
+          <Form.Group controlId="formPassword">
             <Form.Label>
               <strong>Contraseña *</strong>
             </Form.Label>
             <Form.Control
               type="password"
-              name="contraseña"
-              value={formData.contraseña}
+              name="password"
+              value={formData.password}
               onChange={handleChange}
               minLength="6"
               required
@@ -211,14 +240,14 @@ const FormularioPersonal = () => {
           </Form.Group>
         </Col>
         <Col>
-          <Form.Group controlId="formConfirmarContraseña">
+          <Form.Group controlId="formConfirmPassword">
             <Form.Label>
               <strong>Confirmar Contraseña *</strong>
             </Form.Label>
             <Form.Control
               type="password"
-              name="confirmarContraseña"
-              value={formData.confirmarContraseña}
+              name="confirmPassword"
+              value={formData.confirmPassword}
               onChange={handleChange}
               minLength="6"
               required
@@ -231,16 +260,14 @@ const FormularioPersonal = () => {
         variant="success"
         type="submit"
         disabled={
-          formData.nombre === "" ||
-          formData.apellido === "" ||
-          formData.rol === "" ||
-          formData.correo === "" ||
-          formData.celular === "" ||
-          formData.direccion === "" ||
-          formData.contraseña === "" ||
-          formData.confirmarContraseña === ""
-            ? true
-            : false
+          formData.name === "" ||
+          formData.last_name === "" ||
+          formData.role === "" ||
+          formData.email === "" ||
+          formData.cell_number === "" ||
+          formData.address === "" ||
+          formData.password === "" ||
+          formData.confirmPassword === ""
         }
       >
         <i className="fas fa-save"></i> Guardar

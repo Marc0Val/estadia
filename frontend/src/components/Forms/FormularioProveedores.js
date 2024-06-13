@@ -3,22 +3,27 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 
 const FormularioProveedor = () => {
   const [formData, setFormData] = useState({
-    nombreComercial: "",
-    giro: "Por Definir",
-    telefonoCelular: "",
-    correo: "",
-    pais: "",
-    estado: "",
-    direccion: "",
-    ciudad: "",
-    codigoPostal: "",
-    ubicacion: "",
-    paginaWeb: "",
-    cuentasBancarias: "",
-    nombreFacturacion: "",
-    numeroFacturacion: "",
-    domicilioFacturacion: "",
-    notas: "",
+    trade_name: "",
+    business_type: "Por Definir",
+    cell_number: "",
+    email: "",
+    country: "",
+    state: "",
+    address: "",
+    city: "",
+    postal_code: "",
+    location: "",
+    website: "",
+    bank_accounts: "",
+    billing_name: "",
+    billing_number: "",
+    billing_address: "",
+    notes: "",
+    contact_name: "",
+    contact_title: "",
+    contact_area_or_position: "",
+    contact_cell_phone: "",
+    contact_email: "",
   });
 
   const handleChange = (e) => {
@@ -37,22 +42,27 @@ const FormularioProveedor = () => {
 
   const handleReset = () => {
     setFormData({
-      nombreComercial: "",
-      giro: "Por Definir",
-      telefonoCelular: "",
-      correo: "",
-      pais: "",
-      estado: "",
-      direccion: "",
-      ciudad: "",
-      codigoPostal: "",
-      ubicacion: "",
-      paginaWeb: "",
-      cuentasBancarias: "",
-      nombreFacturacion: "",
-      numeroFacturacion: "",
-      domicilioFacturacion: "",
-      notas: "",
+      trade_name: "",
+      business_type: "Por Definir",
+      cell_number: "",
+      email: "",
+      country: "",
+      state: "",
+      address: "",
+      city: "",
+      postal_code: "",
+      location: "",
+      website: "",
+      bank_accounts: "",
+      billing_name: "",
+      billing_number: "",
+      billing_address: "",
+      notes: "",
+      contact_name: "",
+      contact_title: "",
+      contact_area_or_position: "",
+      contact_cell_phone: "",
+      contact_email: "",
     });
   };
 
@@ -68,14 +78,14 @@ const FormularioProveedor = () => {
       <hr />
       <Row className="mb-3">
         <Col>
-          <Form.Group controlId="formNombreComercial">
+          <Form.Group controlId="formTradeName">
             <Form.Label>
               <strong>Nombre Comercial *</strong>
             </Form.Label>
             <Form.Control
               type="text"
-              name="nombreComercial"
-              value={formData.nombreComercial}
+              name="trade_name"
+              value={formData.trade_name}
               onChange={handleChange}
               required
             />
@@ -84,14 +94,14 @@ const FormularioProveedor = () => {
       </Row>
       <Row className="mb-3">
         <Col>
-          <Form.Group controlId="formGiro">
+          <Form.Group controlId="formBusinessType">
             <Form.Label>
               <strong>Giro *</strong>
             </Form.Label>
             <Form.Control
               as="select"
-              name="giro"
-              value={formData.giro}
+              name="business_type"
+              value={formData.business_type}
               onChange={handleChange}
               required
             >
@@ -107,28 +117,28 @@ const FormularioProveedor = () => {
       </Row>
       <Row className="mb-3">
         <Col>
-          <Form.Group controlId="formTelefonoCelular">
+          <Form.Group controlId="formCellNumber">
             <Form.Label>
-              <strong>Telefono/Celular *</strong>
+              <strong>Teléfono/Celular *</strong>
             </Form.Label>
             <Form.Control
               type="tel"
-              name="telefonoCelular"
-              value={formData.telefonoCelular}
+              name="cell_number"
+              value={formData.cell_number}
               onChange={handleChange}
               required
             />
           </Form.Group>
         </Col>
         <Col>
-          <Form.Group controlId="formCorreo">
+          <Form.Group controlId="formEmail">
             <Form.Label>
               <strong>Correo</strong>
             </Form.Label>
             <Form.Control
               type="email"
-              name="correo"
-              value={formData.correo}
+              name="email"
+              value={formData.email}
               onChange={handleChange}
             />
           </Form.Group>
@@ -136,28 +146,28 @@ const FormularioProveedor = () => {
       </Row>
       <Row className="mb-3">
         <Col>
-          <Form.Group controlId="formPais">
+          <Form.Group controlId="formCountry">
             <Form.Label>
-              <strong>Pais *</strong>
+              <strong>País *</strong>
             </Form.Label>
             <Form.Control
               type="text"
-              name="pais"
-              value={formData.pais}
+              name="country"
+              value={formData.country}
               onChange={handleChange}
               required
             />
           </Form.Group>
         </Col>
         <Col>
-          <Form.Group controlId="formEstado">
+          <Form.Group controlId="formState">
             <Form.Label>
               <strong>Estado *</strong>
             </Form.Label>
             <Form.Control
               type="text"
-              name="estado"
-              value={formData.estado}
+              name="state"
+              value={formData.state}
               onChange={handleChange}
               required
             />
@@ -166,27 +176,27 @@ const FormularioProveedor = () => {
       </Row>
       <Row className="mb-3">
         <Col>
-          <Form.Group controlId="formDireccion">
+          <Form.Group controlId="formAddress">
             <Form.Label>
-              <strong>Direccion</strong>
+              <strong>Dirección</strong>
             </Form.Label>
             <Form.Control
               type="text"
-              name="direccion"
-              value={formData.direccion}
+              name="address"
+              value={formData.address}
               onChange={handleChange}
             />
           </Form.Group>
         </Col>
         <Col>
-          <Form.Group controlId="formCiudad">
+          <Form.Group controlId="formCity">
             <Form.Label>
               <strong>Ciudad *</strong>
             </Form.Label>
             <Form.Control
               type="text"
-              name="ciudad"
-              value={formData.ciudad}
+              name="city"
+              value={formData.city}
               onChange={handleChange}
               required
             />
@@ -195,27 +205,27 @@ const FormularioProveedor = () => {
       </Row>
       <Row className="mb-3">
         <Col>
-          <Form.Group controlId="formCodigoPostal">
+          <Form.Group controlId="formPostalCode">
             <Form.Label>
-              <strong>Codigo Postal</strong>
+              <strong>Código Postal</strong>
             </Form.Label>
             <Form.Control
               type="text"
-              name="codigoPostal"
-              value={formData.codigoPostal}
+              name="postal_code"
+              value={formData.postal_code}
               onChange={handleChange}
             />
           </Form.Group>
         </Col>
         <Col>
-          <Form.Group controlId="formUbicacion">
+          <Form.Group controlId="formLocation">
             <Form.Label>
-              <strong>Ubicacion</strong>
+              <strong>Ubicación</strong>
             </Form.Label>
             <Form.Control
               type="text"
-              name="ubicacion"
-              value={formData.ubicacion}
+              name="location"
+              value={formData.location}
               onChange={handleChange}
             />
           </Form.Group>
@@ -223,27 +233,27 @@ const FormularioProveedor = () => {
       </Row>
       <Row className="mb-3">
         <Col>
-          <Form.Group controlId="formPaginaWeb">
+          <Form.Group controlId="formWebsite">
             <Form.Label>
-              <strong>Pagina/Portal Web</strong>
+              <strong>Página/Portal Web</strong>
             </Form.Label>
             <Form.Control
               type="text"
-              name="paginaWeb"
-              value={formData.paginaWeb}
+              name="website"
+              value={formData.website}
               onChange={handleChange}
             />
           </Form.Group>
         </Col>
         <Col>
-          <Form.Group controlId="formCuentasBancarias">
+          <Form.Group controlId="formBankAccounts">
             <Form.Label>
               <strong>Cuentas Bancarias</strong>
             </Form.Label>
             <Form.Control
               type="text"
-              name="cuentasBancarias"
-              value={formData.cuentasBancarias}
+              name="bank_accounts"
+              value={formData.bank_accounts}
               onChange={handleChange}
             />
           </Form.Group>
@@ -251,42 +261,27 @@ const FormularioProveedor = () => {
       </Row>
       <Row className="mb-3">
         <Col>
-          <Form.Group controlId="formNombreFacturacion">
+          <Form.Group controlId="formBillingName">
             <Form.Label>
-              <strong>Nombre de Facturacion</strong>
+              <strong>Nombre de Facturación</strong>
             </Form.Label>
             <Form.Control
               type="text"
-              name="nombreFacturacion"
-              value={formData.nombreFacturacion}
+              name="billing_name"
+              value={formData.billing_name}
               onChange={handleChange}
             />
           </Form.Group>
         </Col>
         <Col>
-          <Form.Group controlId="formNumeroFacturacion">
+          <Form.Group controlId="formBillingNumber">
             <Form.Label>
-              <strong>Numero de Facturacion</strong>
+              <strong>Número de Facturación</strong>
             </Form.Label>
             <Form.Control
               type="text"
-              name="numeroFacturacion"
-              value={formData.numeroFacturacion}
-              onChange={handleChange}
-            />
-          </Form.Group>
-        </Col>
-      </Row>
-      <Row className="mb-3">
-        <Col>
-          <Form.Group controlId="formDomicilioFacturacion">
-            <Form.Label>
-              <strong>Domicilio de Facturacion</strong>
-            </Form.Label>
-            <Form.Control
-              type="text"
-              name="domicilioFacturacion"
-              value={formData.domicilioFacturacion}
+              name="billing_number"
+              value={formData.billing_number}
               onChange={handleChange}
             />
           </Form.Group>
@@ -294,14 +289,29 @@ const FormularioProveedor = () => {
       </Row>
       <Row className="mb-3">
         <Col>
-          <Form.Group controlId="formNotas">
+          <Form.Group controlId="formBillingAddress">
+            <Form.Label>
+              <strong>Domicilio de Facturación</strong>
+            </Form.Label>
+            <Form.Control
+              type="text"
+              name="billing_address"
+              value={formData.billing_address}
+              onChange={handleChange}
+            />
+          </Form.Group>
+        </Col>
+      </Row>
+      <Row className="mb-3">
+        <Col>
+          <Form.Group controlId="formNotes">
             <Form.Label>
               <strong>Notas</strong>
             </Form.Label>
             <Form.Control
               as="textarea"
-              name="notas"
-              value={formData.notas}
+              name="notes"
+              value={formData.notes}
               onChange={handleChange}
               rows={3}
             />
@@ -309,16 +319,94 @@ const FormularioProveedor = () => {
         </Col>
       </Row>
       <hr />
-      {/* habilitar boton hasta que los campos obligatorios esten llenos */}
+      <h5>Información de Contacto</h5>
+      <Row className="mb-3">
+        <Col>
+          <Form.Group controlId="formContactName">
+            <Form.Label>
+              <strong>Nombre de Contacto *</strong>
+            </Form.Label>
+            <Form.Control
+              type="text"
+              name="contact_name"
+              value={formData.contact_name}
+              onChange={handleChange}
+              required
+            />
+          </Form.Group>
+        </Col>
+        <Col>
+          <Form.Group controlId="formContactTitle">
+            <Form.Label>
+              <strong>Título de Contacto</strong>
+            </Form.Label>
+            <Form.Control
+              type="text"
+              name="contact_title"
+              value={formData.contact_title}
+              onChange={handleChange}
+            />
+          </Form.Group>
+        </Col>
+      </Row>
+      <Row className="mb-3">
+        <Col>
+          <Form.Group controlId="formContactAreaOrPosition">
+            <Form.Label>
+              <strong>Área o Posición</strong>
+            </Form.Label>
+            <Form.Control
+              type="text"
+              name="contact_area_or_position"
+              value={formData.contact_area_or_position}
+              onChange={handleChange}
+            />
+          </Form.Group>
+        </Col>
+        <Col>
+          <Form.Group controlId="formContactCellPhone">
+            <Form.Label>
+              <strong>Celular de Contacto *</strong>
+            </Form.Label>
+            <Form.Control
+              type="tel"
+              name="contact_cell_phone"
+              value={formData.contact_cell_phone}
+              onChange={handleChange}
+              required
+            />
+          </Form.Group>
+        </Col>
+      </Row>
+      <Row className="mb-3">
+        <Col>
+          <Form.Group controlId="formContactEmail">
+            <Form.Label>
+              <strong>Correo de Contacto *</strong>
+            </Form.Label>
+            <Form.Control
+              type="email"
+              name="contact_email"
+              value={formData.contact_email}
+              onChange={handleChange}
+              required
+            />
+          </Form.Group>
+        </Col>
+      </Row>
+      <hr />
       <Button
         variant="success"
         type="submit"
         disabled={
-          formData.nombreComercial === "" ||
-          formData.telefonoCelular === "" ||
-          formData.pais === "" ||
-          formData.estado === "" ||
-          formData.ciudad === ""
+          !formData.trade_name ||
+          !formData.cell_number ||
+          !formData.country ||
+          !formData.state ||
+          !formData.city ||
+          !formData.contact_name ||
+          !formData.contact_cell_phone ||
+          !formData.contact_email
         }
       >
         <i className="fas fa-save"></i> Guardar
