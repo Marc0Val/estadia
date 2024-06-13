@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import { FaSignInAlt } from "react-icons/fa";
 import logo from "../assets/logo.png";
 import BotonModal from "./Buttons/BotonModal";
-import FormularioPersonal from "./Forms/FormularioPersonal";
+import FormularioPersonalLogin from "./Forms/FormularioPersonalLogin";
 import FormularioRecoverContraseña from "./Forms/FormularioRecoverContraseña";
 
 function Login() {
@@ -91,7 +91,7 @@ function Login() {
         />
         <BotonModal
           icono="fas fa-user-plus"
-          contenidoModal={<FormularioPersonal />}
+          contenidoModal={<FormularioPersonalLogin />}
           titulo="Registro"
         />
       </div>
