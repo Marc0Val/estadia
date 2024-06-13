@@ -266,8 +266,8 @@ html {
   padding: 0 20px;
   background: linear-gradient(180deg, $azul1, $azul2);
   height: 50px;
-  margin-left: 250px; 
-  z-index: 1001; 
+  margin-left: 250px;
+  z-index: 1001;
 }
 
 .navbar .icon {
@@ -277,15 +277,14 @@ html {
 
 .navbar .icon:hover {
   cursor: pointer;
-  color: $secondary-color; 
+  color: $secondary-color;
 }
 
 @media (max-width: 768px) {
   .navbar {
-    margin-left: 0; 
+    margin-left: 0;
   }
 }
-
 
 // estilos para el componetne de la tabla
 .table-responsive {
@@ -308,7 +307,7 @@ html {
   background-color: $gray-color;
 }
 
-// hoover personalizado
+// hoover personalizado para clase grow
 .grow {
   transition: 0.5s, color 0.1s;
   -webkit-transition: 0.5s, color 0.1s;

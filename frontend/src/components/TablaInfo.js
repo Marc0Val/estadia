@@ -19,7 +19,7 @@ const TablaInfo = ({ columns, data, totalRecords, fetchElemento }) => {
             {columns.map((columnName, index) => (
               <th key={index}>{columnName}</th>
             ))}
-            {/* <th>Acciones</th> */}
+            <th className="text-center">Accion</th>
           </tr>
         </thead>
         <tbody>
@@ -30,10 +30,7 @@ const TablaInfo = ({ columns, data, totalRecords, fetchElemento }) => {
                   <td key={colIndex}>{row[columnName]}</td>
                 ))}
                 <td className="actions">
-                  <BotonEditarModal
-                    nombreBoton=""
-                    icono="fas fa-pencil-alt"
-                  />
+                  <BotonEditarModal nombreBoton="" icono="fa-solid fa-ellipsis" />
                 </td>
               </tr>
             ))
