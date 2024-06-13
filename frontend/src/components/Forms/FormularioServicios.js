@@ -3,12 +3,12 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 
 const FormularioServicio = () => {
   const [formData, setFormData] = useState({
-    nombre: "",
-    categoria: "Por Definir",
-    precioVenta: "",
-    descripcion: "",
-    unidadSAT: "",
-    codigoSAT: "",
+    name: "",
+    category_id: "Por Definir",
+    sale_price: "",
+    description: "",
+    sat_unit: "",
+    sat_code: "",
   });
 
   const handleChange = (e) => {
@@ -27,12 +27,12 @@ const FormularioServicio = () => {
 
   const handleReset = () => {
     setFormData({
-      nombre: "",
-      categoria: "Por Definir",
-      precioVenta: "",
-      descripcion: "",
-      unidadSAT: "",
-      codigoSAT: "",
+      name: "",
+      category_id: "Por Definir",
+      sale_price: "",
+      description: "",
+      sat_unit: "",
+      sat_code: "",
     });
   };
 
@@ -48,28 +48,28 @@ const FormularioServicio = () => {
       <hr />
       <Row className="mb-3">
         <Col>
-          <Form.Group controlId="formNombre">
+          <Form.Group controlId="formName">
             <Form.Label>
               <strong>Nombre *</strong>
             </Form.Label>
             <Form.Control
               type="text"
-              name="nombre"
-              value={formData.nombre}
+              name="name"
+              value={formData.name}
               onChange={handleChange}
               required
             />
           </Form.Group>
         </Col>
         <Col>
-          <Form.Group controlId="formCategoria">
+          <Form.Group controlId="formCategory">
             <Form.Label>
               <strong>Categoría *</strong>
             </Form.Label>
             <Form.Control
               as="select"
-              name="categoria"
-              value={formData.categoria}
+              name="category_id"
+              value={formData.category_id}
               onChange={handleChange}
               required
             >
@@ -82,14 +82,14 @@ const FormularioServicio = () => {
       </Row>
       <Row className="mb-3">
         <Col>
-          <Form.Group controlId="formPrecioVenta">
+          <Form.Group controlId="formSalePrice">
             <Form.Label>
               <strong>Precio de venta $ *</strong>
             </Form.Label>
             <Form.Control
               type="number"
-              name="precioVenta"
-              value={formData.precioVenta}
+              name="sale_price"
+              value={formData.sale_price}
               onChange={handleChange}
               required
             />
@@ -98,14 +98,14 @@ const FormularioServicio = () => {
       </Row>
       <Row className="mb-3">
         <Col>
-          <Form.Group controlId="formDescripcion">
+          <Form.Group controlId="formDescription">
             <Form.Label>
               <strong>Descripción *</strong>
             </Form.Label>
             <Form.Control
               as="textarea"
-              name="descripcion"
-              value={formData.descripcion}
+              name="description"
+              value={formData.description}
               onChange={handleChange}
               required
             />
@@ -114,27 +114,27 @@ const FormularioServicio = () => {
       </Row>
       <Row className="mb-3">
         <Col>
-          <Form.Group controlId="formUnidadSAT">
+          <Form.Group controlId="formSatUnit">
             <Form.Label>
               <strong>Unidad SAT</strong>
             </Form.Label>
             <Form.Control
               type="text"
-              name="unidadSAT"
-              value={formData.unidadSAT}
+              name="sat_unit"
+              value={formData.sat_unit}
               onChange={handleChange}
             />
           </Form.Group>
         </Col>
         <Col>
-          <Form.Group controlId="formCodigoSAT">
+          <Form.Group controlId="formSatCode">
             <Form.Label>
               <strong>Código SAT</strong>
             </Form.Label>
             <Form.Control
               type="text"
-              name="codigoSAT"
-              value={formData.codigoSAT}
+              name="sat_code"
+              value={formData.sat_code}
               onChange={handleChange}
             />
           </Form.Group>
@@ -146,10 +146,10 @@ const FormularioServicio = () => {
         type="submit"
         disabled={
           !(
-            formData.nombre &&
-            formData.categoria &&
-            formData.precioVenta &&
-            formData.descripcion
+            formData.name &&
+            formData.category_id &&
+            formData.sale_price &&
+            formData.description
           )
         }
       >

@@ -3,12 +3,12 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 
 const FormularioActivoCliente = () => {
   const [formData, setFormData] = useState({
-    producto: "",
-    cliente: "",
-    nombre: "",
-    descripcion: "",
-    serie: "",
-    nroInventario: "",
+    product_id: "",
+    client_id: "",
+    name: "",
+    description: "",
+    serial: "",
+    inventory_number: "",
   });
 
   const handleChange = (e) => {
@@ -27,12 +27,12 @@ const FormularioActivoCliente = () => {
 
   const handleReset = () => {
     setFormData({
-      producto: "",
-      cliente: "",
-      nombre: "",
-      descripcion: "",
-      serie: "",
-      nroInventario: "",
+      product_id: "",
+      client_id: "",
+      name: "",
+      description: "",
+      serial: "",
+      inventory_number: "",
     });
   };
 
@@ -42,30 +42,34 @@ const FormularioActivoCliente = () => {
       onReset={handleReset}
       className="container mt-4"
     >
+      <p className="text-muted">
+        Complete el formulario | (*) Campos obligatorios
+      </p>
+      <hr />
       <Row className="mb-3">
         <Col>
-          <Form.Group controlId="formProducto">
+          <Form.Group controlId="formProduct">
             <Form.Label>
               <strong>Producto *</strong>
             </Form.Label>
             <Form.Control
               type="text"
-              name="producto"
-              value={formData.producto}
+              name="product_id"
+              value={formData.product_id}
               onChange={handleChange}
               required
             />
           </Form.Group>
         </Col>
         <Col>
-          <Form.Group controlId="formCliente">
+          <Form.Group controlId="formClient">
             <Form.Label>
               <strong>Cliente</strong>
             </Form.Label>
             <Form.Control
               type="text"
-              name="cliente"
-              value={formData.cliente}
+              name="client_id"
+              value={formData.client_id}
               onChange={handleChange}
             />
           </Form.Group>
@@ -73,14 +77,14 @@ const FormularioActivoCliente = () => {
       </Row>
       <Row className="mb-3">
         <Col>
-          <Form.Group controlId="formNombre">
+          <Form.Group controlId="formName">
             <Form.Label>
               <strong>Nombre *</strong>
             </Form.Label>
             <Form.Control
               type="text"
-              name="nombre"
-              value={formData.nombre}
+              name="name"
+              value={formData.name}
               onChange={handleChange}
               required
             />
@@ -89,14 +93,14 @@ const FormularioActivoCliente = () => {
       </Row>
       <Row className="mb-3">
         <Col>
-          <Form.Group controlId="formDescripcion">
+          <Form.Group controlId="formDescription">
             <Form.Label>
               <strong>Descripción *</strong>
             </Form.Label>
             <Form.Control
               as="textarea"
-              name="descripcion"
-              value={formData.descripcion}
+              name="description"
+              value={formData.description}
               onChange={handleChange}
               required
             />
@@ -105,27 +109,27 @@ const FormularioActivoCliente = () => {
       </Row>
       <Row className="mb-3">
         <Col>
-          <Form.Group controlId="formSerie">
+          <Form.Group controlId="formSerial">
             <Form.Label>
               <strong>Serie</strong>
             </Form.Label>
             <Form.Control
               type="text"
-              name="serie"
-              value={formData.serie}
+              name="serial"
+              value={formData.serial}
               onChange={handleChange}
             />
           </Form.Group>
         </Col>
         <Col>
-          <Form.Group controlId="formNroInventario">
+          <Form.Group controlId="formInventoryNumber">
             <Form.Label>
               <strong>Nro Inventario</strong>
             </Form.Label>
             <Form.Control
               type="text"
-              name="nroInventario"
-              value={formData.nroInventario}
+              name="inventory_number"
+              value={formData.inventory_number}
               onChange={handleChange}
             />
           </Form.Group>
@@ -136,7 +140,7 @@ const FormularioActivoCliente = () => {
         variant="success"
         type="submit"
         disabled={
-          !formData.producto || !formData.nombre || !formData.descripcion
+          !formData.product_id || !formData.name || !formData.description
         }
       >
         <i className="fas fa-save"></i> Guardar

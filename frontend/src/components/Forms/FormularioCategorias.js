@@ -3,7 +3,7 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 
 const FormularioCategoria = () => {
   const [formData, setFormData] = useState({
-    categoria: "",
+    name_category: "",
   });
 
   const handleChange = (e) => {
@@ -22,7 +22,7 @@ const FormularioCategoria = () => {
 
   const handleReset = () => {
     setFormData({
-      categoria: "",
+      name_category: "",
     });
   };
 
@@ -44,8 +44,9 @@ const FormularioCategoria = () => {
             </Form.Label>
             <Form.Control
               type="text"
-              name="categoria"
-              value={formData.categoria}
+              placeholder="Ingrese el nombre de la categoria"
+              name="name_category"
+              value={formData.name_category}
               onChange={handleChange}
               required
             />
@@ -56,7 +57,7 @@ const FormularioCategoria = () => {
       <Button
         variant="success"
         type="submit"
-        disabled={formData.categoria === "" ? true : false}
+        disabled={formData.name_category === "" ? true : false}
       >
         <i className="fas fa-save"></i> Guardar
       </Button>
