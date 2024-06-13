@@ -1,10 +1,10 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { FaHome, FaSignOutAlt } from "react-icons/fa"
+import { FaHome, FaSignOutAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
 
 const Navbar = () => {
-  // funcion para cerrar sesion
+  // Función para cerrar sesión
   const cerrarSesion = () => {
     Swal.fire({
       title: "¿Estás seguro?",
@@ -16,7 +16,7 @@ const Navbar = () => {
       confirmButtonText: "Sí, cerrar sesión",
     }).then((result) => {
       if (result.isConfirmed) {
-        // redireccionar a la pagina principal
+        // Redireccionar a la página principal
         window.location.href = "/";
       }
     });
@@ -26,12 +26,17 @@ const Navbar = () => {
     <nav className="navbar fixed-top">
       <div className="container-fluid">
         <NavLink to="/admin" className="navbar-brand">
-          <FaHome className="me-2 lii" />
+          <FaHome className="me-2 icon lii" />
         </NavLink>
         <ul className="nav justify-content-end">
           <li>
-            <button type="button" className="btn" title="Cerrar Sesion">
-              <FaSignOutAlt className="icon" onClick={cerrarSesion} />
+            <button
+              type="button"
+              className="btn"
+              title="Cerrar Sesión"
+              onClick={cerrarSesion}
+            >
+              <FaSignOutAlt className="icon" />
             </button>
           </li>
         </ul>
