@@ -34,7 +34,7 @@ const FormularioRecoverContraseña = () => {
   return (
     <Container className="mt-4">
       <div className="text-center mb-4">
-        <img src={logo} alt="Logo" style={{ width: "80px" }} />
+        <img src={logo} alt="Logo"/>
         <hr />
       </div>
       <Form onSubmit={handleSubmit} onReset={handleReset}>
