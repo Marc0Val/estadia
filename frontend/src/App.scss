@@ -120,102 +120,147 @@ html {
   }
 }
 // // estilos para el sidebar
-.sidebar {
-  display: block;
-  width: 250px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  background: linear-gradient(90deg, $azul1, $azul2);
-  color: #fff;
-  transition: transform 0.3s ease;
-  transform: translateX(-100%);
-  .sidebar-header {
+.sidebar-wrapper {
+  .sidebar {
+    display: block;
     width: 250px;
-    height: 70px;
-    background: $gray-color;
-    text-align: center;
-    img {
-      width: 80px;
-      height: 50px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: linear-gradient(90deg, $azul1, $azul2);
+    color: #fff;
+    transition: transform 0.3s ease;
+    transform: translateX(-100%);
+    z-index: 1000;
+
+    &.open {
+      transform: translateX(0);
+    }
+
+    .sidebar-header {
+      width: 250px;
+      height: 70px;
+      background: $gray-color;
+      text-align: center;
+
+      img {
+        width: 80px;
+        height: 50px;
+      }
+    }
+
+    ul.components {
+      display: flex;
+      flex-direction: column;
+      padding: 20px 0;
+      overflow-y: auto;
+      height: calc(100vh - 70px);
+
+      li {
+        padding: 10px;
+        font-size: 1.1em;
+        list-style: none;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+
+        &:hover {
+          background: #e9ecefa6;
+          color: $secondary-color;
+        }
+
+        &.active {
+          background-color: $gray-color;
+          color: $secondary-color;
+        }
+
+        a {
+          color: #fff;
+          text-decoration: none;
+          display: block;
+          width: 100%;
+        }
+
+        i {
+          margin-right: 10px;
+        }
+      }
+    }
+    .lii {
+      margin-top: 10px;
+      text-decoration: none;
+      color: white;
+    }
+    .btn-link {
+      color: white;
+      text-decoration: none;
+    }
+    .sub-options {
+      margin-left: 10px;
+
+      li {
+        padding: 10px;
+        font-size: 1.1em;
+        list-style: none;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+
+        &:hover {
+          background: #e9ecefa6;
+          color: $secondary-color;
+        }
+
+        &.active {
+          background-color: $gray-color;
+          color: $secondary-color;
+        }
+
+        a {
+          color: #fff;
+          text-decoration: none;
+          display: block;
+          width: 100%;
+        }
+
+        i {
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .sidebar {
+      transform: translateX(-100%);
+    }
+
+    .btn-primary {
+      display: block;
+      position: fixed;
+      background-color: red;
+      bottom: 0;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .sidebar {
+      transform: translateX(0);
+    }
+
+    .sidebar.open {
+      transform: translateX(-100%);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .sidebar-header {
+      display: none;
     }
   }
 }
-@media (max-width: 768px) {
-  .sidebar .sidebar-header {
-    display: none;
-  }
-}
-.lii {
-  color: white;
-  text-decoration: none;
-  display: block;
-  font-size: 1.1em;
-  &.active {
-    background-color: $gray-color;
-    color: $secondary-color;
-    border-radius: 20px 20px 20px 20px;
-    -moz-border-radius: 20px 20px 20px 20px;
-    -webkit-border-radius: 20px 20px 20px 20px;
-    border: 0px solid #000000;
-  }
-}
 
-.sidebar.open {
-  transform: translateX(0);
-}
-.sidebar ul.components {
-  display: flex;
-  flex-direction: column;
-  padding: 20px 0;
-  overflow-y: auto;
-  height: calc(100vh - 70px);
-}
-.sidebar ul.components li {
-  flex: 1;
-}
-.sidebar ul li {
-  padding: 10px;
-  font-size: 1.1em;
-  list-style: none;
-  border-radius: 20px 20px 20px 20px;
-  -moz-border-radius: 20px 20px 20px 20px;
-  -webkit-border-radius: 20px 20px 20px 20px;
-  border: 0px solid #000000;
-}
-.sidebar ul li a {
-  color: #fff;
-  text-decoration: none;
-  display: block;
-  width: 100%;
-}
-.sidebar ul li i {
-  margin-right: 10px;
-}
-
-.sidebar ul li:hover {
-  background: #e9ecefa6;
-  transition: background 1s;
-  color: $secondary-color;
-}
-
-.btn-primary {
-  display: block;
-  position: fixed;
-  background-color: red;
-  bottom: 0;
-}
-
-@media (min-width: 768px) {
-  .sidebar {
-    transform: translateX(0);
-    z-index: 1;
-  }
-  .sidebar.open {
-    transform: translateX(-100%);
-  }
-}
 // estilos para el navbar
 .navbar {
   padding: 0 20px;
