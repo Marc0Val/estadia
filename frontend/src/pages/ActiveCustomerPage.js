@@ -6,49 +6,42 @@ import Header from "../components/Header";
 
 const ActiveCustomerPage = () => {
   const [data, setData] = useState([]);
-  const columnNames = [
-    "Identificador",
-    "Activo",
-    "Cliente",
-    "EstadoPoliza",
-    "VencimientoPoliza",
-    "NroInventario",
-  ];
+  const columnNames = ["Nombre", "Correo", "Telefono", "Ciudad", "Estado"];
   // informacion de prueba
   useEffect(() => {
     const fetchData = async () => {
       setData([
         {
-          Identificador: 1,
-          Activo: "Activo 1",
-          Cliente: "Cliente 1",
-          EstadoPoliza: "Estado Poliza 1",
-          VencimientoPoliza: "Vencimiento Poliza 1",
-          NroInventario: "Nro Inventario 1",
+          idCodigo: 1,
+          Nombre: "Cliente 1",
+          Correo: "test@test.com",
+          Telefono: "1234567890",
+          Ciudad: "Ciudad 1",
+          Estado: "Activo",
         },
         {
-          Identificador: 2,
-          Activo: "Activo 2",
-          Cliente: "Cliente 2",
-          EstadoPoliza: "Estado Poliza 2",
-          VencimientoPoliza: "Vencimiento Poliza 2",
-          NroInventario: "Nro Inventario 2",
+          idCodigo: 2,
+          Nombre: "Cliente 2",
+          Correo: "test@test.com",
+          Telefono: "1234567890",
+          Ciudad: "Ciudad 2",
+          Estado: "Activo",
         },
         {
-          Identificador: 3,
-          Activo: "Activo 3",
-          Cliente: "Cliente 3",
-          EstadoPoliza: "Estado Poliza 3",
-          VencimientoPoliza: "Vencimiento Poliza 3",
-          NroInventario: "Nro Inventario 3",
+          idCodigo: 3,
+          Nombre: "Cliente 3",
+          Correo: "test@test.com",
+          Telefono: "1234567890",
+          Ciudad: "Ciudad 3",
+          Estado: "Activo",
         },
         {
-          Identificador: 4,
-          Activo: "Activo 4",
-          Cliente: "Cliente 4",
-          EstadoPoliza: "Estado Poliza 4",
-          VencimientoPoliza: "Vencimiento Poliza 4",
-          NroInventario: "Nro Inventario 4",
+          idCodigo: 4,
+          Nombre: "Cliente 4",
+          Correo: "test@test.com",
+          Telefono: "1234567890",
+          Ciudad: "Ciudad 4",
+          Estado: "Activo",
         },
       ]);
     };

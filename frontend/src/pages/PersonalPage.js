@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import axios from "axios";
-// import Swal from "sweetalert2";
 import TablaInfo from "../components/TablaInfo";
 import BotonModal from "../components/Buttons/BotonModal";
 import FormularioPersonal from "../components/Forms/FormularioPersonal";
@@ -8,8 +6,7 @@ import Header from "../components/Header";
 
 const PersonalPage = () => {
   const [data, setData] = useState([]);
-  const columnNames = ["idCodigo", "Nombre", "Celular", "Rol", "Estado"];
-  // informacion de prueba
+  const columnNames = ["Nombre", "Celular", "Rol", "Estado"]; 
   useEffect(() => {
     const fetchData = async () => {
       setData([

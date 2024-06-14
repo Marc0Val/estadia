@@ -4,49 +4,34 @@ import Header from "../components/Header";
 
 const QuotesPage = () => {
   const [data, setData] = useState([]);
-  const columnNames = [
-    "Folio",
-    "Fecha",
-    "Vencimiento",
-    "Cliente",
-    "Monto",
-    "PDF",
-  ];
+  const columnNames = ["Cliente", "Fecha", "Total", "PDF"];
   // informacion de prueba
   useEffect(() => {
     const fetchData = async () => {
       setData([
         {
-          Folio: "1",
-          Fecha: "01/01/2021",
-          Vencimiento: "01/01/2021",
           Cliente: "Cliente 1",
-          Monto: "100.00",
-          PDF: "PDF",
+          Fecha: "2021-08-01",
+          Total: "100.00",
+          PDF: "PDF 1",
         },
         {
-          Folio: "2",
-          Fecha: "02/02/2022",
-          Vencimiento: "02/02/2022",
           Cliente: "Cliente 2",
-          Monto: "200.00",
-          PDF: "PDF",
+          Fecha: "2021-08-02",
+          Total: "200.00",
+          PDF: "PDF 2",
         },
         {
-          Folio: "3",
-          Fecha: "03/03/2023",
-          Vencimiento: "03/03/2023",
           Cliente: "Cliente 3",
-          Monto: "300.00",
-          PDF: "PDF",
+          Fecha: "2021-08-03",
+          Total: "300.00",
+          PDF: "PDF 3",
         },
         {
-          Folio: "4",
-          Fecha: "04/04/2024",
-          Vencimiento: "04/04/2024",
           Cliente: "Cliente 4",
-          Monto: "400.00",
-          PDF: "PDF",
+          Fecha: "2021-08-04",
+          Total: "400.00",
+          PDF: "PDF 4",
         },
       ]);
     };

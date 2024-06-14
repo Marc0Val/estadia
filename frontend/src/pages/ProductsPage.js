@@ -6,14 +6,7 @@ import Header from "../components/Header";
 
 const ProductsPage = () => {
   const [data, setData] = useState([]);
-  const columnNames = [
-    "idCodigo",
-    "Unidad",
-    "Nombre",
-    "Precio",
-    "Stock",
-    "Proveedor",
-  ];
+  const columnNames = ["Unidad", "Nombre", "Precio", "Stock", "Proveedor"];
   // informacion de prueba
   useEffect(() => {
     const fetchData = async () => {

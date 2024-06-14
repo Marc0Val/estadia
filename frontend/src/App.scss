@@ -307,6 +307,15 @@ html {
   background-color: $gray-color;
 }
 
+.table .actions {
+  display: flex;
+  justify-content: center;
+}
+
+// .table .actions .btnn {
+//   display: block; 
+// }
+
 // hoover personalizado para clase grow
 .grow {
   transition: 0.5s, color 0.1s;

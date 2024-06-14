@@ -16,9 +16,11 @@ const TablaInfo = ({ columns, data, totalRecords, fetchElemento }) => {
             )}
           </tr>
           <tr>
-            {columns.map((columnName, index) => (
-              <th key={index}>{columnName}</th>
-            ))}
+            {columns.map((columnName, index) =>
+              columnName.startsWith("id_") ? null : (
+                <th key={index}>{columnName}</th>
+              )
+            )}
             <th className="text-center">Accion</th>
           </tr>
         </thead>
@@ -26,11 +28,17 @@ const TablaInfo = ({ columns, data, totalRecords, fetchElemento }) => {
           {totalRecords > 0 ? (
             data.map((row, rowIndex) => (
               <tr key={rowIndex} className="table-row">
-                {columns.map((columnName, colIndex) => (
-                  <td key={colIndex}>{row[columnName]}</td>
-                ))}
-                <td className="actions">
-                  <BotonEditarModal nombreBoton="" icono="fa-solid fa-ellipsis" />
+                {columns.map((columnName, colIndex) =>
+                  columnName.startsWith("id_") ? null : (
+                    <td key={colIndex}>{row[columnName]}</td>
+                  )
+                )}
+                <td>
+                  <BotonEditarModal
+                    nombreBoton=""
+                    icono="fa-solid fa-ellipsis"
+                    className="btnn"
+                  />
                 </td>
               </tr>
             ))

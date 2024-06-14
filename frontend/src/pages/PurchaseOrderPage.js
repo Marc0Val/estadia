@@ -5,11 +5,10 @@ import Header from "../components/Header";
 const PurchaseOrderPage = () => {
   const [data, setData] = useState([]);
   const columnNames = [
-    "Folio",
     "Fecha",
-    "Vencimiento",
     "Proveedor",
-    "Monto",
+    "Total",
+    "Estado",
     "PDF",
   ];
   // informacion de prueba
@@ -17,43 +16,38 @@ const PurchaseOrderPage = () => {
     const fetchData = async () => {
       setData([
         {
-          Folio: "1",
-          Fecha: "01/01/2021",
-          Vencimiento: "01/01/2021",
+          Fecha: "2021-08-01",
           Proveedor: "Proveedor 1",
-          Monto: "100.00",
-          PDF: "PDF",
+          Total: "100.00",
+          Estado: "Activa",
+          PDF: "PDF 1",
         },
         {
-          Folio: "2",
-          Fecha: "02/02/2022",
-          Vencimiento: "02/02/2022",
+          Fecha: "2021-08-02",
           Proveedor: "Proveedor 2",
-          Monto: "200.00",
-          PDF: "PDF",
+          Total: "200.00",
+          Estado: "Activa",
+          PDF: "PDF 2",
         },
         {
-          Folio: "3",
-          Fecha: "03/03/2023",
-          Vencimiento: "03/03/2023",
+          Fecha: "2021-08-03",
           Proveedor: "Proveedor 3",
-          Monto: "300.00",
-          PDF: "PDF",
+          Total: "300.00",
+          Estado: "Activa",
+          PDF: "PDF 3",
         },
         {
-          Folio: "4",
-          Fecha: "04/04/2024",
-          Vencimiento: "04/04/2024",
+          Fecha: "2021-08-04",
           Proveedor: "Proveedor 4",
-          Monto: "400.00",
-          PDF: "PDF",
+          Total: "400.00",
+          Estado: "Activa",
+          PDF: "PDF 4",
         },
       ]);
     };
 
     fetchData();
   }, []);
-
   return (
     <div className="contenedor container-fluid">
       <p className="subtitulo">
