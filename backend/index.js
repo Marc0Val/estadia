@@ -18,6 +18,14 @@ const app = express();
 
 app.use(express.json());
 
+// Use cors to connect backend and frontend
+app.use(
+    cors({
+      origin: "http://localhost:3000",
+      credentials: true,
+    })
+  );
+
 // Add all the routes with "/api" prefix
 app.use("/api", indexRoutes);
 app.use("/api", usersRoutes);

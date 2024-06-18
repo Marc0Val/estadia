@@ -5,5 +5,16 @@ export const pool = createPool({
   port: 3306,
   user: "root",
   password: "",
-  database: "micro_red",
+  database: "microtest",
 });
+
+// Verificar la conexión
+pool
+  .getConnection()
+  .then((connection) => {
+    console.log("Conexión a la base de datos establecida con éxito");
+    connection.release();
+  })
+  .catch((error) => {
+    console.error("Error al conectar a la base de datos", error);
+  });
