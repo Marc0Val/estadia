@@ -1,281 +1,315 @@
-import React, { useState } from "react";
-import { Form, Button, Row, Col } from "react-bootstrap";
+import React from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import { Button, Row, Col } from "react-bootstrap";
+import Swal from "sweetalert2";
+import { createPersonalRequest } from "../../api/personal.api";
+
+// Esquema de validación
+const validationSchema = Yup.object().shape({
+  name_: Yup.string().required("Este campo es obligatorio"),
+  last_name: Yup.string().required("Este campo es obligatorio"),
+  role_: Yup.string().required("Este campo es obligatorio"),
+  title: Yup.string(),
+  email: Yup.string()
+    .email("Correo electrónico inválido")
+    .required("Este campo es obligatorio"),
+  cell_number: Yup.string().required("Este campo es obligatorio"),
+  country: Yup.string().required("Este campo es obligatorio"),
+  state_: Yup.string().required("Este campo es obligatorio"),
+  city: Yup.string().required("Este campo es obligatorio"),
+  phone: Yup.string(),
+  address_: Yup.string().required("Este campo es obligatorio"),
+  password_: Yup.string()
+    .required("Este campo es obligatorio")
+    .min(6, "La contraseña debe tener al menos 6 caracteres"),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref("password_"), null], "Las contraseñas deben coincidir")
+    .required("Este campo es obligatorio"),
+});
 
 const FormularioPersonal = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    last_name: "",
-    role: "",
-    title: "",
-    email: "",
-    cell_number: "",
-    country: "",
-    state: "",
-    city: "",
-    phone: "",
-    address: "",
-    password: "",
-    confirmPassword: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === "checkbox" ? checked : value,
-    });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Validar y enviar los datos del formulario.
-    console.log("Datos del formulario enviados:", formData);
-  };
-
-  const handleReset = () => {
-    setFormData({
-      name: "",
-      last_name: "",
-      role: "",
-      title: "",
-      email: "",
-      cell_number: "",
-      country: "",
-      state: "",
-      city: "",
-      phone: "",
-      address: "",
-      password: "",
-      confirmPassword: "",
-    });
-  };
-
   return (
-    <Form
-      onSubmit={handleSubmit}
-      onReset={handleReset}
-      className="container mt-4"
-    >
-      <p className="text-muted">
-        Complete el formulario | (*) Campos obligatorios
-      </p>
-      <hr />
-      <Row className="mb-3">
-        <Col>
-          <Form.Group controlId="formName">
-            <Form.Label>
-              <strong>Nombre *</strong>
-            </Form.Label>
-            <Form.Control
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
-          </Form.Group>
-        </Col>
-        <Col>
-          <Form.Group controlId="formLastName">
-            <Form.Label>
-              <strong>Apellido *</strong>
-            </Form.Label>
-            <Form.Control
-              type="text"
-              name="last_name"
-              value={formData.last_name}
-              onChange={handleChange}
-              required
-            />
-          </Form.Group>
-        </Col>
-      </Row>
-      <Row className="mb-3">
-        <Col>
-          <Form.Group controlId="formRole">
-            <Form.Label>
-              <strong>Rol *</strong>
-            </Form.Label>
-            <Form.Control
-              as="select"
-              name="role"
-              value={formData.role}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Seleccione un rol</option>
-              <option value="Administrador">Administrador</option>
-              <option value="Vendedor">Vendedor</option>
-            </Form.Control>
-          </Form.Group>
-        </Col>
-        <Col>
-          <Form.Group controlId="formTitle">
-            <Form.Label>
-              <strong>Título</strong>
-            </Form.Label>
-            <Form.Control
-              type="text"
-              name="title"
-              value={formData.title}
-              onChange={handleChange}
-            />
-          </Form.Group>
-        </Col>
-      </Row>
-      <Row className="mb-3">
-        <Col>
-          <Form.Group controlId="formEmail">
-            <Form.Label>
-              <strong>Correo *</strong>
-            </Form.Label>
-            <Form.Control
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </Form.Group>
-        </Col>
-        <Col>
-          <Form.Group controlId="formCellNumber">
-            <Form.Label>
-              <strong>Celular *</strong>
-            </Form.Label>
-            <Form.Control
-              type="tel"
-              name="cell_number"
-              value={formData.cell_number}
-              onChange={handleChange}
-              required
-            />
-          </Form.Group>
-        </Col>
-      </Row>
-      <Row className="mb-3">
-        <Col>
-          <Form.Group controlId="formPhone">
-            <Form.Label>
-              <strong>Teléfono</strong>
-            </Form.Label>
-            <Form.Control
-              type="tel"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-            />
-          </Form.Group>
-        </Col>
-        <Col>
-          <Form.Group controlId="formAddress">
-            <Form.Label>
-              <strong>Dirección *</strong>
-            </Form.Label>
-            <Form.Control
-              type="text"
-              name="address"
-              value={formData.address}
-              onChange={handleChange}
-              required
-            />
-          </Form.Group>
-        </Col>
-      </Row>
-      <Row className="mb-3">
-        <Col>
-          <Form.Group controlId="formCountry">
-            <Form.Label>
-              <strong>País</strong>
-            </Form.Label>
-            <Form.Control
-              type="text"
-              name="country"
-              value={formData.country}
-              onChange={handleChange}
-            />
-          </Form.Group>
-        </Col>
-        <Col>
-          <Form.Group controlId="formState">
-            <Form.Label>
-              <strong>Estado</strong>
-            </Form.Label>
-            <Form.Control
-              type="text"
-              name="state"
-              value={formData.state}
-              onChange={handleChange}
-            />
-          </Form.Group>
-        </Col>
-        <Col>
-          <Form.Group controlId="formCity">
-            <Form.Label>
-              <strong>Ciudad</strong>
-            </Form.Label>
-            <Form.Control
-              type="text"
-              name="city"
-              value={formData.city}
-              onChange={handleChange}
-            />
-          </Form.Group>
-        </Col>
-      </Row>
-      <Row className="mb-3">
-        <Col>
-          <Form.Group controlId="formPassword">
-            <Form.Label>
-              <strong>Contraseña *</strong>
-            </Form.Label>
-            <Form.Control
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              minLength="6"
-              required
-            />
-          </Form.Group>
-        </Col>
-        <Col>
-          <Form.Group controlId="formConfirmPassword">
-            <Form.Label>
-              <strong>Confirmar Contraseña *</strong>
-            </Form.Label>
-            <Form.Control
-              type="password"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              minLength="6"
-              required
-            />
-          </Form.Group>
-        </Col>
-      </Row>
-      <hr />
-      <Button
-        variant="success"
-        type="submit"
-        disabled={
-          formData.name === "" ||
-          formData.last_name === "" ||
-          formData.role === "" ||
-          formData.email === "" ||
-          formData.cell_number === "" ||
-          formData.address === "" ||
-          formData.password === "" ||
-          formData.confirmPassword === ""
+    <Formik
+      initialValues={{
+        name_: "",
+        last_name: "",
+        role_: "",
+        title: "",
+        email: "",
+        cell_number: "",
+        country: "",
+        state_: "",
+        city: "",
+        phone: "",
+        address_: "",
+        password_: "",
+        confirmPassword: "",
+      }}
+      validationSchema={validationSchema}
+      onSubmit={async (values, { resetForm }) => {
+        try {
+          console.log(values);
+          // Simulación de llamada a API
+          await createPersonalRequest(values);
+          Swal.fire({
+            icon: "success",
+            title: "Datos guardados",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          resetForm();
+        } catch (error) {
+          Swal.fire({
+            icon: "error",
+            title: "Error al guardar los datos",
+            showConfirmButton: false,
+            timer: 1500,
+          });
         }
-      >
-        <i className="fas fa-save"></i> Guardar
-      </Button>
-      <Button variant="warning" type="reset">
-        <i className="fas fa-undo"></i> Limpiar
-      </Button>
-    </Form>
+      }}
+    >
+      {({ handleChange, handleSubmit, values, errors, isValid, dirty }) => (
+        <Form className="container mt-4">
+          <p className="text-muted">
+            Complete el formulario | (*) Campos obligatorios
+          </p>
+          <hr />
+          <Row className="mb-3">
+            <Col>
+              <label htmlFor="name_">
+                <strong>Nombre *</strong>
+              </label>
+              <Field
+                type="text"
+                name="name_"
+                id="name_"
+                className={`form-control ${errors.name_ ? "is-invalid" : ""}`}
+              />
+              <ErrorMessage
+                name="name_"
+                component="div"
+                className="invalid-feedback"
+              />
+            </Col>
+            <Col>
+              <label htmlFor="last_name">
+                <strong>Apellido *</strong>
+              </label>
+              <Field
+                type="text"
+                name="last_name"
+                id="last_name"
+                className={`form-control ${
+                  errors.last_name ? "is-invalid" : ""
+                }`}
+              />
+              <ErrorMessage
+                name="last_name"
+                component="div"
+                className="invalid-feedback"
+              />
+            </Col>
+          </Row>
+          <Row className="mb-3">
+            <Col>
+              <label htmlFor="role_">
+                <strong>Rol *</strong>
+              </label>
+              <Field
+                as="select"
+                name="role_"
+                id="role_"
+                className={`form-control ${errors.role_ ? "is-invalid" : ""}`}
+              >
+                <option value="">Seleccione un rol</option>
+                <option value="Administrador">Administrador</option>
+                <option value="Vendedor">Vendedor</option>
+              </Field>
+              <ErrorMessage
+                name="role_"
+                component="div"
+                className="invalid-feedback"
+              />
+            </Col>
+            <Col>
+              <label htmlFor="title">
+                <strong>Título</strong>
+              </label>
+              <Field
+                type="text"
+                name="title"
+                id="title"
+                className="form-control"
+              />
+            </Col>
+          </Row>
+          <Row className="mb-3">
+            <Col>
+              <label htmlFor="email">
+                <strong>Correo *</strong>
+              </label>
+              <Field
+                type="email"
+                name="email"
+                id="email"
+                className={`form-control ${errors.email ? "is-invalid" : ""}`}
+              />
+              <ErrorMessage
+                name="email"
+                component="div"
+                className="invalid-feedback"
+              />
+            </Col>
+            <Col>
+              <label htmlFor="cell_number">
+                <strong>Celular *</strong>
+              </label>
+              <Field
+                type="text"
+                name="cell_number"
+                id="cell_number"
+                className={`form-control ${
+                  errors.cell_number ? "is-invalid" : ""
+                }`}
+              />
+              <ErrorMessage
+                name="cell_number"
+                component="div"
+                className="invalid-feedback"
+              />
+            </Col>
+          </Row>
+          <Row className="mb-3">
+            <Col>
+              <label htmlFor="country">
+                <strong>País *</strong>
+              </label>
+              <Field
+                type="text"
+                name="country"
+                id="country"
+                className={`form-control ${errors.country ? "is-invalid" : ""}`}
+              />
+              <ErrorMessage
+                name="country"
+                component="div"
+                className="invalid-feedback"
+              />
+            </Col>
+            <Col>
+              <label htmlFor="state_">
+                <strong>Estado *</strong>
+              </label>
+              <Field
+                type="text"
+                name="state_"
+                id="state_"
+                className={`form-control ${errors.state_ ? "is-invalid" : ""}`}
+              />
+              <ErrorMessage
+                name="state_"
+                component="div"
+                className="invalid-feedback"
+              />
+            </Col>
+            <Col>
+              <label htmlFor="city">
+                <strong>Ciudad *</strong>
+              </label>
+              <Field
+                type="text"
+                name="city"
+                id="city"
+                className={`form-control ${errors.city ? "is-invalid" : ""}`}
+              />
+              <ErrorMessage
+                name="city"
+                component="div"
+                className="invalid-feedback"
+              />
+            </Col>
+          </Row>
+          <Row className="mb-3">
+            <Col>
+              <label htmlFor="phone">
+                <strong>Teléfono</strong>
+              </label>
+              <Field
+                type="text"
+                name="phone"
+                id="phone"
+                className="form-control"
+              />
+            </Col>
+            <Col>
+              <label htmlFor="address_">
+                <strong>Dirección *</strong>
+              </label>
+              <Field
+                as="textarea"
+                name="address_"
+                id="address_"
+                rows={3}
+                className={`form-control ${
+                  errors.address_ ? "is-invalid" : ""
+                }`}
+              />
+              <ErrorMessage
+                name="address_"
+                component="div"
+                className="invalid-feedback"
+              />
+            </Col>
+          </Row>
+          <Row className="mb-3">
+            <Col>
+              <label htmlFor="password_">
+                <strong>Contraseña *</strong>
+              </label>
+              <Field
+                type="password"
+                name="password_"
+                id="password_"
+                className={`form-control ${
+                  errors.password_ ? "is-invalid" : ""
+                }`}
+              />
+              <ErrorMessage
+                name="password_"
+                component="div"
+                className="invalid-feedback"
+              />
+            </Col>
+            <Col>
+              <label htmlFor="confirmPassword">
+                <strong>Confirmar Contraseña *</strong>
+              </label>
+              <Field
+                type="password"
+                name="confirmPassword"
+                id="confirmPassword"
+                className={`form-control ${
+                  errors.confirmPassword ? "is-invalid" : ""
+                }`}
+              />
+              <ErrorMessage
+                name="confirmPassword"
+                component="div"
+                className="invalid-feedback"
+              />
+            </Col>
+          </Row>
+          <hr />
+          <Button variant="success" type="submit" disabled={!isValid || !dirty}>
+            <i className="fas fa-save"></i> Guardar
+          </Button>
+          <Button variant="warning" type="reset">
+            <i className="fas fa-undo"></i> Limpiar
+          </Button>
+        </Form>
+      )}
+    </Formik>
   );
 };
 

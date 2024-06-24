@@ -4,7 +4,7 @@ import { pool } from "../db.js";
 export const getUsers = async (req, res) => {
   try {
     const [result] = await pool.query(
-      "SELECT * FROM personal ORDER BY name DESC"
+      "SELECT * FROM personal ORDER BY name_ DESC"
     );
 
     res.json(result);
@@ -35,39 +35,39 @@ export const getUser = async (req, res) => {
 export const createUser = async (req, res) => {
   try {
     const {
-      name,
+      name_,
       last_name,
-      role,
+      role_,
       title,
       email,
       cell_number,
       country,
-      state,
+      state_,
       city,
       phone,
-      address,
-      password,
+      address_,
+      password_,
     } = req.body;
 
     const [result] = await pool.query(
-      "INSERT INTO personal(name, last_name, role, title, email, cell_number, country, state, city, phone, address, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      "INSERT INTO personal(name_, last_name, role_, title, email, cell_number, country, state_, city, phone, address_, password_) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
-        name,
+        name_,
         last_name,
-        role,
+        role_,
         title,
         email,
         cell_number,
         country,
-        state,
+        state_,
         city,
         phone,
-        address,
-        password,
+        address_,
+        password_,
       ]
     );
 
-    res.json({ id: result.insertId, name, last_name, role });
+    res.json({ id: result.insertId, name_, last_name, role_ });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
