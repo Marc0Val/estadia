@@ -2,9 +2,9 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.scss";
 import App from "./App";
-import "bootstrap/scss/bootstrap.scss";
-import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "sweetalert2/src/sweetalert2.scss";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

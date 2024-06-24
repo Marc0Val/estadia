@@ -24,6 +24,8 @@ import FormularioOrdenServicio from "./pages/Forms/FormularioordenServicio";
 import FormularioCotizacion from "./pages/Forms/FormularioCotizacion";
 import FormularioOrdenCompra from "./pages/Forms/FormularioOrdenCompra";
 
+
+
 const Admin = () => {
   return (
     <div className="contenedor">
@@ -60,6 +62,7 @@ const Admin = () => {
             path="/formulario-orden-compra"
             element={<FormularioOrdenCompra />}
           />
+          
         </Routes>
       </div>
     </div>

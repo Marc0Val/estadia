@@ -4,7 +4,7 @@ import { pool } from "../db.js";
 export const getCategories = async (req, res) => {
   try {
     const [result] = await pool.query(
-      "SELECT * FROM categories ORDER BY name DESC"
+      "SELECT * FROM categories ORDER BY name_ DESC"
     );
 
     res.json(result);
@@ -34,14 +34,14 @@ export const getCategory = async (req, res) => {
 //* Create new category
 export const createCategory = async (req, res) => {
   try {
-    const { name } = req.body;
+    const { name_ } = req.body;
 
     const [result] = await pool.query(
-      "INSERT INTO categories(name) VALUES (?)",
-      [name]
+      "INSERT INTO categories(name_) VALUES (?)",
+      [name_]
     );
 
-    res.json({ id: result.insertId, name });
+    res.json({ id: result.insertId, name_ });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
