@@ -1,40 +1,61 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Button, Row, Col } from "react-bootstrap";
 import Swal from "sweetalert2";
 import { createPersonalRequest } from "../../api/personal.api";
-
-// Esquema de validación
-const validationSchema = Yup.object().shape({
-  name_: Yup.string().required("Este campo es obligatorio"),
-  last_name: Yup.string().required("Este campo es obligatorio"),
-  role_: Yup.string().required("Este campo es obligatorio"),
-  title: Yup.string(),
-  email: Yup.string()
-    .email("Correo electrónico inválido")
-    .required("Este campo es obligatorio"),
-  cell_number: Yup.string().required("Este campo es obligatorio"),
-  country: Yup.string().required("Este campo es obligatorio"),
-  state_: Yup.string().required("Este campo es obligatorio"),
-  city: Yup.string().required("Este campo es obligatorio"),
-  phone: Yup.string(),
-  address_: Yup.string().required("Este campo es obligatorio"),
-  password_: Yup.string()
-    .required("Este campo es obligatorio")
-    .min(6, "La contraseña debe tener al menos 6 caracteres"),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref("password_"), null], "Las contraseñas deben coincidir")
-    .required("Este campo es obligatorio"),
-});
+import { getRolesRequest } from "../../api/role.api";
 
 const FormularioPersonal = () => {
+  const [roles, setRoles] = useState([]);
+
+  useEffect(() => {
+    const cargarRoles = async () => {
+      try {
+        const response = await getRolesRequest();
+        if (Array.isArray(response.data)) {
+          setRoles(response.data);
+        } else {
+          console.error("Error al cargar los roles:", response.data);
+        }
+      } catch (error) {
+        console.error("Error al cargar los roles:", error);
+      }
+    };
+    cargarRoles();
+  }, []);
+
+  // Esquema de validación con Yup
+  const validationSchema = Yup.object().shape({
+    name_: Yup.string().required("Este campo es obligatorio"),
+    last_name: Yup.string().required("Este campo es obligatorio"),
+    role_id: Yup.number()
+      .required("Seleccione un rol")
+      .integer("Debe ser un número entero"),
+    title: Yup.string(),
+    email: Yup.string()
+      .email("Correo electrónico inválido")
+      .required("Este campo es obligatorio"),
+    cell_number: Yup.string().required("Este campo es obligatorio"),
+    country: Yup.string().required("Este campo es obligatorio"),
+    state_: Yup.string().required("Este campo es obligatorio"),
+    city: Yup.string().required("Este campo es obligatorio"),
+    phone: Yup.string(),
+    address_: Yup.string().required("Este campo es obligatorio"),
+    password_: Yup.string()
+      .required("Este campo es obligatorio")
+      .min(6, "La contraseña debe tener al menos 6 caracteres"),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password_"), null], "Las contraseñas deben coincidir")
+      .required("Este campo es obligatorio"),
+  });
+
   return (
     <Formik
       initialValues={{
         name_: "",
         last_name: "",
-        role_: "",
+        role_id: "",
         title: "",
         email: "",
         cell_number: "",
@@ -49,8 +70,7 @@ const FormularioPersonal = () => {
       validationSchema={validationSchema}
       onSubmit={async (values, { resetForm }) => {
         try {
-          console.log(values);
-          // Simulación de llamada a API
+          // console.log("Datos a guardar:", values);
           await createPersonalRequest(values);
           Swal.fire({
             icon: "success",
@@ -66,6 +86,7 @@ const FormularioPersonal = () => {
             showConfirmButton: false,
             timer: 1500,
           });
+          console.error("Error al guardar los datos", error);
         }
       }}
     >
@@ -113,21 +134,24 @@ const FormularioPersonal = () => {
           </Row>
           <Row className="mb-3">
             <Col>
-              <label htmlFor="role_">
+              <label htmlFor="role_id">
                 <strong>Rol *</strong>
               </label>
               <Field
                 as="select"
-                name="role_"
-                id="role_"
-                className={`form-control ${errors.role_ ? "is-invalid" : ""}`}
+                name="role_id"
+                id="role_id"
+                className={`form-control ${errors.role_id ? "is-invalid" : ""}`}
               >
                 <option value="">Seleccione un rol</option>
-                <option value="Administrador">Administrador</option>
-                <option value="Vendedor">Vendedor</option>
+                {roles.map((rol) => (
+                  <option key={rol.id_role} value={rol.id_role}>
+                    {rol.name_role}
+                  </option>
+                ))}
               </Field>
               <ErrorMessage
-                name="role_"
+                name="role_id"
                 component="div"
                 className="invalid-feedback"
               />

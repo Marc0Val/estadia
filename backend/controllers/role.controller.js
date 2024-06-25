@@ -33,9 +33,10 @@ export const createRole = async (req, res) => {
   try {
     const { name_role } = req.body;
 
-    const [result] = await pool.query("INSERT INTO roles(name_role) VALUES (?)", [
-      name_role,
-    ]);
+    const [result] = await pool.query(
+      "INSERT INTO roles(name_role) VALUES (?)",
+      [name_role]
+    );
 
     res.json({ id: result.insertId, name_role });
   } catch (error) {

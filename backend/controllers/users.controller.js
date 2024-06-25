@@ -37,7 +37,6 @@ export const createUser = async (req, res) => {
     const {
       name_,
       last_name,
-      role_,
       title,
       email,
       cell_number,
@@ -47,14 +46,14 @@ export const createUser = async (req, res) => {
       phone,
       address_,
       password_,
+      role_id,
     } = req.body;
 
     const [result] = await pool.query(
-      "INSERT INTO personal(name_, last_name, role_, title, email, cell_number, country, state_, city, phone, address_, password_) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      "INSERT INTO personal(name_, last_name,  title, email, cell_number, country, state_, city, phone, address_, password_,role_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
         name_,
         last_name,
-        role_,
         title,
         email,
         cell_number,
@@ -64,10 +63,11 @@ export const createUser = async (req, res) => {
         phone,
         address_,
         password_,
+        role_id,
       ]
     );
 
-    res.json({ id: result.insertId, name_, last_name, role_ });
+    res.json({ id: result.insertId, name_, last_name, role_id});
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
