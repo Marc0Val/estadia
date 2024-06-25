@@ -4,7 +4,7 @@ import { pool } from "../db.js";
 export const getServices = async (req, res) => {
   try {
     const [result] = await pool.query(
-      "SELECT * FROM services ORDER BY name ASC"
+      "SELECT * FROM services ORDER BY name_ ASC"
     );
 
     res.json(result);
@@ -34,15 +34,15 @@ export const getService = async (req, res) => {
 //* Create a new service
 export const createService = async (req, res) => {
   try {
-    const { name, category_id, sale_price, description, sat_unit, sat_code } =
+    const { name_, category_id, sale_price, description_, sat_unit, sat_code } =
       req.body;
 
     const [result] = await pool.query(
-      "INSERT INTO services (name, category_id, sale_price, description, sat_unit, sat_code) VALUES (?, ?, ?, ?, ?, ?)",
-      [name, category_id, sale_price, description, sat_unit, sat_code]
+      "INSERT INTO services (name_, category_id, sale_price, description_, sat_unit, sat_code) VALUES (?, ?, ?, ?, ?, ?)",
+      [name_, category_id, sale_price, description_, sat_unit, sat_code]
     );
 
-    res.json({ id: result.insertId, name });
+    res.json({ id: result.insertId, name_ });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
