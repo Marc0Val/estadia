@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Button, Container, Row, Col } from "react-bootstrap";
 import Swal from "sweetalert2";
 import { createProductRequest } from "../../api/products.api";
+import { getCategoriesRequest } from "../../api/catergory";
+import { getSuppliersRequest } from "../../api/suppliers.api";
 
 // Esquema de validación
 const validationSchema = Yup.object().shape({
@@ -25,6 +27,43 @@ const validationSchema = Yup.object().shape({
 });
 
 const FormularioProducto = () => {
+  const [categories, setCategories] = useState([]);
+  const [suppliers, setSuppliers] = useState([]);
+
+  useEffect(() => {
+    const cargarCategorias = async () => {
+      try {
+        const response = await getCategoriesRequest();
+        if (Array.isArray(response.data)) {
+          setCategories(response.data);
+        } else {
+          console.log("Error al cargar las categorías o no es un arreglo  ");
+        }
+      } catch (error) {
+        console.log(error);
+        console.error("Error al cargar las categorías", error);
+      }
+    };
+    cargarCategorias();
+  }, []);
+
+  useEffect(() => {
+    const cargarProveedores = async () => {
+      try {
+        const response = await getSuppliersRequest();
+        if (Array.isArray(response.data)) {
+          setSuppliers(response.data);
+        } else {
+          console.log("Error al cargar los proveedores o no es un arreglo");
+        }
+      } catch (error) {
+        console.log(error);
+        console.error("Error al cargar los proveedores", error);
+      }
+    };
+    cargarProveedores();
+  }, []);
+
   return (
     <Formik
       initialValues={{
@@ -98,21 +137,18 @@ const FormularioProducto = () => {
                 </label>
                 <Field
                   as="select"
-                  id="category_id"
                   name="category_id"
                   className={`form-control ${
                     errors.category_id ? "is-invalid" : ""
                   }`}
                 >
-                  <option value="">Selecciona una categoría</option>
-                  <option value="1">Categoría 1</option>
-                  {/* Añadir más opciones según sea necesario */}
+                  <option value="">Seleccione una categoría</option>
+                  {categories.map((category) => (
+                    <option key={category.id_category} value={category.id_category}>
+                      {category.name_}
+                    </option>
+                  ))}
                 </Field>
-                <ErrorMessage
-                  name="category_id"
-                  component="div"
-                  className="invalid-feedback"
-                />
               </Col>
             </Row>
             <Row className="mb-3">
@@ -215,21 +251,21 @@ const FormularioProducto = () => {
                 </label>
                 <Field
                   as="select"
-                  id="supplier_id"
                   name="supplier_id"
                   className={`form-control ${
                     errors.supplier_id ? "is-invalid" : ""
                   }`}
                 >
-                  <option value="">Selecciona un proveedor</option>
-                  <option value="4">Proveedor 1</option>
-                  {/* Añadir más opciones según sea necesario */}
+                  <option value="">Seleccione un proveedor</option>
+                  {suppliers.map((supplier) => (
+                    <option
+                      key={supplier.id_supplier}
+                      value={supplier.id_supplier}
+                    >
+                      {supplier.trade_name}
+                    </option>
+                  ))}
                 </Field>
-                <ErrorMessage
-                  name="supplier_id"
-                  component="div"
-                  className="invalid-feedback"
-                />
               </Col>
             </Row>
             <Row className="mb-3">
