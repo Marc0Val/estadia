@@ -35,18 +35,18 @@ export const createClientAsset = async (req, res) => {
     const {
       product_id,
       client_id,
-      name,
-      description,
-      serial,
+      name_,
+      description_,
+      serial_,
       inventory_number,
     } = req.body;
 
     const [result] = await pool.query(
-      "INSERT INTO client_assets (product_id, client_id, name, description, serial, inventory_number) VALUES (?, ?, ?, ?, ?, ?)",
-      [product_id, client_id, name, description, serial, inventory_number]
+      "INSERT INTO client_assets (product_id, client_id, name_, description_, serial_, inventory_number) VALUES (?, ?, ?, ?, ?, ?)",
+      [product_id, client_id, name_, description_, serial_, inventory_number]
     );
 
-    res.json({ id: result.insertId, name, description, serial });
+    res.json({ id: result.insertId, name_, description_, serial_ });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
