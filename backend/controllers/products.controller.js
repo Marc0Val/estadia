@@ -4,7 +4,7 @@ import { pool } from "../db.js";
 export const getProducts = async (req, res) => {
   try {
     const [result] = await pool.query(
-      "SELECT * FROM products ORDER BY name ASC"
+      "SELECT * FROM products ORDER BY name_ ASC"
     );
 
     res.json(result);
@@ -35,10 +35,10 @@ export const getProduct = async (req, res) => {
 export const createProduct = async (req, res) => {
   try {
     const {
-      name,
+      name_,
       category_id,
       unit,
-      description,
+      description_,
       sale_price,
       model,
       factory_code,
@@ -50,12 +50,12 @@ export const createProduct = async (req, res) => {
     } = req.body;
 
     const [result] = await pool.query(
-      "INSERT INTO products (name, category_id, unit, description, sale_price, model, factory_code, supplier_id, manufacturer_brand, reorder_point, initial_stock, minimum_stock) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      "INSERT INTO products (name_, category_id, unit, description_, sale_price, model, factory_code, supplier_id, manufacturer_brand, reorder_point, initial_stock, minimum_stock) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
-        name,
+        name_,
         category_id,
         unit,
-        description,
+        description_,
         sale_price,
         model,
         factory_code,
@@ -67,7 +67,7 @@ export const createProduct = async (req, res) => {
       ]
     );
 
-    res.json({ id: result.insertId, name });
+    res.json({ id: result.insertId, name_ });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
