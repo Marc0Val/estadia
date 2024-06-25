@@ -23,8 +23,7 @@ import RolPage from "./pages/ConfigPages/RolPage";
 import FormularioOrdenServicio from "./pages/Forms/FormularioordenServicio";
 import FormularioCotizacion from "./pages/Forms/FormularioCotizacion";
 import FormularioOrdenCompra from "./pages/Forms/FormularioOrdenCompra";
-
-
+import NotFoundPage from "./pages/NotFoundPage";
 
 const Admin = () => {
   return (
@@ -62,7 +61,7 @@ const Admin = () => {
             path="/formulario-orden-compra"
             element={<FormularioOrdenCompra />}
           />
-          
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
     </div>
