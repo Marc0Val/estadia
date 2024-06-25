@@ -3,21 +3,25 @@ import TablaInfo from "../components/TablaInfo";
 import BotonModal from "../components/Buttons/BotonModal";
 import FormularioCategorias from "../components/Forms/FormularioCategorias";
 import Header from "../components/Header";
+import { getCategoriesRequest } from "../api/catergory";
 
 const CategoryPage = () => {
-  const [data, setData] = useState([]);
-  const columnNames = ["NombreCategoria"];
+  const [categories, setCategories] = useState([]);
+  const columnNames = ["id_category", "name_"];
 
   useEffect(() => {
-    const fetchData = async () => {
-      setData([
-        { NombreCategoria: "Categoria 1" },
-        { NombreCategoria: "Categoria 2" },
-        { NombreCategoria: "Categoria 3" },
-      ]);
-    };
-
-    fetchData();
+    async function cargarCategorias() {
+      const response = await getCategoriesRequest();
+      if (Array.isArray(response.data)) {
+        // Asegúrate de que response.data sea un arreglo
+        setCategories(response.data);
+      } else {
+        console.log("La respuesta no es un arreglo", response.data);
+        setCategories([]);
+      }
+      console.log(response);
+    }
+    cargarCategorias();
   }, []);
 
   return (
@@ -36,7 +40,16 @@ const CategoryPage = () => {
           />
         }
       />
-      <TablaInfo columns={columnNames} data={data} totalRecords={data.length} />
+      <TablaInfo
+        columns={columnNames}
+        data={categories}
+        totalRecords={categories.length}
+        fetchElemento={getCategoriesRequest}
+        hiddenColumns={["id_category"]}
+        customColumnNames={{
+          name_: "Nombre",
+        }}
+      />
     </div>
   );
 };

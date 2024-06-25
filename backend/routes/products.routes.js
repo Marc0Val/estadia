@@ -1,10 +1,11 @@
 import { Router } from "express";
 import {
-  getProduct,
   getProducts,
+  getProduct,
   createProduct,
   updateProduct,
   deleteProduct,
+  getProductsProvider
 } from "../controllers/products.controller.js";
 
 const router = Router();
@@ -14,6 +15,9 @@ router.get("/products", getProducts);
 
 //* Get a product by ID
 router.get("/products/:id", getProduct);
+
+//* Get all products v2 (traer el nombre del proveedor en vez del id del mismo)
+router.get("/products-provider", getProductsProvider);
 
 //* Create a new product
 router.post("/products", createProduct);

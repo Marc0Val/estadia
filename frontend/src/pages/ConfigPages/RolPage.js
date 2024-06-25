@@ -2,16 +2,24 @@ import React, { useEffect, useState } from "react";
 import TablaInfo from "../../components/TablaInfo";
 import BotonModal from "../../components/Buttons/BotonModal";
 import FormularioRol from "../../components/Forms/FormularioRol";
+import { getRolesUsersRequest } from "../../api/role.api";
 
 const RolPage = () => {
-  const [data, setData] = useState([]);
-  const columnNames = ["Rol", "Usuario"];
-  // informacion de prueba que muestre 2 roles y cuantos usarios tiene cada uno
+  const [roles, setRoles] = useState([]);
+  const columnNames = ["id_role", "name_role", "users"];
+
   useEffect(() => {
-    setData([
-      { Rol: "Administrador", Usuario: 3 },
-      { Rol: "Usuario", Usuario: 5 },
-    ]);
+    async function cargarRoles() {
+      const response = await getRolesUsersRequest();
+      if (Array.isArray(response.data)) {
+        setRoles(response.data);
+      } else {
+        console.log("La respuesta no es un arreglo", response.data);
+        setRoles([]);
+      }
+      console.log(response);
+    }
+    cargarRoles();
   }, []);
 
   return (
@@ -27,7 +35,16 @@ const RolPage = () => {
         titulo="Agregar Nuevo Rol"
       />
       <hr />
-      <TablaInfo columns={columnNames} data={data} totalRecords={data.length} />
+      <TablaInfo
+        columns={columnNames}
+        data={roles}
+        totalRecords={roles.length}
+        hiddenColumns={["id_role"]}
+        customColumnNames={{
+          name_role: "Nombre",
+          users: "Usuarios",
+        }}
+      />
     </div>
   );
 };

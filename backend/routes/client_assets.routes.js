@@ -4,6 +4,7 @@ import {
   getClientAssets,
   createClientAsset,
   updateClientAsset,
+  getClientAssetProviderProduct,
   deleteClientAsset,
 } from "../controllers/client_assets.controller.js";
 
@@ -14,6 +15,9 @@ router.get("/client-assets", getClientAssets);
 
 //* Get a client asset by ID
 router.get("/client-assets/:id", getClientAsset);
+
+//* Get all client assets v2 (traer el nombre del producto en vez del id del mismo)
+router.get("/client-assets-provider-product", getClientAssetProviderProduct);
 
 //* Create a new client asset
 router.post("/client-assets", createClientAsset);

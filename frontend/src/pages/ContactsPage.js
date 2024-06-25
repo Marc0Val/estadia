@@ -1,50 +1,28 @@
 import React, { useState, useEffect } from "react";
-// import axios from "axios";
-// import Swal from "sweetalert2";
 import TablaInfo from "../components/TablaInfo";
 import BotonModal from "../components/Buttons/BotonModal";
 import FormularioContactos from "../components/Forms/FormularioContactos";
 import Header from "../components/Header";
+import { getContactsRequest } from "../api/contacts.api";
 
 const ContactsPage = () => {
-  // info de prueba: Nombre	Celular	Celular	Telefono
-  const [data, setData] = useState([]);
-  const columnNames = ["Nombre", "Celular", "Correo", "Telefono"];
-  useEffect(() => {
-    const fetchData = async () => {
-      setData([
-        {
-          idCodigo: 1,
-          Nombre: "Nombre 1",
-          Celular: "1234567890",
-          Correo: "test@test.com",
-          Telefono: "1234567890",
-        },
-        {
-          idCodigo: 2,
-          Nombre: "Nombre 2",
-          Celular: "1234567890",
-          Correo: "test@test.com",
-          Telefono: "1234567890",
-        },
-        {
-          idCodigo: 3,
-          Nombre: "Nombre 3",
-          Celular: "1234567890",
-          Correo: "test@test.com",
-          Telefono: "1234567890",
-        },
-        {
-          idCodigo: 4,
-          Nombre: "Nombre 4",
-          Celular: "1234567890",
-          Correo: "test@test.com",
-          Telefono: "1234567890",
-        },
-      ]);
-    };
+  const [contacts, setContacts] = useState([]);
 
-    fetchData();
+  const columnNames = ["id_contact", "name_", "cell_number", "email", "title"];
+
+  useEffect(() => {
+    async function cargarContactos() {
+      const response = await getContactsRequest();
+      if (Array.isArray(response.data)) {
+        // Asegúrate de que response.data sea un arreglo
+        setContacts(response.data);
+      } else {
+        console.log("La respuesta no es un arreglo", response.data);
+        setContacts([]);
+      }
+      console.log(response);
+    }
+    cargarContactos();
   }, []);
 
   return (
@@ -63,7 +41,19 @@ const ContactsPage = () => {
           />
         }
       />
-      <TablaInfo columns={columnNames} data={data} totalRecords={data.length} />
+      <TablaInfo
+        columns={columnNames}
+        data={contacts}
+        totalRecords={contacts.length}
+        fetchElemento={getContactsRequest}
+        hiddenColumns={["id_contact"]}
+        customColumnNames={{
+          name_: "Nombre",
+          cell_number: "Número de celular",
+          email: "Correo electrónico",
+          title: "Título",
+        }}
+      />
     </div>
   );
 };

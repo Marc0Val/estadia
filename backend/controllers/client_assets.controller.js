@@ -10,6 +10,18 @@ export const getClientAssets = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+// get all clients v2 (traer el nombre del proveedor y producto en vez del id del mismo)
+export const getClientAssetProviderProduct = async (req, res) => {
+  try {
+    const [result] = await pool.query(
+      "SELECT c.id_client_asset, p.name_ AS product, cl.trade_name AS client, c.name_, c.description_, c.serial_, c.inventory_number FROM client_assets c INNER JOIN products p ON c.product_id = p.id_product INNER JOIN clients cl ON c.client_id = cl.id_client"
+    );
+
+    res.json(result);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
 
 //* Get a client asset by ID
 export const getClientAsset = async (req, res) => {
