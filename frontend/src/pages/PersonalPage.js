@@ -3,45 +3,25 @@ import TablaInfo from "../components/TablaInfo";
 import BotonModal from "../components/Buttons/BotonModal";
 import FormularioPersonal from "../components/Forms/FormularioPersonal";
 import Header from "../components/Header";
+import { getPersonalRoleRequest } from "../api/personal.api";
 
 const PersonalPage = () => {
-  const [data, setData] = useState([]);
-  const columnNames = ["Nombre", "Celular", "Rol", "Estado"]; 
-  useEffect(() => {
-    const fetchData = async () => {
-      setData([
-        {
-          idCodigo: 1,
-          Nombre: "Juan Perez",
-          Celular: "1234567890",
-          Rol: "Administrador",
-          Estado: "Activo",
-        },
-        {
-          idCodigo: 2,
-          Nombre: "Maria Lopez",
-          Celular: "0987654321",
-          Rol: "Cajero",
-          Estado: "Activo",
-        },
-        {
-          idCodigo: 3,
-          Nombre: "Pedro Ramirez",
-          Celular: "6789012345",
-          Rol: "Cajero",
-          Estado: "Inactivo",
-        },
-        {
-          idCodigo: 4,
-          Nombre: "Ana Rodriguez",
-          Celular: "5432167890",
-          Rol: "Administrador",
-          Estado: "Activo",
-        },
-      ]);
-    };
+  const [personal, setPersonal] = useState([]);
+  const columnNames = ["name_", "last_name", "cell_number", "name_role"];
 
-    fetchData();
+  useEffect(() => {
+    async function cargarPersonal() {
+      const response = await getPersonalRoleRequest();
+      if (Array.isArray(response.data)) {
+        // Asegúrate de que response.data sea un arreglo
+        setPersonal(response.data);
+      } else {
+        console.log("La respuesta no es un arreglo", response.data);
+        setPersonal([]);
+      }
+      console.log(response);
+    }
+    cargarPersonal();
   }, []);
 
   return (
@@ -60,7 +40,19 @@ const PersonalPage = () => {
           />
         }
       />
-      <TablaInfo columns={columnNames} data={data} totalRecords={data.length} />
+      <TablaInfo
+        columns={columnNames}
+        data={personal}
+        totalRecords={personal.length}
+        fetchElemento={getPersonalRoleRequest}
+        hiddenColumns={["role_id"]}
+        customColumnNames={{
+          name_: "Nombre",
+          last_name: "Apellido",
+          cell_number: "Celular",
+          name_role: "Rol",
+        }}
+      />
     </div>
   );
 };

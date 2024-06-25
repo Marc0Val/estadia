@@ -4,11 +4,12 @@ import {
   validateRequest,
 } from "../validators/validate_email.js";
 import {
+  createUser,
+  deleteUser,
   getUser,
   getUsers,
-  createUser,
+  getUsersRole,
   updateUser,
-  deleteUser,
 } from "../controllers/users.controller.js";
 
 const router = Router();
@@ -18,6 +19,9 @@ router.get("/personal", getUsers);
 
 //* Get a user by ID
 router.get("/personal/:id", getUser);
+
+//* Get all users with role name
+router.get("/personal-role", getUsersRole);
 
 //* Insert a new user
 router.post("/personal", [validateEmail("email"), validateRequest], createUser);

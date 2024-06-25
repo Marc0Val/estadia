@@ -12,7 +12,18 @@ export const getUsers = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+//* Get all users v2 (traer el nombre del rol en vez del id del mismo)
+export const getUsersRole = async (req, res) => {
+  try {
+    const [result] = await pool.query(
+      "SELECT p.id_personal, p.name_, p.last_name, p.title, p.email, p.cell_number, p.country, p.state_, p.city, p.phone, p.address_, p.password_, r.name_role FROM personal p INNER JOIN roles r ON p.role_id = r.id_role"
+    );
 
+    res.json(result);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
 //* Get one user
 export const getUser = async (req, res) => {
   try {
@@ -67,7 +78,7 @@ export const createUser = async (req, res) => {
       ]
     );
 
-    res.json({ id: result.insertId, name_, last_name, role_id});
+    res.json({ id: result.insertId, name_, last_name, role_id });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
