@@ -74,7 +74,7 @@ const FormularioClientes = () => {
         }
       }}
     >
-      {({ isValid, dirty }) => (
+      {({ errors, isValid, dirty }) => (
         <Container className="mt-4">
           <Form>
             <p className="text-muted">
@@ -90,7 +90,9 @@ const FormularioClientes = () => {
                   type="text"
                   id="trade_name"
                   name="trade_name"
-                  className="form-control"
+                  className={`form-control ${
+                    errors.trade_name ? "is-invalid" : ""
+                  }`}
                 />
                 <ErrorMessage
                   name="trade_name"
@@ -108,7 +110,9 @@ const FormularioClientes = () => {
                   as="select"
                   id="business_type"
                   name="business_type"
-                  className="form-control"
+                  className={`form-control ${
+                    errors.business_type ? "is-invalid" : ""
+                  }`}
                 >
                   <option value="Comercial">Comercial</option>
                   <option value="Equipo Medico">Equipo Medico</option>
@@ -149,7 +153,7 @@ const FormularioClientes = () => {
                   type="email"
                   id="email"
                   name="email"
-                  className="form-control"
+                  className={`form-control ${errors.email ? "is-invalid" : ""}`}
                 />
                 <ErrorMessage
                   name="email"
@@ -167,7 +171,9 @@ const FormularioClientes = () => {
                   type="text"
                   id="street"
                   name="street"
-                  className="form-control"
+                  className={`form-control ${
+                    errors.street ? "is-invalid" : ""
+                  }`}
                 />
                 <ErrorMessage
                   name="street"
@@ -183,7 +189,9 @@ const FormularioClientes = () => {
                   type="text"
                   id="number_"
                   name="number_"
-                  className="form-control"
+                  className={`form-control ${
+                    errors.number_ ? "is-invalid" : ""
+                  }`}
                 />
                 <ErrorMessage
                   name="number_"
@@ -235,7 +243,7 @@ const FormularioClientes = () => {
                   type="text"
                   id="city"
                   name="city"
-                  className="form-control"
+                  className={`form-control ${errors.city ? "is-invalid" : ""}`}
                 />
                 <ErrorMessage
                   name="city"
@@ -251,7 +259,9 @@ const FormularioClientes = () => {
                   type="text"
                   id="country"
                   name="country"
-                  className="form-control"
+                  className={`form-control ${
+                    errors.country ? "is-invalid" : ""
+                  }`}
                 />
                 <ErrorMessage
                   name="country"
@@ -267,7 +277,9 @@ const FormularioClientes = () => {
                   type="text"
                   id="state_"
                   name="state_"
-                  className="form-control"
+                  className={`form-control ${
+                    errors.state_ ? "is-invalid" : ""
+                  }`}
                 />
                 <ErrorMessage
                   name="state_"
@@ -306,7 +318,9 @@ const FormularioClientes = () => {
                   type="text"
                   id="contact_name"
                   name="contact_name"
-                  className="form-control"
+                  className={`form-control ${
+                    errors.contact_name ? "is-invalid" : ""
+                  }`}
                 />
                 <ErrorMessage
                   name="contact_name"
@@ -356,7 +370,9 @@ const FormularioClientes = () => {
                   type="tel"
                   id="contact_cell_phone"
                   name="contact_cell_phone"
-                  className="form-control"
+                  className={`form-control ${
+                    errors.contact_cell_phone ? "is-invalid" : ""
+                  }`}
                 />
                 <ErrorMessage
                   name="contact_cell_phone"
@@ -374,7 +390,9 @@ const FormularioClientes = () => {
                   type="email"
                   id="contact_email"
                   name="contact_email"
-                  className="form-control"
+                  className={`form-control ${
+                    errors.contact_email ? "is-invalid" : ""
+                  }`}
                 />
                 <ErrorMessage
                   name="contact_email"
