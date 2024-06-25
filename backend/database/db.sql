@@ -40,7 +40,6 @@ CREATE TABLE
         city VARCHAR(100) NOT NULL,
         country VARCHAR(100) NOT NULL,
         state_ VARCHAR(100) NOT NULL,
-        location_ TEXT,
         notes TEXT,
         contact_name VARCHAR(255) NOT NULL,
         contact_title VARCHAR(100),
