@@ -4,7 +4,7 @@ import { pool } from "../db.js";
 export const getContacts = async (req, res) => {
   try {
     const [result] = await pool.query(
-      "SELECT * FROM contacts ORDER BY name DESC"
+      "SELECT * FROM contacts ORDER BY name_ DESC"
     );
 
     res.json(result);
@@ -35,45 +35,45 @@ export const getContact = async (req, res) => {
 export const createContact = async (req, res) => {
   try {
     const {
-      name,
+      name_,
       last_name,
       position,
       title,
-      type,
+      type_,
       cell_number,
       phone_number,
       email,
       street,
-      number,
+      number_,
       neighborhood,
       country,
-      state,
+      state_,
       city,
       postal_code,
     } = req.body;
 
     const [result] = await pool.query(
-      "INSERT INTO contacts(name, last_name, position, title, type, cell_number, phone_number, email, street, number, neighborhood, country, state, city, postal_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      "INSERT INTO contacts(name_, last_name, position, title, type_, cell_number, phone_number, email, street, number_, neighborhood, country, state_, city, postal_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
-        name,
+        name_,
         last_name,
         position,
         title,
-        type,
+        type_,
         cell_number,
         phone_number,
         email,
         street,
-        number,
+        number_,
         neighborhood,
         country,
-        state,
+        state_,
         city,
         postal_code,
       ]
     );
 
-    res.json({ id: result.insertId, name, last_name, position, title });
+    res.json({ id: result.insertId, name_, last_name, position, title });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
