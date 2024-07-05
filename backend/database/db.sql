@@ -1,6 +1,6 @@
-CREATE DATABASE microtest;
+CREATE DATABASE microredtest;
 
-USE microtest;
+USE microredtest;
 
 CREATE TABLE
     roles (

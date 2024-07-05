@@ -55,8 +55,8 @@ const FormularioClientes = () => {
       validationSchema={validationSchema}
       onSubmit={async (values, { resetForm }) => {
         try {
-          console.log(values);
           await createClientRequest(values);
+          console.log(values);
           Swal.fire({
             icon: "success",
             title: "Cliente creado",
