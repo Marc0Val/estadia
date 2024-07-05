@@ -3,7 +3,9 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Button, Container, Row, Col } from "react-bootstrap";
 import Swal from "sweetalert2";
-import { createClientRequest } from "../../api/clients.api";
+
+//Aquí se importa el context
+import { useClients } from "../../context/ClientsContext.jsx";
 
 // Esquema de validación
 const validationSchema = Yup.object().shape({
@@ -31,6 +33,8 @@ const validationSchema = Yup.object().shape({
 });
 
 const FormularioClientes = () => {
+  //Aquí se manda a llamar la función que vamor a usar, en el caso de este form vamos a usar la de crear un nuevo cliente
+  const { createClient } = useClients();
   return (
     <Formik
       initialValues={{
@@ -55,7 +59,7 @@ const FormularioClientes = () => {
       validationSchema={validationSchema}
       onSubmit={async (values, { resetForm }) => {
         try {
-          await createClientRequest(values);
+          await createClient(values);
           console.log(values);
           Swal.fire({
             icon: "success",

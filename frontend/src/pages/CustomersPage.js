@@ -3,10 +3,10 @@ import TablaInfo from "../components/TablaInfo";
 import BotonModal from "../components/Buttons/BotonModal";
 import FormularioClientes from "../components/Forms/FormularioClientes";
 import Header from "../components/Header";
-import { getClientsRequest } from "../api/clients.api";
+import { useClients } from "../context/ClientsContext.jsx";
 
 const PersonalPage = () => {
-  const [clients, setClients] = useState([]);
+  const { clients, getClients } = useClients();
   const columnNames = [
     "id_client",
     "trade_name",
@@ -17,18 +17,7 @@ const PersonalPage = () => {
   ];
 
   useEffect(() => {
-    async function cargarClientes() {
-      const response = await getClientsRequest();
-      if (Array.isArray(response.data)) {
-        // Asegúrate de que response.data sea un arreglo
-        setClients(response.data);
-      } else {
-        console.log("La respuesta no es un arreglo", response.data);
-        setClients([]);
-      }
-      console.log(response);
-    }
-    cargarClientes();
+    getClients();
   }, []);
 
   return (
@@ -51,7 +40,7 @@ const PersonalPage = () => {
         columns={columnNames}
         data={clients}
         totalRecords={clients.length}
-        fetchElemento={getClientsRequest}
+        fetchElemento={getClients}
         hiddenColumns={["id_client"]}
         customColumnNames={{
           trade_name: "Nombre Comercial",
