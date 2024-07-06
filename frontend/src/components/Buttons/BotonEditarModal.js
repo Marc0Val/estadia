@@ -14,7 +14,7 @@ const BotonEditarModal = ({ nombreBoton, icono, contenidoModal }) => {
         <Modal.Header closeButton>
           <Modal.Title>{nombreBoton}</Modal.Title>
         </Modal.Header>
-        <Modal.Body>{contenidoModal}</Modal.Body>
+        <Modal.Body>{contenidoModal()} </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShow(false)}>
             Cerrar

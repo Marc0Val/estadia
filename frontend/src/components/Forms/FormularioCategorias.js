@@ -1,37 +1,68 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Button, Container, Row, Col } from "react-bootstrap";
 import Swal from "sweetalert2";
-import { createCategorieRequest } from "../../api/catergory";
+import { useCategories } from "../../context/CategoriesContext";
 
 // Esquema de validación
 const validationSchema = Yup.object().shape({
   name_: Yup.string().required("Este campo es obligatorio"),
 });
 
-const FormularioCategorias = () => {
+const FormularioCategorias = ({ id_categoria }) => {
+  const { getCategory, createCategory, updateCategory } = useCategories();
+  const [initialValues, setInitialValues] = useState({
+    name_: "",
+  });
+
+  useEffect(() => {
+    const fetchCategoryData = async () => {
+      try {
+        if (id_categoria) {
+          const categoryData = await getCategory(id_categoria);
+
+          if (categoryData) {
+            setInitialValues(categoryData);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching category data:", error);
+      }
+    };
+
+    fetchCategoryData();
+  }, [id_categoria, getCategory]);
+
   return (
     <Formik
-      initialValues={{
-        name_: "",
-      }}
+      initialValues={initialValues}
+      enableReinitialize={true}
       validationSchema={validationSchema}
       onSubmit={async (values, { resetForm }) => {
         try {
-          console.log(values);
-          await createCategorieRequest(values);
-          Swal.fire({
-            icon: "success",
-            title: "Categoría creada",
-            showConfirmButton: false,
-            timer: 1500,
-          });
+          if (id_categoria) {
+            await updateCategory(id_categoria, values);
+            Swal.fire({
+              icon: "success",
+              title: "Categoría actualizada",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          } else {
+            await createCategory(values);
+            Swal.fire({
+              icon: "success",
+              title: "Categoría creada",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
           resetForm();
         } catch (error) {
           Swal.fire({
             icon: "error",
-            title: "Error al crear la categoría",
+            title: "Error al guardar la categoría",
             showConfirmButton: false,
             timer: 1500,
           });
@@ -86,5 +117,3 @@ const FormularioCategorias = () => {
 };
 
 export default FormularioCategorias;
-
-

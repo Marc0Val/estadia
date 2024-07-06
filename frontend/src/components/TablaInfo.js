@@ -1,14 +1,44 @@
-import React from "react";
+import React, { useEffect, useCallback } from "react";
 import BotonEditarModal from "./Buttons/BotonEditarModal";
+import FormularioClientes from "../components/Forms/FormularioClientes";
+import FormularioCategorias from "../components/Forms/FormularioCategorias";
 
 const TablaInfo = ({
   columns,
   data,
   totalRecords,
-  fetchElemento,
   hiddenColumns = [],
   customColumnNames = {},
+  tipoFormulario,
 }) => {
+  const obtenerIdParaFormulario = useCallback(
+    (tipoFormulario, row) => {
+      console.log(tipoFormulario);
+      switch (tipoFormulario) {
+        case "clientes":
+          console.log(`ID de cliente: ${row.id_client}`);
+          return row.id_client;
+        case "categorias":
+          console.log(`ID de categoría: ${row.id_category}`);
+          return row.id_category;
+        default:
+          return null;
+      }
+    },
+    [tipoFormulario]
+  );
+
+  const obtenerComponenteFormulario = useCallback((tipoFormulario, id) => {
+    switch (tipoFormulario) {
+      case "clientes":
+        return <FormularioClientes id_cliente={id} />;
+      case "categorias":
+        return <FormularioCategorias id_categoria={id} />;
+      default:
+        return null;
+    }
+  }, []);
+
   return (
     <div className="table-responsive">
       <table className="table align-middle table-hover">
@@ -47,9 +77,14 @@ const TablaInfo = ({
                 )}
                 <td>
                   <BotonEditarModal
-                    nombreBoton=""
-                    icono="fa-solid fa-ellipsis"
-                    className="btnn"
+                    nombreBoton="Editar"
+                    icono="bi bi-pencil"
+                    contenidoModal={() =>
+                      obtenerComponenteFormulario(
+                        tipoFormulario,
+                        obtenerIdParaFormulario(tipoFormulario, row)
+                      )
+                    }
                   />
                 </td>
               </tr>

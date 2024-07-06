@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import { Button, Container, Row, Col } from "react-bootstrap";
 import Swal from "sweetalert2";
 import { createServiceRequest } from "../../api/services.api";
-import { getCategoriesRequest } from "../../api/catergory";
+import { getCategoriesRequest } from "../../api/category.api";
 
 // Esquema de validación
 const validationSchema = Yup.object().shape({

@@ -1,42 +1,31 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import TablaInfo from "../components/TablaInfo";
 import BotonModal from "../components/Buttons/BotonModal";
 import FormularioCategorias from "../components/Forms/FormularioCategorias";
 import Header from "../components/Header";
-import { getCategoriesRequest } from "../api/catergory";
+import { useCategories } from "../context/CategoriesContext.jsx";
 
 const CategoryPage = () => {
-  const [categories, setCategories] = useState([]);
+  const { categories, getCategories } = useCategories();
   const columnNames = ["id_category", "name_"];
 
   useEffect(() => {
-    async function cargarCategorias() {
-      const response = await getCategoriesRequest();
-      if (Array.isArray(response.data)) {
-        // Asegúrate de que response.data sea un arreglo
-        setCategories(response.data);
-      } else {
-        console.log("La respuesta no es un arreglo", response.data);
-        setCategories([]);
-      }
-      console.log(response);
-    }
-    cargarCategorias();
+    getCategories();
   }, []);
 
   return (
     <div className="contenedor container-fluid">
       <p className="subtitulo">
-        <i className="fas fa-users"></i> Categoria
+        <i className="fas fa-users"></i> Categoría
       </p>
       <hr />
       <Header
         botonAgregar={
           <BotonModal
-            nombreBoton="Nueva Categoria"
+            nombreBoton="Nueva Categoría"
             icono="fas fa-plus"
             contenidoModal={<FormularioCategorias />}
-            titulo="Agregar Categoria"
+            titulo="Agregar Categoría"
           />
         }
       />
@@ -44,11 +33,12 @@ const CategoryPage = () => {
         columns={columnNames}
         data={categories}
         totalRecords={categories.length}
-        fetchElemento={getCategoriesRequest}
+        fetchElemento={getCategories} // Ajusta la función según corresponda
         hiddenColumns={["id_category"]}
         customColumnNames={{
           name_: "Nombre",
         }}
+        tipoFormulario="categorias" // Puedes pasar esto al contexto si es necesario
       />
     </div>
   );

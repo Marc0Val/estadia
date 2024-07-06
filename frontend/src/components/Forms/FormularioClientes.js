@@ -1,13 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Button, Container, Row, Col } from "react-bootstrap";
 import Swal from "sweetalert2";
+import { useClients } from "../../context/ClientsContext";
 
-//Aquí se importa el context
-import { useClients } from "../../context/ClientsContext.jsx";
-
-// Esquema de validación
 const validationSchema = Yup.object().shape({
   trade_name: Yup.string().required("Este campo es obligatorio"),
   business_type: Yup.string().required("Este campo es obligatorio"),
@@ -32,53 +29,85 @@ const validationSchema = Yup.object().shape({
     .required("Este campo es obligatorio"),
 });
 
-const FormularioClientes = () => {
-  //Aquí se manda a llamar la función que vamor a usar, en el caso de este form vamos a usar la de crear un nuevo cliente
-  const { createClient } = useClients();
+const FormularioClientes = ({ id_cliente }) => {
+  const { getClient, createClient, updateClient } = useClients();
+
+  const emptyValues = {
+    trade_name: "",
+    business_type: "Por Definir",
+    phone_or_cell: "",
+    email: "",
+    street: "",
+    number_: "",
+    neighborhood: "",
+    postal_code: "",
+    city: "",
+    country: "",
+    state_: "",
+    notes: "",
+    contact_name: "",
+    contact_title: "",
+    contact_area_or_position: "",
+    contact_cell_phone: "",
+    contact_email: "",
+  };
+
+  const [initialValues, setInitialValues] = useState(emptyValues);
+
+  useEffect(() => {
+    const fetchClientData = async () => {
+      try {
+        if (id_cliente) {
+          const clientData = await getClient(id_cliente);
+
+          if (clientData) {
+            setInitialValues(clientData);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching client data:", error);
+      }
+    };
+
+    fetchClientData();
+  }, [id_cliente, getClient]);
+
   return (
     <Formik
-      initialValues={{
-        trade_name: "",
-        business_type: "Por Definir",
-        phone_or_cell: "",
-        email: "",
-        street: "",
-        number_: "",
-        neighborhood: "",
-        postal_code: "",
-        city: "",
-        country: "",
-        state_: "",
-        notes: "",
-        contact_name: "",
-        contact_title: "",
-        contact_area_or_position: "",
-        contact_cell_phone: "",
-        contact_email: "",
-      }}
+      initialValues={initialValues}
+      enableReinitialize={true}
       validationSchema={validationSchema}
       onSubmit={async (values, { resetForm }) => {
         try {
-          await createClient(values);
-          console.log(values);
-          Swal.fire({
-            icon: "success",
-            title: "Cliente creado",
-            showConfirmButton: false,
-            timer: 1500,
-          });
+          if (id_cliente) {
+            await updateClient(id_cliente, values);
+            Swal.fire({
+              icon: "success",
+              title: "Cliente actualizado",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          } else {
+            await createClient(values);
+            Swal.fire({
+              icon: "success",
+              title: "Cliente creado",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
           resetForm();
         } catch (error) {
           Swal.fire({
             icon: "error",
-            title: "Error al crear el cliente",
+            title: "Error al guardar el cliente",
             showConfirmButton: false,
             timer: 1500,
           });
         }
       }}
     >
-      {({ errors, isValid, dirty }) => (
+      {({ errors, isValid, dirty, resetForm }) => (
         <Container className="mt-4">
           <Form>
             <p className="text-muted">
@@ -413,7 +442,11 @@ const FormularioClientes = () => {
             >
               <i className="fas fa-save"></i> Guardar
             </Button>
-            <Button variant="warning" type="reset">
+            <Button
+              variant="warning"
+              type="button"
+              onClick={() => resetForm({ values: emptyValues })}
+            >
               <i className="fas fa-undo"></i> Limpiar
             </Button>
           </Form>

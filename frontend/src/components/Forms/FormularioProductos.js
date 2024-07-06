@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import { Button, Container, Row, Col } from "react-bootstrap";
 import Swal from "sweetalert2";
 import { createProductRequest } from "../../api/products.api";
-import { getCategoriesRequest } from "../../api/catergory";
+import { getCategoriesRequest } from "../../api/category.api";
 import { getSuppliersRequest } from "../../api/suppliers.api";
 
 // Esquema de validación
@@ -144,7 +144,10 @@ const FormularioProducto = () => {
                 >
                   <option value="">Seleccione una categoría</option>
                   {categories.map((category) => (
-                    <option key={category.id_category} value={category.id_category}>
+                    <option
+                      key={category.id_category}
+                      value={category.id_category}
+                    >
                       {category.name_}
                     </option>
                   ))}

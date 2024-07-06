@@ -49,6 +49,7 @@ const PersonalPage = () => {
           email: "Correo Electrónico",
           phone_or_cell: "Teléfono o Celular",
         }}
+        tipoFormulario="clientes"
       />
     </div>
   );
