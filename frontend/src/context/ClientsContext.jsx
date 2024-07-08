@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import {
   getClientsRequest,
   getClientRequest,
@@ -9,10 +9,22 @@ import {
 
 const ClientsContext = createContext();
 
+export const useClients = () => {
+  const context = useContext(ClientsContext);
+  if (!context) {
+    throw new Error("useClients must be used within a ClientsProvider");
+  }
+  return context;
+};
+
 export const ClientsProvider = ({ children }) => {
   const [clients, setClients] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    getClients();
+  }, []);
 
   const getClients = async () => {
     setLoading(true);
@@ -43,6 +55,7 @@ export const ClientsProvider = ({ children }) => {
     try {
       const response = await createClientRequest(client);
       setClients((prevClients) => [...prevClients, response.data]);
+      getClients();
     } catch (err) {
       setError(err);
     } finally {
@@ -55,8 +68,9 @@ export const ClientsProvider = ({ children }) => {
     try {
       await updateClientRequest(id, client);
       setClients((prevClients) =>
-        prevClients.map((cl) => (cl.id === id ? client : cl))
+        prevClients.map((cl) => (cl.id === id ? { ...cl, ...client } : cl))
       );
+      getClients();
     } catch (err) {
       setError(err);
     } finally {
@@ -69,6 +83,7 @@ export const ClientsProvider = ({ children }) => {
     try {
       await deleteClientRequest(id);
       setClients((prevClients) => prevClients.filter((cl) => cl.id !== id));
+      getClients();
     } catch (err) {
       setError(err);
     } finally {
@@ -93,5 +108,3 @@ export const ClientsProvider = ({ children }) => {
     </ClientsContext.Provider>
   );
 };
-
-export const useClients = () => useContext(ClientsContext);

@@ -1,7 +1,8 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useCallback } from "react";
 import BotonEditarModal from "./Buttons/BotonEditarModal";
 import FormularioClientes from "../components/Forms/FormularioClientes";
 import FormularioCategorias from "../components/Forms/FormularioCategorias";
+import FormularioRoles from "../components/Forms/FormularioRoles";
 
 const TablaInfo = ({
   columns,
@@ -15,12 +16,15 @@ const TablaInfo = ({
     (tipoFormulario, row) => {
       console.log(tipoFormulario);
       switch (tipoFormulario) {
-        case "clientes":
+        case "clients":
           console.log(`ID de cliente: ${row.id_client}`);
           return row.id_client;
-        case "categorias":
+        case "categories":
           console.log(`ID de categoría: ${row.id_category}`);
           return row.id_category;
+        case "roles":
+          console.log(`ID de rol: ${row.id_role}`);
+          return row.id_role;
         default:
           return null;
       }
@@ -30,10 +34,12 @@ const TablaInfo = ({
 
   const obtenerComponenteFormulario = useCallback((tipoFormulario, id) => {
     switch (tipoFormulario) {
-      case "clientes":
+      case "clients":
         return <FormularioClientes id_cliente={id} />;
-      case "categorias":
+      case "categories":
         return <FormularioCategorias id_categoria={id} />;
+      case "roles":
+        return <FormularioRoles id_rol={id} />;
       default:
         return null;
     }

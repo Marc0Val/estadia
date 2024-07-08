@@ -33,12 +33,12 @@ const CategoryPage = () => {
         columns={columnNames}
         data={categories}
         totalRecords={categories.length}
-        fetchElemento={getCategories} // Ajusta la función según corresponda
+        // fetchElemento={getCategories}
         hiddenColumns={["id_category"]}
         customColumnNames={{
           name_: "Nombre",
         }}
-        tipoFormulario="categorias" // Puedes pasar esto al contexto si es necesario
+        tipoFormulario="categories"
       />
     </div>
   );

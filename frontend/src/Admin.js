@@ -7,7 +7,7 @@ import PersonalPage from "./pages/PersonalPage";
 import ActiveCustomerPage from "./pages/ActiveCustomerPage";
 import CategoryPage from "./pages/CategoryPage";
 import ContactsPage from "./pages/ContactsPage";
-import CustomersPage from "./pages/CustomersPage";
+import ClientsPage from "./pages/ClientsPage";
 import DocumentPage from "./pages/DocumentPage";
 import OrderServicePage from "./pages/OrderServicePage";
 // deshabil hasta el momento 21/05/2024
@@ -36,7 +36,7 @@ const Admin = () => {
           <Route path="/activos-de-clientes" element={<ActiveCustomerPage />} />
           <Route path="/categorias" element={<CategoryPage />} />
           <Route path="/contactos" element={<ContactsPage />} />
-          <Route path="/clientes" element={<CustomersPage />} />
+          <Route path="/clientes" element={<ClientsPage />} />
           <Route path="/documentos" element={<DocumentPage />} />
           {/* <Route path="/ordenes-de-servicio" element={<OrderServicePage />} /> */}
           {/* <Route path="/polizas" element={<PolicyPage />} /> */}

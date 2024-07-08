@@ -9,7 +9,13 @@ import {
 
 const CategoriesContext = createContext();
 
-export const useCategories = () => useContext(CategoriesContext);
+export const useCategories = () => {
+  const context = useContext(CategoriesContext);
+  if (!context) {
+    throw new Error("useCategories must be used within a CategoriesProvider");
+  }
+  return context;
+};
 
 export const CategoriesProvider = ({ children }) => {
   const [categories, setCategories] = useState([]);
@@ -40,6 +46,7 @@ export const CategoriesProvider = ({ children }) => {
     try {
       const response = await createCategoryRequest(category);
       setCategories([...categories, response.data]);
+      getCategories();
     } catch (error) {
       console.error("Error creating category:", error);
       throw error;
@@ -52,6 +59,7 @@ export const CategoriesProvider = ({ children }) => {
       const updatedCategories = categories.map((cat) =>
         cat.id === id ? { ...cat, ...category } : cat
       );
+      getCategories();
       setCategories(updatedCategories);
     } catch (error) {
       console.error(`Error updating category with ID ${id}:`, error);
@@ -63,6 +71,7 @@ export const CategoriesProvider = ({ children }) => {
     try {
       await deleteCategoryRequest(id);
       setCategories(categories.filter((cat) => cat.id !== id));
+      getCategories();
     } catch (error) {
       console.error(`Error deleting category with ID ${id}:`, error);
       throw error;

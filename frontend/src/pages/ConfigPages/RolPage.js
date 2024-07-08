@@ -1,25 +1,15 @@
 import React, { useEffect, useState } from "react";
 import TablaInfo from "../../components/TablaInfo";
 import BotonModal from "../../components/Buttons/BotonModal";
-import FormularioRol from "../../components/Forms/FormularioRol";
-import { getRolesUsersRequest } from "../../api/role.api";
+import FormularioRol from "../../components/Forms/FormularioRoles";
+import { useRoles } from "../../context/RolesContext";
 
 const RolPage = () => {
-  const [roles, setRoles] = useState([]);
+  const { rolesUsers, getRolesUsers } = useRoles();
   const columnNames = ["id_role", "name_role", "users"];
 
   useEffect(() => {
-    async function cargarRoles() {
-      const response = await getRolesUsersRequest();
-      if (Array.isArray(response.data)) {
-        setRoles(response.data);
-      } else {
-        console.log("La respuesta no es un arreglo", response.data);
-        setRoles([]);
-      }
-      console.log(response);
-    }
-    cargarRoles();
+    getRolesUsers();
   }, []);
 
   return (
@@ -37,13 +27,14 @@ const RolPage = () => {
       <hr />
       <TablaInfo
         columns={columnNames}
-        data={roles}
-        totalRecords={roles.length}
+        data={rolesUsers}
+        totalRecords={rolesUsers.length}
         hiddenColumns={["id_role"]}
         customColumnNames={{
           name_role: "Nombre",
           users: "Usuarios",
         }}
+        tipoFormulario="roles"
       />
     </div>
   );

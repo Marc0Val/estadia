@@ -30,6 +30,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const FormularioClientes = ({ id_cliente }) => {
+  console.log(id_cliente);
   const { getClient, createClient, updateClient } = useClients();
 
   const emptyValues = {
@@ -58,6 +59,7 @@ const FormularioClientes = ({ id_cliente }) => {
     const fetchClientData = async () => {
       try {
         if (id_cliente) {
+          console.log(id_cliente);
           const clientData = await getClient(id_cliente);
 
           if (clientData) {

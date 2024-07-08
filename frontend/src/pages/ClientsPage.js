@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import TablaInfo from "../components/TablaInfo";
 import BotonModal from "../components/Buttons/BotonModal";
 import FormularioClientes from "../components/Forms/FormularioClientes";
 import Header from "../components/Header";
 import { useClients } from "../context/ClientsContext.jsx";
 
-const PersonalPage = () => {
+const ClientsPage = () => {
   const { clients, getClients } = useClients();
   const columnNames = [
     "id_client",
@@ -40,7 +40,7 @@ const PersonalPage = () => {
         columns={columnNames}
         data={clients}
         totalRecords={clients.length}
-        fetchElemento={getClients}
+        // fetchElemento={getClients}
         hiddenColumns={["id_client"]}
         customColumnNames={{
           trade_name: "Nombre Comercial",
@@ -49,10 +49,10 @@ const PersonalPage = () => {
           email: "Correo Electrónico",
           phone_or_cell: "Teléfono o Celular",
         }}
-        tipoFormulario="clientes"
+        tipoFormulario="clients"
       />
     </div>
   );
 };
 
-export default PersonalPage;
+export default ClientsPage;

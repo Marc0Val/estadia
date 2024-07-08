@@ -11,15 +11,20 @@ const validationSchema = Yup.object().shape({
 });
 
 const FormularioCategorias = ({ id_categoria }) => {
+  console.log(id_categoria);
   const { getCategory, createCategory, updateCategory } = useCategories();
-  const [initialValues, setInitialValues] = useState({
+
+  const emptyValues = {
     name_: "",
-  });
+  };
+
+  const [initialValues, setInitialValues] = useState(emptyValues);
 
   useEffect(() => {
     const fetchCategoryData = async () => {
       try {
         if (id_categoria) {
+          console.log(id_categoria);
           const categoryData = await getCategory(id_categoria);
 
           if (categoryData) {
@@ -69,7 +74,7 @@ const FormularioCategorias = ({ id_categoria }) => {
         }
       }}
     >
-      {({ handleChange, handleSubmit, values, errors, isValid, dirty }) => (
+      {({ errors, isValid, dirty, resetForm }) => (
         <Container className="mt-4">
           <Form>
             <p className="text-muted">
@@ -104,7 +109,12 @@ const FormularioCategorias = ({ id_categoria }) => {
                 >
                   <i className="fas fa-save"></i> Guardar
                 </Button>
-                <Button variant="danger" type="reset" className="ms-2">
+                <Button
+                  variant="danger"
+                  type="reset"
+                  className="ms-2"
+                  onClick={() => resetForm({ values: emptyValues })}
+                >
                   <i className="fas fa-eraser"></i> Limpiar
                 </Button>
               </Col>
