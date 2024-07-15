@@ -24,6 +24,7 @@ import FormularioOrdenServicio from "./pages/Forms/FormularioordenServicio";
 import FormularioCotizacion from "./pages/Forms/FormularioCotizacion";
 import FormularioOrdenCompra from "./pages/Forms/FormularioOrdenCompra";
 import NotFoundPage from "./pages/NotFoundPage";
+import CalendarPage from "./pages/CalendarPage";
 
 const Admin = () => {
   return (
@@ -32,7 +33,8 @@ const Admin = () => {
       <div className="content">
         <Navbar />
         <Routes>
-          <Route path="/" element={<PersonalPage />} />
+          <Route path="/" element={<CalendarPage />} />
+          <Route path="/personal" element={<PersonalPage />} />
           <Route path="/activos-de-clientes" element={<ActiveCustomerPage />} />
           <Route path="/categorias" element={<CategoryPage />} />
           <Route path="/contactos" element={<ContactsPage />} />
@@ -62,6 +64,7 @@ const Admin = () => {
             element={<FormularioOrdenCompra />}
           />
           <Route path="*" element={<NotFoundPage />} />
+          
         </Routes>
       </div>
     </div>

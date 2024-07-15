@@ -38,6 +38,17 @@ const Sidebar = () => {
               onClick={() => window.innerWidth <= 768 && toggleSidebar()}
               className={location.pathname === "/admin/" ? "active" : ""}
             >
+              <i className="fas fa-calendar"></i>
+              Calendario
+            </li>
+          </NavLink>
+          <NavLink to="/admin/personal  " className="lii">
+            <li
+              onClick={() => window.innerWidth <= 768 && toggleSidebar()}
+              className={
+                location.pathname === "/admin/personal" ? "active" : ""
+              }
+            >
               <i className="fas fa-users"></i>
               Personal
             </li>
@@ -45,7 +56,9 @@ const Sidebar = () => {
           <NavLink to="/admin/clientes" className="lii">
             <li
               onClick={() => window.innerWidth <= 768 && toggleSidebar()}
-              className={location.pathname === "/admin/clientes" ? "active" : ""}
+              className={
+                location.pathname === "/admin/clientes" ? "active" : ""
+              }
             >
               <i className="fas fa-users"></i>
               Clientes
@@ -54,7 +67,9 @@ const Sidebar = () => {
           <NavLink to="/admin/proveedores" className="lii">
             <li
               onClick={() => window.innerWidth <= 768 && toggleSidebar()}
-              className={location.pathname === "/admin/proveedores" ? "active" : ""}
+              className={
+                location.pathname === "/admin/proveedores" ? "active" : ""
+              }
             >
               <i className="fas fa-truck"></i>
               Proveedores
@@ -63,7 +78,9 @@ const Sidebar = () => {
           <NavLink to="/admin/contactos" className="lii">
             <li
               onClick={() => window.innerWidth <= 768 && toggleSidebar()}
-              className={location.pathname === "/admin/contactos" ? "active" : ""}
+              className={
+                location.pathname === "/admin/contactos" ? "active" : ""
+              }
             >
               <i className="fas fa-address-book"></i>
               Contactos
@@ -72,7 +89,9 @@ const Sidebar = () => {
           <NavLink to="/admin/categorias" className="lii">
             <li
               onClick={() => window.innerWidth <= 768 && toggleSidebar()}
-              className={location.pathname === "/admin/categorias" ? "active" : ""}
+              className={
+                location.pathname === "/admin/categorias" ? "active" : ""
+              }
             >
               <i className="fas fa-list"></i>
               Categorías
@@ -81,7 +100,9 @@ const Sidebar = () => {
           <NavLink to="/admin/productos" className="lii">
             <li
               onClick={() => window.innerWidth <= 768 && toggleSidebar()}
-              className={location.pathname === "/admin/productos" ? "active" : ""}
+              className={
+                location.pathname === "/admin/productos" ? "active" : ""
+              }
             >
               <i className="fas fa-box"></i>
               Productos
@@ -90,7 +111,9 @@ const Sidebar = () => {
           <NavLink to="/admin/servicios" className="lii">
             <li
               onClick={() => window.innerWidth <= 768 && toggleSidebar()}
-              className={location.pathname === "/admin/servicios" ? "active" : ""}
+              className={
+                location.pathname === "/admin/servicios" ? "active" : ""
+              }
             >
               <i className="fas fa-concierge-bell"></i>
               Servicios
@@ -99,7 +122,9 @@ const Sidebar = () => {
           <NavLink to="/admin/ordenes-servicio" className="lii">
             <li
               onClick={() => window.innerWidth <= 768 && toggleSidebar()}
-              className={location.pathname === "/admin/ordenes-servicio" ? "active" : ""}
+              className={
+                location.pathname === "/admin/ordenes-servicio" ? "active" : ""
+              }
             >
               <i className="fas fa-tools"></i>
               Ordenes de Servicio
@@ -108,7 +133,9 @@ const Sidebar = () => {
           <NavLink to="/admin/cotizaciones" className="lii">
             <li
               onClick={() => window.innerWidth <= 768 && toggleSidebar()}
-              className={location.pathname === "/admin/cotizaciones" ? "active" : ""}
+              className={
+                location.pathname === "/admin/cotizaciones" ? "active" : ""
+              }
             >
               <i className="fas fa-file-invoice-dollar"></i>
               Cotizaciones
@@ -117,7 +144,9 @@ const Sidebar = () => {
           <NavLink to="/admin/ordenes-de-compra" className="lii">
             <li
               onClick={() => window.innerWidth <= 768 && toggleSidebar()}
-              className={location.pathname === "/admin/ordenes-de-compra" ? "active" : ""}
+              className={
+                location.pathname === "/admin/ordenes-de-compra" ? "active" : ""
+              }
             >
               <i className="fas fa-shopping-cart"></i>
               Ordenes de Compra
@@ -126,7 +155,11 @@ const Sidebar = () => {
           <NavLink to="/admin/activos-de-clientes" className="lii">
             <li
               onClick={() => window.innerWidth <= 768 && toggleSidebar()}
-              className={location.pathname === "/admin/activos-de-clientes" ? "active" : ""}
+              className={
+                location.pathname === "/admin/activos-de-clientes"
+                  ? "active"
+                  : ""
+              }
             >
               <i className="fas fa-wallet"></i>
               Activos de Clientes
@@ -139,8 +172,9 @@ const Sidebar = () => {
             <ul className="list-unstyled sub-options">
               <NavLink to="/admin/roles" className="lii">
                 <li
-                  
-                  className={location.pathname === "/admin/roles" ? "active" : ""}
+                  className={
+                    location.pathname === "/admin/roles" ? "active" : ""
+                  }
                 >
                   <i className="fas fa-cog"></i>Roles y Permisos
                 </li>

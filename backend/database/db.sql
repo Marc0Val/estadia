@@ -199,3 +199,19 @@ CREATE TABLE
         FOREIGN KEY (product_id) REFERENCES products (id_product),
         FOREIGN KEY (client_id) REFERENCES clients (id_client)
     );
+
+-- tabla para las tareas para el calendario
+CREATE TABLE
+    tasks (
+        id_task INTEGER PRIMARY KEY AUTO_INCREMENT,
+        title VARCHAR(255) NOT NULL,
+        client_id INTEGER NOT NULL,
+        description_ TEXT NOT NULL,
+        date_ DATE NOT NULL,
+        start_time TIME NOT NULL,
+        end_time TIME NOT NULL,
+        assigned_to INTEGER NOT NULL,
+        status_ VARCHAR(50) NOT NULL,
+        FOREIGN KEY (client_id) REFERENCES clients (id_client),
+        FOREIGN KEY (assigned_to) REFERENCES personal (id_personal)
+    );
