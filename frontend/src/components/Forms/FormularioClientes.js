@@ -445,11 +445,11 @@ const FormularioClientes = ({ id_cliente }) => {
               <i className="fas fa-save"></i> Guardar
             </Button>
             <Button
-              variant="warning"
+              variant="danger"
               type="button"
               onClick={() => resetForm({ values: emptyValues })}
             >
-              <i className="fas fa-undo"></i> Limpiar
+              <i className="fas fa-eraser"></i> Limpiar
             </Button>
           </Form>
         </Container>

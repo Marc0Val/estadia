@@ -224,8 +224,8 @@ const FormularioActivoCliente = () => {
             >
               <i className="fas fa-save"></i> Guardar
             </Button>
-            <Button variant="warning" type="reset" className="ms-2">
-              <i className="fas fa-undo"></i> Limpiar
+            <Button variant="danger" type="reset" className="ms-2">
+              <i className="fas fa-eraser"></i> Limpiar
             </Button>
           </Form>
         </Container>

@@ -199,8 +199,8 @@ const FormularioServicio = () => {
             >
               <i className="fas fa-save"></i> Guardar
             </Button>
-            <Button variant="warning" type="reset">
-              <i className="fas fa-undo"></i> Limpiar
+            <Button variant="danger" type="reset">
+              <i className="fas fa-eraser"></i> Limpiar
             </Button>
           </Form>
         </Container>
