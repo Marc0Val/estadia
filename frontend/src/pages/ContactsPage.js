@@ -4,6 +4,7 @@ import BotonModal from "../components/Buttons/BotonModal";
 import FormularioContactos from "../components/Forms/FormularioContactos";
 import Header from "../components/Header";
 import { getContactsRequest } from "../api/contacts.api";
+import BotonPDF from "../components/Buttons/BotonPDF";
 
 const ContactsPage = () => {
   const [contacts, setContacts] = useState([]);
@@ -14,7 +15,6 @@ const ContactsPage = () => {
     async function cargarContactos() {
       const response = await getContactsRequest();
       if (Array.isArray(response.data)) {
-        // Asegúrate de que response.data sea un arreglo
         setContacts(response.data);
       } else {
         console.log("La respuesta no es un arreglo", response.data);
@@ -32,6 +32,18 @@ const ContactsPage = () => {
       </p>
       <hr />
       <Header
+        contenido={
+          <BotonPDF
+            pageTitle={"Contactos"}
+            columns={{
+              name_: "Nombre",
+              cell_number: "Número de celular",
+              email: "Correo electrónico",
+              title: "Título",
+            }}
+            data={contacts}
+          />
+        }
         botonAgregar={
           <BotonModal
             nombreBoton="Nuevo Contacto"

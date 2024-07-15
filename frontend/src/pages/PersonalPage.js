@@ -4,6 +4,7 @@ import BotonModal from "../components/Buttons/BotonModal";
 import FormularioPersonal from "../components/Forms/FormularioPersonal";
 import Header from "../components/Header";
 import { getPersonalRoleRequest } from "../api/personal.api";
+import BotonPDF from "../components/Buttons/BotonPDF";
 
 const PersonalPage = () => {
   const [personal, setPersonal] = useState([]);
@@ -31,6 +32,18 @@ const PersonalPage = () => {
       </p>
       <hr />
       <Header
+        contenido={
+          <BotonPDF
+            pageTitle={"Personal"}
+            columns={{
+              name_: "Nombre",
+              last_name: "Apellido",
+              cell_number: "Celular",
+              name_role: "Rol",
+            }}
+            data={personal}
+          />
+        }
         botonAgregar={
           <BotonModal
             nombreBoton="Nuevo Personal"

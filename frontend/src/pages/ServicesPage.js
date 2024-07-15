@@ -4,6 +4,7 @@ import BotonModal from "../components/Buttons/BotonModal";
 import FormularioServicios from "../components/Forms/FormularioServicios";
 import Header from "../components/Header";
 import { getServicesRequest } from "../api/services.api";
+import BotonPDF from "../components/Buttons/BotonPDF";
 
 const ServicesPage = () => {
   const [services, setServices] = useState([]);
@@ -31,6 +32,16 @@ const ServicesPage = () => {
       </p>
       <hr />
       <Header
+        contenido={
+          <BotonPDF
+            pageTitle={"Servicios"}
+            columns={{
+              name_: "Nombre",
+              sale_price: "Precio",
+            }}
+            data={services}
+          />
+        }
         botonAgregar={
           <BotonModal
             nombreBoton="Nuevo Servicio"

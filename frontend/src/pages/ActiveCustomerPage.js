@@ -3,12 +3,19 @@ import TablaInfo from "../components/TablaInfo";
 import BotonModal from "../components/Buttons/BotonModal";
 import FormularioActivoCliente from "../components/Forms/FormularioActivoCliente";
 import Header from "../components/Header";
-import { getClientAssetProviderProductRequest } from "../api/clientassets.api";  
+import { getClientAssetProviderProductRequest } from "../api/clientassets.api";
+import BotonPDF from "../components/Buttons/BotonPDF";
 
 const ActiveCustomerPage = () => {
   const [activeCustomer, setActiveCustomer] = useState([]);
-  
-  const columnNames = ["id_client_asset","name_", "serial_", "product", "client"];
+
+  const columnNames = [
+    "id_client_asset",
+    "name_",
+    "serial_",
+    "product",
+    "client",
+  ];
 
   useEffect(() => {
     async function cargarClientesActivos() {
@@ -32,6 +39,18 @@ const ActiveCustomerPage = () => {
       </p>
       <hr />
       <Header
+        contenido={
+          <BotonPDF
+            pageTitle={"Clientes activos"}
+            columns={{
+              name_: "Nombre",
+              serial_: "Serial",
+              product: "Producto",
+              client: "Cliente",
+            }}
+            data={activeCustomer}
+          />
+        }
         botonAgregar={
           <BotonModal
             nombreBoton="Nuevo Cliente Activo"

@@ -4,6 +4,7 @@ import BotonModal from "../components/Buttons/BotonModal";
 import FormularioProveedores from "../components/Forms/FormularioProveedores";
 import Header from "../components/Header";
 import { getSuppliersRequest } from "../api/suppliers.api";
+import BotonPDF from "../components/Buttons/BotonPDF";
 
 const ProvidersPage = () => {
   const [suppliers, setSuppliers] = useState([]);
@@ -37,6 +38,18 @@ const ProvidersPage = () => {
       </p>
       <hr />
       <Header
+        contenido={
+          <BotonPDF
+            pageTitle={"Proveedores"}
+            columns={{
+              trade_name: "Empresa",
+              contact_name: "Contacto",
+              email: "Correo",
+              contact_cell_phone: "Teléfono",
+            }}
+            data={suppliers}
+          />
+        }
         botonAgregar={
           <BotonModal
             nombreBoton="Nuevo Proveedor"

@@ -1,9 +1,10 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect } from "react";
 import TablaInfo from "../components/TablaInfo";
 import BotonModal from "../components/Buttons/BotonModal";
 import FormularioCategorias from "../components/Forms/FormularioCategorias";
 import Header from "../components/Header";
 import { useCategories } from "../context/CategoriesContext.jsx";
+import BotonPDF from "../components/Buttons/BotonPDF.js";
 
 const CategoryPage = () => {
   const { categories, getCategories } = useCategories();
@@ -20,6 +21,15 @@ const CategoryPage = () => {
       </p>
       <hr />
       <Header
+        contenido={
+          <BotonPDF
+            pageTitle={"Categorías"}
+            columns={{
+              name_: "Nombre",
+            }}
+            data={categories}
+          />
+        }
         botonAgregar={
           <BotonModal
             nombreBoton="Nueva Categoría"
@@ -33,7 +43,6 @@ const CategoryPage = () => {
         columns={columnNames}
         data={categories}
         totalRecords={categories.length}
-        // fetchElemento={getCategories}
         hiddenColumns={["id_category"]}
         customColumnNames={{
           name_: "Nombre",

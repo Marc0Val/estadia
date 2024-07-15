@@ -4,10 +4,11 @@ import BotonModal from "../components/Buttons/BotonModal";
 import FormularioProducto from "../components/Forms/FormularioProductos";
 import Header from "../components/Header";
 import { getProductsProviderRequest } from "../api/products.api";
+import BotonPDF from "../components/Buttons/BotonPDF";
 
 const ProductsPage = () => {
   const [products, setProducts] = useState([]);
-  
+
   const columnNames = [
     "id_product",
     "unit",
@@ -39,6 +40,19 @@ const ProductsPage = () => {
       </p>
       <hr />
       <Header
+        contenido={
+          <BotonPDF
+            pageTitle={"Productos"}
+            columns={{
+              unit: "Unidad",
+              name_: "Nombre",
+              sale_price: "Precio",
+              initial_stock: "Stock",
+              supplier_name: "Proveedor",
+            }}
+            data={products}
+          />
+        }
         botonAgregar={
           <BotonModal
             nombreBoton="Nuevo Producto"

@@ -4,6 +4,7 @@ import BotonModal from "../components/Buttons/BotonModal";
 import FormularioClientes from "../components/Forms/FormularioClientes";
 import Header from "../components/Header";
 import { useClients } from "../context/ClientsContext.jsx";
+import BotonPDF from "../components/Buttons/BotonPDF.js";
 
 const ClientsPage = () => {
   const { clients, getClients } = useClients();
@@ -27,6 +28,19 @@ const ClientsPage = () => {
       </p>
       <hr />
       <Header
+        contenido={
+          <BotonPDF
+            pageTitle={"Clientes"}
+            columns={{
+              trade_name: "Nombre Comercial",
+              city: "Ciudad",
+              contact_name: "Contacto",
+              email: "Correo",
+              phone_or_cell: "Celular",
+            }}
+            data={clients}
+          />
+        }
         botonAgregar={
           <BotonModal
             nombreBoton="Nuevo Cliente"
