@@ -109,7 +109,6 @@ const CalendarPage = () => {
                 }
               />
             </Form.Group>
-
             <Form.Group controlId="formEventStart">
               <Form.Label>Inicio</Form.Label>
               <Form.Control
@@ -139,17 +138,27 @@ const CalendarPage = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
+          <Button
+            variant="success"
+            onClick={handleSaveEvent}
+            disabled={
+              !currentEvent?.title || !currentEvent?.start || !currentEvent?.end
+            }
+          >
+            <i className="fas fa-save"></i> Guardar
+          </Button>
           <Button variant="secondary" onClick={() => setShowModal(false)}>
             Cerrar
           </Button>
-          <Button variant="primary" onClick={handleSaveEvent}>
-            Guardar
-          </Button>
+
           {currentEvent?.id && (
             <Button variant="danger" onClick={handleDeleteEvent}>
-              Eliminar
+              <i className="fas fa-trash"></i> Eliminar
             </Button>
           )}
+          <Button variant="ligth" onClick={() => setCurrentEvent(null)}>
+            <i className="fas fa-eraser"></i> Limpiar
+          </Button>
         </Modal.Footer>
       </Modal>
     </div>
