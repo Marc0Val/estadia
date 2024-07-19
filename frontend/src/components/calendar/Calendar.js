@@ -64,12 +64,17 @@ const CalendarComponent = () => {
             <Form.Group controlId="formEventTitle">
               <Form.Label>Título</Form.Label>
               <Form.Control
-                type="text"
+                as="select"
                 value={currentEvent?.title || ""}
                 onChange={(e) =>
                   setCurrentEvent({ ...currentEvent, title: e.target.value })
                 }
-              />
+              >
+                <option value="">Seleccionar</option>
+                <option value="Pagar">Pagar</option>
+                <option value="Llamar">Llamar</option>
+                <option value="Reunion">Reunion</option>
+              </Form.Control>
             </Form.Group>
             <Form.Group controlId="formEventStart">
               <Form.Label>Inicio</Form.Label>
