@@ -3,6 +3,8 @@ import BotonEditarModal from "./Buttons/BotonEditarModal";
 import FormularioClientes from "../components/Forms/FormularioClientes";
 import FormularioCategorias from "../components/Forms/FormularioCategorias";
 import FormularioRoles from "../components/Forms/FormularioRoles";
+import FormularioPersonal from "./Forms/FormularioPersonal";
+import FormularioContactos from "./Forms/FormularioContactos";
 
 const TablaInfo = ({
   columns,
@@ -25,6 +27,12 @@ const TablaInfo = ({
         case "roles":
           console.log(`ID de rol: ${row.id_role}`);
           return row.id_role;
+        case "personal":
+          console.log(`ID de personal: ${row.id_personal}`);
+          return row.id_personal;
+        case "contacts":
+          console.log(`ID de contact: ${row.contact}`);
+          return row.id_contact;
         default:
           return null;
       }
@@ -40,6 +48,10 @@ const TablaInfo = ({
         return <FormularioCategorias id_categoria={id} />;
       case "roles":
         return <FormularioRoles id_rol={id} />;
+      case "personal":
+        return <FormularioPersonal id_personal={id} />;
+      case "contacts":
+        return <FormularioContactos id_contact={id} />;
       default:
         return null;
     }

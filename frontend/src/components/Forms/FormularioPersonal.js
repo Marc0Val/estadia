@@ -3,27 +3,12 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Button, Row, Col } from "react-bootstrap";
 import Swal from "sweetalert2";
-import { createPersonalRequest } from "../../api/personal.api";
-import { getRolesRequest } from "../../api/role.api";
+import { usePersonal } from "../../context/PersonalContext";
+import { useRoles } from "../../context/RolesContext";
 
-const FormularioPersonal = () => {
-  const [roles, setRoles] = useState([]);
-
-  useEffect(() => {
-    const cargarRoles = async () => {
-      try {
-        const response = await getRolesRequest();
-        if (Array.isArray(response.data)) {
-          setRoles(response.data);
-        } else {
-          console.error("Error al cargar los roles:", response.data);
-        }
-      } catch (error) {
-        console.error("Error al cargar los roles:", error);
-      }
-    };
-    cargarRoles();
-  }, []);
+const FormularioPersonal = ({ id_personal }) => {
+  const { getPersonal, createPersonal, updatePersonal } = usePersonal();
+  const { roles } = useRoles();
 
   // Esquema de validación con Yup
   const validationSchema = Yup.object().shape({
@@ -50,34 +35,65 @@ const FormularioPersonal = () => {
       .required("Este campo es obligatorio"),
   });
 
+  const emptyValues = {
+    name_: "",
+    last_name: "",
+    role_id: "",
+    title: "",
+    email: "",
+    cell_number: "",
+    country: "",
+    state_: "",
+    city: "",
+    phone: "",
+    address_: "",
+    password_: "",
+    confirmPassword: "",
+  };
+
+  const [initialValues, setInitialValues] = useState(emptyValues);
+
+  useEffect(() => {
+    const fetchPersonalData = async () => {
+      try {
+        if (id_personal) {
+          const personalData = await getPersonal(id_personal);
+          if (personalData) {
+            setInitialValues(personalData);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching personal data:", error);
+      }
+    };
+
+    fetchPersonalData();
+  }, [id_personal, getPersonal]);
+
   return (
     <Formik
-      initialValues={{
-        name_: "",
-        last_name: "",
-        role_id: "",
-        title: "",
-        email: "",
-        cell_number: "",
-        country: "",
-        state_: "",
-        city: "",
-        phone: "",
-        address_: "",
-        password_: "",
-        confirmPassword: "",
-      }}
+      initialValues={initialValues}
+      enableReinitialize={true}
       validationSchema={validationSchema}
       onSubmit={async (values, { resetForm }) => {
         try {
-          // console.log("Datos a guardar:", values);
-          await createPersonalRequest(values);
-          Swal.fire({
-            icon: "success",
-            title: "Datos guardados",
-            showConfirmButton: false,
-            timer: 1500,
-          });
+          if (id_personal) {
+            await updatePersonal(id_personal, values);
+            Swal.fire({
+              icon: "success",
+              title: "Personal actualizado",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          } else {
+            await createPersonal(values);
+            Swal.fire({
+              icon: "success",
+              title: "Personal creado",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
           resetForm();
         } catch (error) {
           Swal.fire({
@@ -274,7 +290,6 @@ const FormularioPersonal = () => {
                 as="textarea"
                 name="address_"
                 id="address_"
-                rows={3}
                 className={`form-control ${
                   errors.address_ ? "is-invalid" : ""
                 }`}
@@ -324,12 +339,13 @@ const FormularioPersonal = () => {
               />
             </Col>
           </Row>
-          <hr />
-          <Button variant="success" type="submit" disabled={!isValid || !dirty}>
-            <i className="fas fa-save"></i> Guardar
-          </Button>
-          <Button variant="danger" type="reset">
-            <i className="fas fa-eraser"></i> Limpiar
+          <Button
+            type="submit"
+            className="btn btn-primary btn-block"
+            disabled={!isValid || !dirty}
+            onClick={handleSubmit}
+          >
+            {id_personal ? "Actualizar Personal" : "Registrar Personal"}
           </Button>
         </Form>
       )}

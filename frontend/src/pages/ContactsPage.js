@@ -65,6 +65,7 @@ const ContactsPage = () => {
           email: "Correo electrónico",
           title: "Título",
         }}
+        tipoFormulario="contacts"
       />
     </div>
   );

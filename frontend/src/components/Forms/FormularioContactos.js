@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { Button, Container, Row, Col } from "react-bootstrap";
+import { Button, Row, Col, Container } from "react-bootstrap";
 import Swal from "sweetalert2";
-import { createContactRequest } from "../../api/contacts.api";
+import { useContacts } from "../../context/ContactsContext";
 
-// Esquema de validación
+// Esquema de validación con Yup
 const validationSchema = Yup.object().shape({
   name_: Yup.string().required("Este campo es obligatorio"),
   last_name: Yup.string().required("Este campo es obligatorio"),
@@ -15,49 +15,83 @@ const validationSchema = Yup.object().shape({
     .required("Este campo es obligatorio")
     .matches(/^[0-9]{10}$/, "Debe ser un número de 10 dígitos"),
   email: Yup.string()
-    .email("Correo inválido")
+    .email("Correo electrónico inválido")
     .required("Este campo es obligatorio"),
 });
 
-const FormularioContacto = () => {
+const FormularioContacto = ({ id_contact }) => {
+  const { getContact, createContact, updateContact } = useContacts();
+
+  const emptyValues = {
+    name_: "",
+    last_name: "",
+    position: "",
+    title: "",
+    type_: "",
+    cell_number: "",
+    phone_number: "",
+    email: "",
+    street: "",
+    number_: "",
+    neighborhood: "",
+    country: "",
+    state_: "",
+    city: "",
+    postal_code: "",
+  };
+
+  const [initialValues, setInitialValues] = useState(emptyValues);
+
+  useEffect(() => {
+    const fetchContactData = async () => {
+      try {
+        if (id_contact) {
+          const contactData = await getContact(id_contact);
+          if (contactData) {
+            setInitialValues(contactData);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching contact data:", error);
+      }
+    };
+
+    fetchContactData();
+  }, [id_contact, getContact]);
+
   return (
     <Formik
-      initialValues={{
-        name_: "",
-        last_name: "",
-        position: "",
-        title: "",
-        type_: "",
-        cell_number: "",
-        phone_number: "",
-        email: "",
-        street: "",
-        number_: "",
-        neighborhood: "",
-        country: "",
-        state_: "",
-        city: "",
-        postal_code: "",
-      }}
+      initialValues={initialValues}
+      enableReinitialize={true}
       validationSchema={validationSchema}
       onSubmit={async (values, { resetForm }) => {
         try {
-          console.log(values);
-          await createContactRequest(values);
-          Swal.fire({
-            icon: "success",
-            title: "Contacto guardado",
-            showConfirmButton: false,
-            timer: 1500,
-          });
+          if (id_contact) {
+            await updateContact(id_contact, values);
+            Swal.fire({
+              icon: "success",
+              title: "Contacto actualizado",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          } else {
+            await createContact(values);
+            Swal.fire({
+              icon: "success",
+              title: "Contacto creado",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
           resetForm();
         } catch (error) {
           Swal.fire({
             icon: "error",
-            title: "Error al guardar el contacto",
+            title: "Error al guardar los datos",
             showConfirmButton: false,
             timer: 1500,
           });
+          console.error("Error al guardar los datos", error);
         }
       }}
     >
@@ -289,7 +323,7 @@ const FormularioContacto = () => {
               type="submit"
               disabled={!isValid || !dirty}
             >
-              <i className="fas fa-save"></i> Guardar
+              {id_contact ? "Actualizar Contacto" : "Registrar Contacto"}
             </Button>
             <Button variant="danger" type="reset" className="ms-2">
               <i className="fas fa-eraser"></i> Limpiar

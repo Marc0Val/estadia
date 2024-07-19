@@ -7,6 +7,8 @@ import { ClientsProvider } from "./context/ClientsContext";
 import { CategoriesProvider } from "./context/CategoriesContext";
 import { RolesProvider } from "./context/RolesContext";
 import { EventProvider } from "./context/TaskContext";
+import { PersonalProvider } from "./context/PersonalContext";
+import { ContactsProvider } from "./context/ContactsContext";
 
 function App() {
   return (
@@ -14,13 +16,17 @@ function App() {
       <CategoriesProvider>
         <RolesProvider>
           <EventProvider>
-            <Router>
-              <Routes>
-                <Route path="/" element={<LoginPage />} />
-                <Route path="/admin/*" element={<Admin />} />
-                <Route path="*" element={<NotFoundPage />} />
-              </Routes>
-            </Router>
+            <PersonalProvider>
+              <ContactsProvider>
+                <Router>
+                  <Routes>
+                    <Route path="/" element={<LoginPage />} />
+                    <Route path="/admin/*" element={<Admin />} />
+                    <Route path="*" element={<NotFoundPage />} />
+                  </Routes>
+                </Router>
+              </ContactsProvider>
+            </PersonalProvider>
           </EventProvider>
         </RolesProvider>
       </CategoriesProvider>

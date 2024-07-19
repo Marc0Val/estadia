@@ -65,6 +65,7 @@ const PersonalPage = () => {
           cell_number: "Celular",
           name_role: "Rol",
         }}
+        tipoFormulario="personal"
       />
     </div>
   );
