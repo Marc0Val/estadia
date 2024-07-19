@@ -1,42 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
 import CalendarComponent from "../components/calendar/Calendar";
+import { useEventContext } from "../context/TaskContext";
 import Header from "../components/Header";
 import BotonModal from "../components/Buttons/BotonModal";
 import FormularioTareas from "../components/Forms/FormularioTareas";
 
 const CalendarPage = () => {
-  const [events, setEvents] = useState([]);
-  const [showModal, setShowModal] = useState(false);
-  const [currentEvent, setCurrentEvent] = useState(null);
-
-  const handleSelectSlot = ({ start, end }) => {
-    setCurrentEvent({ start, end, title: "" });
-    setShowModal(true);
-  };
-
-  const handleSelectEvent = (event) => {
-    setCurrentEvent(event);
-    setShowModal(true);
-  };
-
-  const handleSaveEvent = () => {
-    if (currentEvent.id) {
-      setEvents(
-        events.map((event) =>
-          event.id === currentEvent.id ? currentEvent : event
-        )
-      );
-    } else {
-      setCurrentEvent({ ...currentEvent, id: events.length + 1 });
-      setEvents([...events, { ...currentEvent, id: events.length + 1 }]);
-    }
-    setShowModal(false);
-  };
-
-  const handleDeleteEvent = () => {
-    setEvents(events.filter((event) => event.id !== currentEvent.id));
-    setShowModal(false);
-  };
+  const {
+    events,
+    showModal,
+    currentEvent,
+    handleSelectSlot,
+    handleSelectEvent,
+    handleSaveEvent,
+    handleDeleteEvent,
+    setShowModal,
+    setCurrentEvent,
+  } = useEventContext();
 
   return (
     <div className="contenedor container-fluid">
@@ -45,9 +25,9 @@ const CalendarPage = () => {
       </p>
       <hr />
       <Header
-        botonAgregar={
+        contenido={
           <BotonModal
-            nombreBoton="Nueva Tarea"
+            nombreBoton="Nueva Asignacion"
             icono="fas fa-plus"
             contenidoModal={<FormularioTareas />}
             titulo="Agregar Nueva Tarea"
@@ -57,15 +37,14 @@ const CalendarPage = () => {
       <hr />
       <CalendarComponent
         events={events}
-        setEvents={setEvents}
         showModal={showModal}
-        setShowModal={setShowModal}
         currentEvent={currentEvent}
-        setCurrentEvent={setCurrentEvent}
         handleSelectSlot={handleSelectSlot}
         handleSelectEvent={handleSelectEvent}
         handleSaveEvent={handleSaveEvent}
         handleDeleteEvent={handleDeleteEvent}
+        setShowModal={setShowModal}
+        setCurrentEvent={setCurrentEvent}
       />
     </div>
   );

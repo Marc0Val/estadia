@@ -1,11 +1,12 @@
-import React, { useState } from "react";
-import { Calendar, momentLocalizer, Views } from "react-big-calendar";
+import React from "react";
+import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "moment/locale/es";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { useEventContext } from "../../context/TaskContext";
 
 moment.locale("es");
 const localizer = momentLocalizer(moment);
@@ -25,18 +26,19 @@ const messages = {
   noEventsInRange: "Sin eventos",
 };
 
-const CalendarComponent = ({
-  events,
-  setEvents,
-  showModal,
-  setShowModal,
-  currentEvent,
-  setCurrentEvent,
-  handleSelectSlot,
-  handleSelectEvent,
-  handleSaveEvent,
-  handleDeleteEvent,
-}) => {
+const CalendarComponent = () => {
+  const {
+    events,
+    showModal,
+    currentEvent,
+    handleSelectSlot,
+    handleSelectEvent,
+    handleSaveEvent,
+    handleDeleteEvent,
+    setShowModal,
+    setCurrentEvent,
+  } = useEventContext();
+
   return (
     <div>
       <Calendar
