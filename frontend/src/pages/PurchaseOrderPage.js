@@ -4,13 +4,7 @@ import Header from "../components/Header";
 
 const PurchaseOrderPage = () => {
   const [data, setData] = useState([]);
-  const columnNames = [
-    "Fecha",
-    "Proveedor",
-    "Total",
-    "Estado",
-    "PDF",
-  ];
+  const columnNames = ["Fecha", "Proveedor", "Total", "Estado", "PDF"];
   // informacion de prueba
   useEffect(() => {
     const fetchData = async () => {
@@ -70,7 +64,12 @@ const PurchaseOrderPage = () => {
           </a>
         }
       />
-      <TablaInfo columns={columnNames} data={data} totalRecords={data.length} />
+      <TablaInfo
+        columns={columnNames}
+        data={data}
+        totalRecords={data.length}
+        formType="purchaseOrder"
+      />
     </div>
   );
 };

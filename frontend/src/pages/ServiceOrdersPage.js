@@ -83,7 +83,12 @@ const ServiceOrdersPage = () => {
         }
       />
 
-      <TablaInfo columns={columnNames} data={data} totalRecords={data.length} />
+      <TablaInfo
+        columns={columnNames}
+        data={data}
+        totalRecords={data.length}
+        formType="serviceOrders"
+      />
     </div>
   );
 };

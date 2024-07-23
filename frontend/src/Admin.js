@@ -13,7 +13,7 @@ import OrderServicePage from "./pages/OrderServicePage";
 // deshabil hasta el momento 21/05/2024
 // import PolicyPage from "./pages/PolicyPage";
 import ProductsPage from "./pages/ProductsPage";
-import ProvidersPage from "./pages/ProvidersPage";
+import ProvidersPage from "./pages/SuppliersPage";
 import PurchaseOrderPage from "./pages/PurchaseOrderPage";
 import QuotesPage from "./pages/QuotesPage";
 import ServicesPage from "./pages/ServicesPage";
@@ -64,7 +64,6 @@ const Admin = () => {
             element={<FormularioOrdenCompra />}
           />
           <Route path="*" element={<NotFoundPage />} />
-          
         </Routes>
       </div>
     </div>

@@ -1,23 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Button, Container, Row, Col } from "react-bootstrap";
 import Swal from "sweetalert2";
-import { createSupplierRequest } from "../../api/suppliers.api";
+import { useSuppliers } from "../../context/SuppliersContext";
 
 // Esquema de validación
 const validationSchema = Yup.object().shape({
   trade_name: Yup.string().required("Nombre Comercial es obligatorio"),
   business_type: Yup.string().required("Giro es obligatorio"),
   cell_number: Yup.string().required("Teléfono/Celular es obligatorio"),
-  email: Yup.string().email("Correo inválido"),
+  email: Yup.string().email("Correo inválido").required("Correo es requerido"),
   country: Yup.string().required("País es obligatorio"),
-  state: Yup.string().required("Estado es obligatorio"),
-  address: Yup.string(),
+  state_: Yup.string().required("Estado es obligatorio"),
+  address_: Yup.string(),
   city: Yup.string().required("Ciudad es obligatoria"),
   postal_code: Yup.string(),
-  location: Yup.string(),
-  website: Yup.string().url("URL inválida"),
+  location_: Yup.string(),
+  website: Yup.string(),
   bank_accounts: Yup.string(),
   billing_name: Yup.string(),
   billing_number: Yup.string(),
@@ -34,81 +34,88 @@ const validationSchema = Yup.object().shape({
     .required("Correo de Contacto es obligatorio"),
 });
 
-const FormularioProveedor = () => {
+const FormularioProveedor = ({ id_supplier }) => {
+  const { getSupplier, createSupplier, updateSupplier } = useSuppliers();
+
+  const emptyValues = {
+    trade_name: "",
+    business_type: "Por Definir",
+    cell_number: "",
+    email: "",
+    country: "",
+    state_: "",
+    address_: "",
+    city: "",
+    postal_code: "",
+    location_: "",
+    website: "",
+    bank_accounts: "",
+    billing_name: "",
+    billing_number: "",
+    billing_address: "",
+    notes: "",
+    contact_name: "",
+    contact_title: "",
+    contact_area_or_position: "",
+    contact_cell_phone: "",
+    contact_email: "",
+  };
+
+  const [initialValues, setInitialValues] = useState(emptyValues);
+
+  useEffect(() => {
+    const fetchSupplierData = async () => {
+      try {
+        if (id_supplier) {
+          const supplierData = await getSupplier(id_supplier);
+          if (supplierData) {
+            setInitialValues(supplierData);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching supplier data:", error);
+      }
+    };
+
+    fetchSupplierData();
+  }, [id_supplier, getSupplier]);
+
   return (
     <Formik
-      initialValues={{
-        trade_name: "",
-        business_type: "Por Definir",
-        cell_number: "",
-        email: "",
-        country: "",
-        state: "",
-        address: "",
-        city: "",
-        postal_code: "",
-        location: "",
-        website: "",
-        bank_accounts: "",
-        billing_name: "",
-        billing_number: "",
-        billing_address: "",
-        notes: "",
-        contact_name: "",
-        contact_title: "",
-        contact_area_or_position: "",
-        contact_cell_phone: "",
-        contact_email: "",
-      }}
+      initialValues={initialValues}
+      enableReinitialize={true}
       validationSchema={validationSchema}
       onSubmit={async (values, { resetForm }) => {
         try {
-          console.log(values);
-          // ordenar los valores antes de enviarlos
-          const orderedData = {
-            trade_name: values.trade_name,
-            business_type: values.business_type,
-            cell_number: values.cell_number,
-            email: values.email,
-            country: values.country,
-            state_: values.state,
-            address_: values.address,
-            city: values.city,
-            postal_code: values.postal_code,
-            location_: values.location,
-            website: values.website,
-            bank_accounts: values.bank_accounts,
-            billing_name: values.billing_name,
-            billing_number: values.billing_number,
-            billing_address: values.billing_address,
-            notes: values.notes,
-            contact_name: values.contact_name,
-            contact_title: values.contact_title,
-            contact_area_or_position: values.contact_area_or_position,
-            contact_cell_phone: values.contact_cell_phone,
-            contact_email: values.contact_email,
-          };
-          console.log(orderedData);
-
-          await createSupplierRequest(orderedData);
-          Swal.fire({
-            icon: "success",
-            title: "Proveedor creado",
-            showConfirmButton: false,
-            timer: 1500,
-          });
+          if (id_supplier) {
+            await updateSupplier(id_supplier, values);
+            Swal.fire({
+              icon: "success",
+              title: "Proveedor actualizado",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          } else {
+            await createSupplier(values);
+            Swal.fire({
+              icon: "success",
+              title: "Proveedor creado",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
           resetForm();
         } catch (error) {
           Swal.fire({
             icon: "error",
-            title: "Error al crear el proveedor",
+            title: "Error al guardar el proveedor",
             showConfirmButton: false,
             timer: 1500,
           });
         }
       }}
     >
-      {({ handleChange, handleSubmit, values, errors, isValid, dirty }) => (
+      {({ errors, isValid, dirty, resetForm }) => (
         <Container className="mt-4">
           <Form>
             <p className="text-muted">
@@ -218,17 +225,19 @@ const FormularioProveedor = () => {
                 />
               </Col>
               <Col>
-                <label htmlFor="state">
+                <label htmlFor="state_">
                   <strong>Estado *</strong>
                 </label>
                 <Field
                   type="text"
-                  id="state"
-                  name="state"
-                  className={`form-control ${errors.state ? "is-invalid" : ""}`}
+                  id="state_"
+                  name="state_"
+                  className={`form-control ${
+                    errors.state_ ? "is-invalid" : ""
+                  }`}
                 />
                 <ErrorMessage
-                  name="state"
+                  name="state_"
                   component="div"
                   className="invalid-feedback"
                 />
@@ -236,19 +245,19 @@ const FormularioProveedor = () => {
             </Row>
             <Row className="mb-3">
               <Col>
-                <label htmlFor="address">
+                <label htmlFor="address_">
                   <strong>Dirección</strong>
                 </label>
                 <Field
                   type="text"
-                  id="address"
-                  name="address"
+                  id="address_"
+                  name="address_"
                   className={`form-control ${
-                    errors.address ? "is-invalid" : ""
+                    errors.address_ ? "is-invalid" : ""
                   }`}
                 />
                 <ErrorMessage
-                  name="address"
+                  name="address_"
                   component="div"
                   className="invalid-feedback"
                 />
@@ -295,14 +304,14 @@ const FormularioProveedor = () => {
                 </label>
                 <Field
                   type="text"
-                  id="location"
-                  name="location"
+                  id="location_"
+                  name="location_"
                   className={`form-control ${
-                    errors.location ? "is-invalid" : ""
+                    errors.location_ ? "is-invalid" : ""
                   }`}
                 />
                 <ErrorMessage
-                  name="location"
+                  name="location_"
                   component="div"
                   className="invalid-feedback"
                 />
@@ -529,7 +538,12 @@ const FormularioProveedor = () => {
                 >
                   <i className="fas fa-save"></i> Guardar
                 </Button>
-                <Button variant="danger" type="reset" className="ms-2">
+                <Button
+                  variant="danger"
+                  type="reset"
+                  className="ms-2"
+                  onClick={() => resetForm({ values: emptyValues })}
+                >
                   <i className="fas fa-eraser"></i> Limpiar
                 </Button>
               </Col>

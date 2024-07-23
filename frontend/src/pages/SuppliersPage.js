@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import TablaInfo from "../components/TablaInfo";
 import BotonModal from "../components/Buttons/BotonModal";
 import FormularioProveedores from "../components/Forms/FormularioProveedores";
 import Header from "../components/Header";
-import { getSuppliersRequest } from "../api/suppliers.api";
+import { useSuppliers } from "../context/SuppliersContext";
 import BotonPDF from "../components/Buttons/BotonPDF";
 
-const ProvidersPage = () => {
-  const [suppliers, setSuppliers] = useState([]);
+const SuppliersPage = () => {
+  const { suppliers, getSuppliers } = useSuppliers();
+  // const [filteredSuppliers, setFilteredSuppliers] = useState(suppliers);
   const columnNames = [
     "id_supplier",
     "trade_name",
@@ -17,18 +18,7 @@ const ProvidersPage = () => {
   ];
 
   useEffect(() => {
-    async function cargarProveedores() {
-      const response = await getSuppliersRequest();
-      if (Array.isArray(response.data)) {
-        // Asegúrate de que response.data sea un arreglo
-        setSuppliers(response.data);
-      } else {
-        console.log("La respuesta no es un arreglo", response.data);
-        setSuppliers([]);
-      }
-      console.log(response);
-    }
-    cargarProveedores();
+    getSuppliers();
   }, []);
 
   return (
@@ -47,7 +37,7 @@ const ProvidersPage = () => {
               email: "Correo",
               contact_cell_phone: "Teléfono",
             }}
-            data={suppliers}
+            data={suppliers} // Cambiar a filteredSuppliers en el futuro
           />
         }
         botonAgregar={
@@ -61,9 +51,9 @@ const ProvidersPage = () => {
       />
       <TablaInfo
         columns={columnNames}
-        data={suppliers}
-        totalRecords={suppliers.length}
-        fetchElemento={getSuppliersRequest}
+        data={suppliers} // Cambiar a filteredSuppliers en el futuro
+        totalRecords={suppliers.length} // Cambiar a filteredSuppliers.length en el futuro
+        fetchElemento={getSuppliers}
         hiddenColumns={["id_supplier"]}
         customColumnNames={{
           trade_name: "Empresa",
@@ -71,9 +61,10 @@ const ProvidersPage = () => {
           email: "Correo",
           contact_cell_phone: "Teléfono",
         }}
+        formType="suppliers"
       />
     </div>
   );
 };
 
-export default ProvidersPage;
+export default SuppliersPage;

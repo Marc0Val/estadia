@@ -61,6 +61,7 @@ const ServicesPage = () => {
           name_: "Nombre",
           sale_price: "Precio",
         }}
+        formType="services"
       />
     </div>
   );

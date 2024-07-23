@@ -1,4 +1,3 @@
-//TODO
 import axios from "axios";
 
 const route = "http://127.0.01:4000/api";

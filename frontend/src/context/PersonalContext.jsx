@@ -21,7 +21,7 @@ export const PersonalProvider = ({ children }) => {
   const [personal, setPersonal] = useState([]);
 
   useEffect(() => {
-    getPersonal();
+    getAllPersonal();
   }, []);
 
   const getAllPersonal = async () => {

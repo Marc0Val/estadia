@@ -23,10 +23,10 @@ export const ContactsProvider = ({ children }) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchContacts();
+    getContacts();
   }, []);
 
-  const fetchContacts = async () => {
+  const getContacts = async () => {
     setLoading(true);
     try {
       const response = await getContactsRequest();
@@ -94,7 +94,7 @@ export const ContactsProvider = ({ children }) => {
         contacts,
         loading,
         error,
-        fetchContacts,
+        getContacts,
         getContact,
         createContact,
         updateContact,

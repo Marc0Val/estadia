@@ -5,6 +5,7 @@ import FormularioCategorias from "../components/Forms/FormularioCategorias";
 import FormularioRoles from "../components/Forms/FormularioRoles";
 import FormularioPersonal from "./Forms/FormularioPersonal";
 import FormularioContactos from "./Forms/FormularioContactos";
+import FormularioProveedores from "./Forms/FormularioProveedores";
 
 const TablaInfo = ({
   columns,
@@ -12,12 +13,12 @@ const TablaInfo = ({
   totalRecords,
   hiddenColumns = [],
   customColumnNames = {},
-  tipoFormulario,
+  formType,
 }) => {
   const obtenerIdParaFormulario = useCallback(
-    (tipoFormulario, row) => {
-      console.log(tipoFormulario);
-      switch (tipoFormulario) {
+    (formType, row) => {
+      console.log(formType);
+      switch (formType) {
         case "clients":
           console.log(`ID de cliente: ${row.id_client}`);
           return row.id_client;
@@ -31,17 +32,20 @@ const TablaInfo = ({
           console.log(`ID de personal: ${row.id_personal}`);
           return row.id_personal;
         case "contacts":
-          console.log(`ID de contact: ${row.contact}`);
+          console.log(`ID de contacto: ${row.id_contact}`);
           return row.id_contact;
+        case "suppliers":
+          console.log(`ID de proveedor: ${row.id_supplier}`);
+          return row.id_supplier;
         default:
           return null;
       }
     },
-    [tipoFormulario]
+    [formType]
   );
 
-  const obtenerComponenteFormulario = useCallback((tipoFormulario, id) => {
-    switch (tipoFormulario) {
+  const obtenerComponenteFormulario = useCallback((formType, id) => {
+    switch (formType) {
       case "clients":
         return <FormularioClientes id_cliente={id} />;
       case "categories":
@@ -52,6 +56,8 @@ const TablaInfo = ({
         return <FormularioPersonal id_personal={id} />;
       case "contacts":
         return <FormularioContactos id_contact={id} />;
+      case "suppliers":
+        return <FormularioProveedores id_supplier={id} />;
       default:
         return null;
     }
@@ -99,8 +105,8 @@ const TablaInfo = ({
                     icono="bi bi-pencil"
                     contenidoModal={() =>
                       obtenerComponenteFormulario(
-                        tipoFormulario,
-                        obtenerIdParaFormulario(tipoFormulario, row)
+                        formType,
+                        obtenerIdParaFormulario(formType, row)
                       )
                     }
                   />

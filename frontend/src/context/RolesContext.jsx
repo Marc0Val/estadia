@@ -25,6 +25,7 @@ export const RolesProvider = ({ children }) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    getRoles();
     getRolesUsers();
   }, []);
 

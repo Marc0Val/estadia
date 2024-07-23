@@ -75,6 +75,7 @@ const ProductsPage = () => {
           initial_stock: "Stock",
           supplier_name: "Proveedor",
         }}
+        formType="products"
       />
     </div>
   );

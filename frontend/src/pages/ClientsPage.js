@@ -63,7 +63,7 @@ const ClientsPage = () => {
           email: "Correo Electrónico",
           phone_or_cell: "Teléfono o Celular",
         }}
-        tipoFormulario="clients"
+        formType="clients"
       />
     </div>
   );

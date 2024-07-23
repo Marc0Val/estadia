@@ -1,28 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import TablaInfo from "../components/TablaInfo";
 import BotonModal from "../components/Buttons/BotonModal";
 import FormularioContactos from "../components/Forms/FormularioContactos";
 import Header from "../components/Header";
-import { getContactsRequest } from "../api/contacts.api";
+import { useContacts } from "../context/ContactsContext";
 import BotonPDF from "../components/Buttons/BotonPDF";
 
 const ContactsPage = () => {
-  const [contacts, setContacts] = useState([]);
-
+  const { contacts, getContacts } = useContacts();
   const columnNames = ["id_contact", "name_", "cell_number", "email", "title"];
 
   useEffect(() => {
-    async function cargarContactos() {
-      const response = await getContactsRequest();
-      if (Array.isArray(response.data)) {
-        setContacts(response.data);
-      } else {
-        console.log("La respuesta no es un arreglo", response.data);
-        setContacts([]);
-      }
-      console.log(response);
-    }
-    cargarContactos();
+    getContacts();
   }, []);
 
   return (
@@ -57,7 +46,6 @@ const ContactsPage = () => {
         columns={columnNames}
         data={contacts}
         totalRecords={contacts.length}
-        fetchElemento={getContactsRequest}
         hiddenColumns={["id_contact"]}
         customColumnNames={{
           name_: "Nombre",
@@ -65,7 +53,7 @@ const ContactsPage = () => {
           email: "Correo electrónico",
           title: "Título",
         }}
-        tipoFormulario="contacts"
+        formType="contacts"
       />
     </div>
   );

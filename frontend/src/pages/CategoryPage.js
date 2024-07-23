@@ -47,7 +47,7 @@ const CategoryPage = () => {
         customColumnNames={{
           name_: "Nombre",
         }}
-        tipoFormulario="categories"
+        formType="categories"
       />
     </div>
   );
