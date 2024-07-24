@@ -3,8 +3,8 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Button, Container, Row, Col } from "react-bootstrap";
 import Swal from "sweetalert2";
-import { createServiceRequest } from "../../api/services.api";
-import { getCategoriesRequest } from "../../api/category.api";
+import { useServices } from "../../context/ServicesContext";
+import { useCategories } from "../../context/CategoriesContext";
 
 // Esquema de validación
 const validationSchema = Yup.object().shape({
@@ -18,58 +18,76 @@ const validationSchema = Yup.object().shape({
   sat_code: Yup.string(),
 });
 
-const FormularioServicio = () => {
-  const [categories, setCategories] = useState([]);
+const FormularioServicio = ({ id_service }) => {
+  const { getService, createService, updateService } = useServices();
+  const { categories } = useCategories();
+
+  const emptyValues = {
+    name_: "",
+    category_id: "Por Definir",
+    sale_price: "",
+    description_: "",
+    sat_unit: "",
+    sat_code: "",
+  };
+
+  const [initialValues, setInitialValues] = useState(emptyValues);
 
   useEffect(() => {
-    const cargarCategorias = async () => {
+    const fetchServiceData = async () => {
       try {
-        const response = await getCategoriesRequest();
-        if (Array.isArray(response.data)) {
-          setCategories(response.data);
+        if (id_service) {
+          const serviceData = await getService(id_service);
+          if (serviceData) {
+            setInitialValues(serviceData);
+          }
         } else {
-          console.log("Error al cargar las categorías o no es un arreglo  ");
+          setInitialValues(emptyValues);
         }
       } catch (error) {
-        console.log(error);
-        console.error("Error al cargar las categorías", error);
+        console.error("Error fetching service data:", error);
       }
     };
-    cargarCategorias();
-  }, []);
+
+    fetchServiceData();
+  }, [id_service, getService]);
+
   return (
     <Formik
-      initialValues={{
-        name_: "",
-        category_id: "Por Definir",
-        sale_price: "",
-        description_: "",
-        sat_unit: "",
-        sat_code: "",
-      }}
+      initialValues={initialValues}
+      enableReinitialize={true}
       validationSchema={validationSchema}
       onSubmit={async (values, { resetForm }) => {
         try {
-          console.log(values);
-          await createServiceRequest(values);
-          Swal.fire({
-            icon: "success",
-            title: "Servicio creado",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-          resetForm();
+          if (id_service) {
+            await updateService(id_service, values);
+            Swal.fire({
+              icon: "success",
+              title: "Servicio actualizado",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          } else {
+            await createService(values);
+            Swal.fire({
+              icon: "success",
+              title: "Servicio creado",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            resetForm();
+          }
         } catch (error) {
           Swal.fire({
             icon: "error",
-            title: "Error al crear el servicio",
+            title: "Error al guardar el servicio",
             showConfirmButton: false,
             timer: 1500,
           });
         }
       }}
     >
-      {({ setFieldValue, errors, isValid, dirty }) => (
+      {({ resetForm, errors, isValid, dirty }) => (
         <Container className="mt-4">
           <Form>
             <p className="text-muted">
@@ -199,7 +217,11 @@ const FormularioServicio = () => {
             >
               <i className="fas fa-save"></i> Guardar
             </Button>
-            <Button variant="danger" type="reset">
+            <Button
+              variant="danger"
+              type="reset"
+              onClick={() => resetForm({ values: emptyValues })}
+            >
               <i className="fas fa-eraser"></i> Limpiar
             </Button>
           </Form>

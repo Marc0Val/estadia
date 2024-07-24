@@ -10,6 +10,8 @@ import { EventProvider } from "./context/TaskContext";
 import { PersonalProvider } from "./context/PersonalContext";
 import { ContactsProvider } from "./context/ContactsContext";
 import { SuppliersProvider } from "./context/SuppliersContext";
+import { ServicesProvider } from "./context/ServicesContext";
+// import { ProductsProvider } from "./context/ProductsContext";
 
 function App() {
   return (
@@ -20,13 +22,17 @@ function App() {
             <PersonalProvider>
               <ContactsProvider>
                 <SuppliersProvider>
-                  <Router>
-                    <Routes>
-                      <Route path="/" element={<LoginPage />} />
-                      <Route path="/admin/*" element={<Admin />} />
-                      <Route path="*" element={<NotFoundPage />} />
-                    </Routes>
-                  </Router>
+                  <ServicesProvider>
+                    {/* <ProductsProvider> */}
+                    <Router>
+                      <Routes>
+                        <Route path="/" element={<LoginPage />} />
+                        <Route path="/admin/*" element={<Admin />} />
+                        <Route path="*" element={<NotFoundPage />} />
+                      </Routes>
+                    </Router>
+                    {/* </ProductsProvider> */}
+                  </ServicesProvider>
                 </SuppliersProvider>
               </ContactsProvider>
             </PersonalProvider>

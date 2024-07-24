@@ -95,7 +95,7 @@ const FormularioContacto = ({ id_contact }) => {
         }
       }}
     >
-      {({ handleChange, handleSubmit, values, errors, isValid, dirty }) => (
+      {({ resetForm, errors, isValid, dirty }) => (
         <Container className="mt-4">
           <Form>
             <p className="text-muted">
@@ -325,7 +325,12 @@ const FormularioContacto = ({ id_contact }) => {
             >
               {id_contact ? "Actualizar Contacto" : "Registrar Contacto"}
             </Button>
-            <Button variant="danger" type="reset" className="ms-2">
+            <Button
+              variant="danger"
+              type="reset"
+              className="ms-2"
+              onClick={() => resetForm({ values: emptyValues })}
+            >
               <i className="fas fa-eraser"></i> Limpiar
             </Button>
           </Form>

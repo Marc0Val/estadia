@@ -50,7 +50,7 @@ const RolPage = () => {
           name_role: "Nombre",
           users: "Usuarios",
         }}
-        tipoFormulario="roles"
+        formType="roles"
       />
     </div>
   );

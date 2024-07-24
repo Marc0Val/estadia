@@ -12,9 +12,13 @@ const validationSchema = Yup.object().shape({
 
 const FormularioRoles = ({ id_rol }) => {
   const { getRole, createRole, updateRole } = useRoles();
-  const [initialValues, setInitialValues] = useState({
+
+  const emptyValues = {
     name_role: "",
-  });
+  };
+
+  const [initialValues, setInitialValues] = useState(emptyValues);
+
   const isMountedRef = useRef(null);
 
   useEffect(() => {
@@ -122,7 +126,7 @@ const FormularioRoles = ({ id_rol }) => {
             <Button
               variant="secondary"
               type="button"
-              onClick={() => resetForm({ values: initialValues })}
+              onClick={() => resetForm({ values: emptyValues })}
               className="ms-2"
             >
               <i className="fas fa-eraser"></i> Limpiar

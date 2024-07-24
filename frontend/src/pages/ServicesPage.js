@@ -1,30 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { useServices } from "../context/ServicesContext";
 import TablaInfo from "../components/TablaInfo";
 import BotonModal from "../components/Buttons/BotonModal";
-import FormularioServicios from "../components/Forms/FormularioServicios";
+import FormularioServicio from "../components/Forms/FormularioServicios";
 import Header from "../components/Header";
-import { getServicesRequest } from "../api/services.api";
 import BotonPDF from "../components/Buttons/BotonPDF";
 
 const ServicesPage = () => {
-  const [services, setServices] = useState([]);
+  const { services, getServices } = useServices();
 
   useEffect(() => {
-    async function cargarServicios() {
-      const response = await getServicesRequest();
-      if (Array.isArray(response.data)) {
-        // Asegúrate de que response.data sea un arreglo
-        setServices(response.data);
-      } else {
-        console.log("La respuesta no es un arreglo", response.data);
-        setServices([]);
-      }
-      console.log(response);
-    }
-    cargarServicios();
+    getServices();
   }, []);
 
-  const columnNames = ["id_service", "name_", "sale_price"];
+  const columnNames = ["id", "name_", "sale_price"];
+
   return (
     <div className="contenedor container-fluid">
       <p className="subtitulo">
@@ -46,7 +36,7 @@ const ServicesPage = () => {
           <BotonModal
             nombreBoton="Nuevo Servicio"
             icono="fas fa-plus"
-            contenidoModal={<FormularioServicios />}
+            contenidoModal={<FormularioServicio />}
             titulo="Agregar Servicio"
           />
         }
@@ -55,8 +45,8 @@ const ServicesPage = () => {
         columns={columnNames}
         data={services}
         totalRecords={services.length}
-        fetchElemento={getServicesRequest}
-        hiddenColumns={["id_service"]}
+        fetchElemento={getServices}
+        hiddenColumns={["id"]}
         customColumnNames={{
           name_: "Nombre",
           sale_price: "Precio",

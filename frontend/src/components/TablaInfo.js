@@ -6,6 +6,8 @@ import FormularioRoles from "../components/Forms/FormularioRoles";
 import FormularioPersonal from "./Forms/FormularioPersonal";
 import FormularioContactos from "./Forms/FormularioContactos";
 import FormularioProveedores from "./Forms/FormularioProveedores";
+import FormularioServicio from "./Forms/FormularioServicios";
+import FormularioProductos from "./Forms/FormularioProductos";
 
 const TablaInfo = ({
   columns,
@@ -37,6 +39,12 @@ const TablaInfo = ({
         case "suppliers":
           console.log(`ID de proveedor: ${row.id_supplier}`);
           return row.id_supplier;
+        case "services":
+          console.log(`ID de servicio: ${row.id_service}`);
+          return row.id_service;
+        case "products":
+          console.log(`ID de producto: ${row.id_product}`);
+          return row.id_product;
         default:
           return null;
       }
@@ -58,6 +66,10 @@ const TablaInfo = ({
         return <FormularioContactos id_contact={id} />;
       case "suppliers":
         return <FormularioProveedores id_supplier={id} />;
+      case "services":
+        return <FormularioServicio id_service={id} />;
+      case "products":
+        return <FormularioProductos id_product={id} />;
       default:
         return null;
     }
