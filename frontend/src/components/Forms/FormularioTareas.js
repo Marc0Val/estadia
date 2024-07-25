@@ -7,7 +7,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { createTaskRequest } from "../../api/tasks.api";
 import { getClientsRequest } from "../../api/clients.api";
-import { getPersonalRequest } from "../../api/personal.api";
+import { getPersonalRequest2 } from "../../api/personal.api";
 
 // Esquema de validación con Yup
 const validationSchema = Yup.object().shape({
@@ -55,7 +55,7 @@ const FormularioTareas = () => {
   useEffect(() => {
     const cargarPersonal = async () => {
       try {
-        const response = await getPersonalRequest();
+        const response = await getPersonalRequest2();
         if (Array.isArray(response.data)) {
           setPersonal(response.data);
         } else {

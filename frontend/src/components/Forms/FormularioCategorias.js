@@ -11,7 +11,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const FormularioCategorias = ({ id_categoria }) => {
-  console.log(id_categoria);
+  //console.log(id_categoria);
   const { getCategory, createCategory, updateCategory } = useCategories();
 
   const emptyValues = {
@@ -24,7 +24,7 @@ const FormularioCategorias = ({ id_categoria }) => {
     const fetchCategoryData = async () => {
       try {
         if (id_categoria) {
-          console.log(id_categoria);
+          //console.log(id_categoria);
           const categoryData = await getCategory(id_categoria);
 
           if (categoryData) {

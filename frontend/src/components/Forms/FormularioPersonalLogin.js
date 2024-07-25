@@ -20,7 +20,7 @@ const FormularioPersonalLogin = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Validar y enviar los datos del formulario.
-    console.log("Datos del formulario enviados:", formData);
+    //console.log("Datos del formulario enviados:", formData);
   };
 
   const handleReset = () => {
