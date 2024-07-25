@@ -12,6 +12,7 @@ import { ContactsProvider } from "./context/ContactsContext";
 import { SuppliersProvider } from "./context/SuppliersContext";
 import { ServicesProvider } from "./context/ServicesContext";
 import { ProductsProvider } from "./context/ProductsContext";
+import { ClientsAssetsProvider } from "./context/ClientsAssetsContext";
 
 function App() {
   return (
@@ -24,13 +25,15 @@ function App() {
                 <SuppliersProvider>
                   <ServicesProvider>
                     <ProductsProvider>
-                      <Router>
-                        <Routes>
-                          <Route path="/" element={<LoginPage />} />
-                          <Route path="/admin/*" element={<Admin />} />
-                          <Route path="*" element={<NotFoundPage />} />
-                        </Routes>
-                      </Router>
+                      <ClientsAssetsProvider>
+                        <Router>
+                          <Routes>
+                            <Route path="/" element={<LoginPage />} />
+                            <Route path="/admin/*" element={<Admin />} />
+                            <Route path="*" element={<NotFoundPage />} />
+                          </Routes>
+                        </Router>
+                      </ClientsAssetsProvider>
                     </ProductsProvider>
                   </ServicesProvider>
                 </SuppliersProvider>

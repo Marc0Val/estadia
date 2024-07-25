@@ -3,9 +3,9 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Button, Container, Row, Col } from "react-bootstrap";
 import Swal from "sweetalert2";
-import { createClientAssetRequest } from "../../api/clientassets.api";
-import { getProductsRequest } from "../../api/products.api";
-import { getClientsRequest } from "../../api/clients.api";
+import { useClientAssets } from "../../context/ClientsAssetsContext";
+import { useProducts } from "../../context/ProductsContext";
+import { useClients } from "../../context/ClientsContext";
 
 // Esquema de validación
 const validationSchema = Yup.object().shape({
@@ -17,77 +17,76 @@ const validationSchema = Yup.object().shape({
   inventory_number: Yup.number(),
 });
 
-const FormularioActivoCliente = () => {
-  const [products, setProducts] = useState([]);
-  const [clients, setClients] = useState([]);
+const FormularioActivoCliente = ({ id_client_asset }) => {
+  const { createClientAsset, updateClientAsset, getClientAsset } =
+    useClientAssets();
+  const { products } = useProducts();
+  const { clients } = useClients();
+
+  const emptyValues = {
+    product_id: "",
+    client_id: "",
+    name_: "",
+    description_: "",
+    serial_: "",
+    inventory_number: "",
+  };
+
+  const [initialValues, setInitialValues] = useState(emptyValues);
 
   useEffect(() => {
-    const cargarProductos = async () => {
-      try {
-        const response = await getProductsRequest();
-        if (Array.isArray(response.data)) {
-          setProducts(response.data);
-        } else {
-          console.log("Error al cargar los productos o no es un arreglo");
+    const fetchClientAssetData = async () => {
+      if (id_client_asset) {
+        try {
+          const assetData = await getClientAsset(id_client_asset);
+          if (assetData) {
+            setInitialValues(assetData);
+          }
+        } catch (error) {
+          console.error("Error fetching client asset data:", error);
         }
-      } catch (error) {
-        console.log(error);
-        console.log("Error al cargar los productos", error);
       }
     };
-    cargarProductos();
-  }, []);
 
-  useEffect(() => {
-    const cargarClientes = async () => {
-      try {
-        const response = await getClientsRequest();
-        if (Array.isArray(response.data)) {
-          setClients(response.data);
-        } else {
-          console.log("Error al cargar los clientes o no es un arreglo");
-        }
-      } catch (error) {
-        console.log(error);
-        console.log("Error al cargar los clientes", error);
-      }
-    };
-    cargarClientes();
-  }, []);
+    fetchClientAssetData();
+  }, [id_client_asset, getClientAsset]);
 
   return (
     <Formik
-      initialValues={{
-        product_id: "",
-        client_id: "",
-        name_: "",
-        description_: "",
-        serial_: "",
-        inventory_number: "",
-      }}
+      initialValues={initialValues}
+      enableReinitialize={true}
       validationSchema={validationSchema}
       onSubmit={async (values, { resetForm }) => {
         try {
-          console.log(values);
-          await createClientAssetRequest(values);
-          Swal.fire({
-            icon: "success",
-            title: "Activo creado",
-            showConfirmButton: false,
-            timer: 1500,
-          });
+          if (id_client_asset) {
+            await updateClientAsset(id_client_asset, values);
+            Swal.fire({
+              icon: "success",
+              title: "Activo actualizado",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          } else {
+            await createClientAsset(values);
+            Swal.fire({
+              icon: "success",
+              title: "Activo creado",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
           resetForm();
         } catch (error) {
           Swal.fire({
             icon: "error",
-            title: "Error al crear el activo",
+            title: "Error al guardar el activo",
             showConfirmButton: false,
             timer: 1500,
           });
         }
       }}
     >
-      {({ errors, isValid, dirty }) => (
+      {({ errors, isValid, dirty, resetForm }) => (
         <Container className="mt-4">
           <Form>
             <p className="text-muted">
@@ -224,7 +223,12 @@ const FormularioActivoCliente = () => {
             >
               <i className="fas fa-save"></i> Guardar
             </Button>
-            <Button variant="danger" type="reset" className="ms-2">
+            <Button
+              variant="danger"
+              type="reset"
+              className="ms-2"
+              onClick={() => resetForm({ values: emptyValues })}
+            >
               <i className="fas fa-eraser"></i> Limpiar
             </Button>
           </Form>

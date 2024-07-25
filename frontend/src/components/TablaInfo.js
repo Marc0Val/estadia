@@ -8,6 +8,7 @@ import FormularioContactos from "./Forms/FormularioContactos";
 import FormularioProveedores from "./Forms/FormularioProveedores";
 import FormularioServicio from "./Forms/FormularioServicios";
 import FormularioProductos from "./Forms/FormularioProductos";
+import FormularioActivoCliente from "./Forms/FormularioActivoCliente";
 
 const TablaInfo = ({
   columns,
@@ -45,6 +46,9 @@ const TablaInfo = ({
         case "products":
           console.log(`ID de producto: ${row.id_product}`);
           return row.id_product;
+        case "clients_assets":
+          console.log(`ID de Activo de Cliente: ${row.id_client_asset}`);
+          return row.id_client_asset;
         default:
           return null;
       }
@@ -70,6 +74,8 @@ const TablaInfo = ({
         return <FormularioServicio id_service={id} />;
       case "products":
         return <FormularioProductos id_product={id} />;
+      case "clients_assets":
+        return <FormularioActivoCliente id_client_asset={id} />;
       default:
         return null;
     }

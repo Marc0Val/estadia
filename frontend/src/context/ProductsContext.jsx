@@ -23,6 +23,7 @@ export const ProductsProvider = ({ children }) => {
   const [productsProvider, setProductsProvider] = useState([]);
 
   useEffect(() => {
+    getProducts();
     getProductsProvider();
   }, []);
 

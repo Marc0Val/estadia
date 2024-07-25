@@ -124,8 +124,8 @@ const FormularioRoles = ({ id_rol }) => {
               <i className="fas fa-save"></i> Guardar
             </Button>
             <Button
-              variant="secondary"
-              type="button"
+              variant="danger"
+              type="reset"
               onClick={() => resetForm({ values: emptyValues })}
               className="ms-2"
             >

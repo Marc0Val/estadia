@@ -3,11 +3,12 @@ import TablaInfo from "../components/TablaInfo";
 import BotonModal from "../components/Buttons/BotonModal";
 import FormularioActivoCliente from "../components/Forms/FormularioActivoCliente";
 import Header from "../components/Header";
-import { getClientAssetProviderProductRequest } from "../api/clientassets.api";
 import BotonPDF from "../components/Buttons/BotonPDF";
+import { useClientAssets } from "../context/ClientsAssetsContext";
 
 const ActiveCustomerPage = () => {
-  const [activeCustomer, setActiveCustomer] = useState([]);
+  const { clientAssetsProviderProduct, getClientAssetProviderProduct } =
+    useClientAssets();
 
   const columnNames = [
     "id_client_asset",
@@ -18,18 +19,7 @@ const ActiveCustomerPage = () => {
   ];
 
   useEffect(() => {
-    async function cargarClientesActivos() {
-      const response = await getClientAssetProviderProductRequest();
-      if (Array.isArray(response.data)) {
-        // Asegúrate de que response.data sea un arreglo
-        setActiveCustomer(response.data);
-      } else {
-        console.log("La respuesta no es un arreglo", response.data);
-        setActiveCustomer([]);
-      }
-      console.log(response);
-    }
-    cargarClientesActivos();
+    getClientAssetProviderProduct();
   }, []);
 
   return (
@@ -48,7 +38,7 @@ const ActiveCustomerPage = () => {
               product: "Producto",
               client: "Cliente",
             }}
-            data={activeCustomer}
+            data={clientAssetsProviderProduct}
           />
         }
         botonAgregar={
@@ -62,8 +52,8 @@ const ActiveCustomerPage = () => {
 
       <TablaInfo
         columns={columnNames}
-        data={activeCustomer}
-        totalRecords={activeCustomer.length}
+        data={clientAssetsProviderProduct}
+        totalRecords={clientAssetsProviderProduct.length}
         hiddenColumns={["id_client_asset"]}
         customColumnNames={{
           name_: "Nombre",
@@ -71,6 +61,7 @@ const ActiveCustomerPage = () => {
           product: "Producto",
           client: "Cliente",
         }}
+        formType="clients_assets"
       />
     </div>
   );
