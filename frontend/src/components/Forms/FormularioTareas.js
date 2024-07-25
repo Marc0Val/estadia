@@ -43,10 +43,10 @@ const FormularioTareas = () => {
         if (Array.isArray(response.data)) {
           setClients(response.data);
         } else {
-          console.log("Error al cargar los clientes", response.data);
+          // console.log("Error al cargar los clientes", response.data);
         }
       } catch (error) {
-        console.log("Error al cargar los clientes", error);
+        // console.log("Error al cargar los clientes", error);
       }
     };
     cargarClientes();
@@ -59,10 +59,10 @@ const FormularioTareas = () => {
         if (Array.isArray(response.data)) {
           setPersonal(response.data);
         } else {
-          console.log("Error al cargar el personal", response.data);
+          // console.log("Error al cargar el personal", response.data);
         }
       } catch (error) {
-        console.log("Error al cargar el personal", error);
+        // console.log("Error al cargar el personal", error);
       }
     };
     cargarPersonal();
@@ -70,7 +70,7 @@ const FormularioTareas = () => {
 
   const handleFormSubmit = async (values, { resetForm }) => {
     try {
-      console.log(values);
+      // console.log(values);
       await createTaskRequest(values);
       Swal.fire({
         icon: "success",
