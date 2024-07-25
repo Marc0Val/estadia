@@ -8,6 +8,10 @@ export const getAllPersonalRequest = async () =>
 export const getPersonalRequest = async (id) =>
   await axios.get(`${route}/personal/${id}`);
 
+// SOLO LA USO PARA CARGAR EL PERSONAL AL CALENDARIO
+export const getPersonalRequest2 = async (id) =>
+  await axios.get("http://127.0.01:4000/api/personal/");
+
 export const getPersonalRoleRequest = async () =>
   await axios.get("http://127.0.01:4000/api/personal-role");
 
