@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import BotonEditarModal from "./Buttons/BotonEditarModal";
 import FormularioClientes from "../components/Forms/FormularioClientes";
 import FormularioCategorias from "../components/Forms/FormularioCategorias";
@@ -17,37 +17,30 @@ const TablaInfo = ({
   hiddenColumns = [],
   customColumnNames = {},
   formType,
+  rowsPerPage = 15,
 }) => {
+  const [currentPage, setCurrentPage] = useState(1);
+
   const obtenerIdParaFormulario = useCallback(
     (formType, row) => {
-      // console.log(formType);
       switch (formType) {
         case "clients":
-          //console.log(`ID de cliente: ${row.id_client}`);
           return row.id_client;
         case "categories":
-         //console.log(`ID de categoría: ${row.id_category}`);
           return row.id_category;
         case "roles":
-          //console.log(`ID de rol: ${row.id_role}`);
           return row.id_role;
         case "personal":
-          //console.log(`ID de personal: ${row.id_personal}`);
           return row.id_personal;
         case "contacts":
-          //console.log(`ID de contacto: ${row.id_contact}`);
           return row.id_contact;
         case "suppliers":
-          //console.log(`ID de proveedor: ${row.id_supplier}`);
           return row.id_supplier;
         case "services":
-          //console.log(`ID de servicio: ${row.id_service}`);
           return row.id_service;
         case "products":
-          //console.log(`ID de producto: ${row.id_product}`);
           return row.id_product;
         case "clients_assets":
-          //console.log(`ID de Activo de Cliente: ${row.id_client_asset}`);
           return row.id_client_asset;
         default:
           return null;
@@ -81,6 +74,17 @@ const TablaInfo = ({
     }
   }, []);
 
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+  };
+
+  const paginatedData = data.slice(
+    (currentPage - 1) * rowsPerPage,
+    currentPage * rowsPerPage
+  );
+
+  const totalPages = Math.ceil(data.length / rowsPerPage);
+
   return (
     <div className="table-responsive">
       <table className="table align-middle table-hover">
@@ -110,7 +114,7 @@ const TablaInfo = ({
         </thead>
         <tbody>
           {totalRecords > 0 ? (
-            data.map((row, rowIndex) => (
+            paginatedData.map((row, rowIndex) => (
               <tr key={rowIndex} className="table-row">
                 {columns.map((columnName, colIndex) =>
                   hiddenColumns.includes(columnName) ? null : (
@@ -143,6 +147,23 @@ const TablaInfo = ({
           )}
         </tbody>
       </table>
+      <div className="pagination">
+        <button
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          Anterior
+        </button>
+        <span>
+          {currentPage} de {totalPages}
+        </span>
+        <button
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
+          Siguiente
+        </button>
+      </div>
     </div>
   );
 };
