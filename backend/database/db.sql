@@ -104,17 +104,22 @@ CREATE TABLE
     products (
         id_product INTEGER PRIMARY KEY AUTO_INCREMENT,
         name_ VARCHAR(255) NOT NULL,
-        category_id INT NOT NULL,
+        category_id INTEGER NOT NULL,
         unit VARCHAR(100) NOT NULL,
         description_ TEXT NOT NULL,
         sale_price DECIMAL(10, 2) NOT NULL,
         model VARCHAR(100),
         factory_code VARCHAR(100),
-        supplier_id INT NOT NULL,
+        supplier_id INTEGER NOT NULL,
         manufacturer_brand VARCHAR(255),
-        reorder_point INT NOT NULL,
-        initial_stock INT NOT NULL,
-        minimum_stock INT NOT NULL,
+        reorder_point INTEGER NOT NULL,
+        initial_stock INTEGER NOT NULL,
+        minimum_stock INTEGER NOT NULL,
+        product_image VARCHAR(50),
+        information_document VARCHAR(50),
+        sku VARCHAR(50),
+        sat_code VARCHAR(50),
+        sat_unit VARCHAR(50),
         FOREIGN KEY (category_id) REFERENCES categories (id_category),
         FOREIGN KEY (supplier_id) REFERENCES suppliers (id_supplier)
     );
@@ -200,7 +205,6 @@ CREATE TABLE
         FOREIGN KEY (client_id) REFERENCES clients (id_client)
     );
 
--- tabla para las tareas para el calendario
 CREATE TABLE
     tasks (
         id_task INTEGER PRIMARY KEY AUTO_INCREMENT,
