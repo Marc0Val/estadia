@@ -7,11 +7,11 @@ import { usePersonal } from "../context/PersonalContext";
 import BotonPDF from "../components/Buttons/BotonPDF";
 
 const PersonalPage = () => {
-  const { personal, getAllPersonal } = usePersonal();
+  const { personalRole, getPersonalRole } = usePersonal();
   const columnNames = ["name_", "last_name", "cell_number", "name_role"];
 
   useEffect(() => {
-    getAllPersonal();
+    getPersonalRole();
   }, []);
 
   return (
@@ -30,7 +30,7 @@ const PersonalPage = () => {
               cell_number: "Celular",
               name_role: "Rol",
             }}
-            data={personal}
+            data={personalRole}
           />
         }
         botonAgregar={
@@ -44,8 +44,8 @@ const PersonalPage = () => {
       />
       <TablaInfo
         columns={columnNames}
-        data={personal}
-        totalRecords={personal.length}
+        data={personalRole}
+        totalRecords={personalRole.length}
         hiddenColumns={["role_id"]}
         customColumnNames={{
           name_: "Nombre",

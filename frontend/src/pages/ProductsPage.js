@@ -3,11 +3,11 @@ import TablaInfo from "../components/TablaInfo";
 import BotonModal from "../components/Buttons/BotonModal";
 import FormularioProducto from "../components/Forms/FormularioProductos";
 import Header from "../components/Header";
-import { getProductsProviderRequest } from "../api/products.api";
+import { useProducts } from "../context/ProductsContext";
 import BotonPDF from "../components/Buttons/BotonPDF";
 
 const ProductsPage = () => {
-  const [products, setProducts] = useState([]);
+  const { productsProvider, getProductsProvider } = useProducts();
 
   const columnNames = [
     "id_product",
@@ -19,18 +19,7 @@ const ProductsPage = () => {
   ];
 
   useEffect(() => {
-    async function cargarProductos() {
-      const response = await getProductsProviderRequest();
-      if (Array.isArray(response.data)) {
-        // Asegúrate de que response.data sea un arreglo
-        setProducts(response.data);
-      } else {
-        console.log("La respuesta no es un arreglo", response.data);
-        setProducts([]);
-      }
-      console.log(response);
-    }
-    cargarProductos();
+    getProductsProvider();
   }, []);
 
   return (
@@ -50,7 +39,7 @@ const ProductsPage = () => {
               initial_stock: "Stock",
               supplier_name: "Proveedor",
             }}
-            data={products}
+            data={productsProvider}
           />
         }
         botonAgregar={
@@ -64,9 +53,8 @@ const ProductsPage = () => {
       />
       <TablaInfo
         columns={columnNames}
-        data={products}
-        totalRecords={products.length}
-        fetchElemento={getProductsProviderRequest}
+        data={productsProvider}
+        totalRecords={productsProvider.length}
         hiddenColumns={["id_product"]}
         customColumnNames={{
           unit: "Unidad",

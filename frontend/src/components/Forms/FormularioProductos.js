@@ -3,111 +3,117 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Button, Container, Row, Col } from "react-bootstrap";
 import Swal from "sweetalert2";
-import { createProductRequest } from "../../api/products.api";
-import { getCategoriesRequest } from "../../api/category.api";
-import { getSuppliersRequest } from "../../api/suppliers.api";
+import { useSuppliers } from "../../context/SuppliersContext";
+import { useProducts } from "../../context/ProductsContext";
+import { useCategories } from "../../context/CategoriesContext";
 
 // Esquema de validación
-const validationSchema = Yup.object().shape({
-  name_: Yup.string().required("Este campo es obligatorio"),
-  category_id: Yup.string().required("Este campo es obligatorio"),
-  unit: Yup.string().required("Este campo es obligatorio"),
-  description_: Yup.string().required("Este campo es obligatorio"),
-  sale_price: Yup.number().required("Este campo es obligatorio"),
-  supplier_id: Yup.string().required("Este campo es obligatorio"),
-  reorder_point: Yup.number()
-    .min(1, "Debe ser mayor que 0")
-    .required("Este campo es obligatorio"),
-  initial_stock: Yup.number()
-    .min(1, "Debe ser mayor que 0")
-    .required("Este campo es obligatorio"),
-  minimum_stock: Yup.number()
-    .min(1, "Debe ser mayor que 0")
-    .required("Este campo es obligatorio"),
-});
 
-const FormularioProducto = () => {
-  const [categories, setCategories] = useState([]);
-  const [suppliers, setSuppliers] = useState([]);
+const FormularioProducto = ({ id_product }) => {
+  const { getProduct, createProduct, updateProduct } = useProducts();
+  const { suppliers } = useSuppliers();
+  const { categories } = useCategories();
+
+  const validationSchema = Yup.object().shape({
+    name_: Yup.string().required("Este campo es obligatorio"),
+    category_id: Yup.string().required("Este campo es obligatorio"),
+    unit: Yup.string().required("Este campo es obligatorio"),
+    description_: Yup.string().required("Este campo es obligatorio"),
+    sale_price: Yup.number().required("Este campo es obligatorio"),
+    supplier_id: Yup.string().required("Este campo es obligatorio"),
+    reorder_point: Yup.number()
+      .min(1, "Debe ser mayor que 0")
+      .required("Este campo es obligatorio"),
+    initial_stock: Yup.number()
+      .min(1, "Debe ser mayor que 0")
+      .required("Este campo es obligatorio"),
+    minimum_stock: Yup.number()
+      .min(1, "Debe ser mayor que 0")
+      .required("Este campo es obligatorio"),
+    sku: Yup.string(),
+    sat_code: Yup.string(),
+    sat_unit: Yup.string(),
+  });
+
+  const emptyValues = {
+    name_: "",
+    category_id: "",
+    unit: "",
+    description_: "",
+    sale_price: "",
+    model: "",
+    factory_code: "",
+    supplier_id: "",
+    manufacturer_brand: "",
+    reorder_point: 1,
+    initial_stock: 1,
+    minimum_stock: 1,
+    // product_image: null,
+    // information_document: null,
+    sku: "",
+    sat_code: "",
+    sat_unit: "",
+  };
+
+  const [initialValues, setInitialValues] = useState(emptyValues);
 
   useEffect(() => {
-    const cargarCategorias = async () => {
+    const fetchProductData = async () => {
       try {
-        const response = await getCategoriesRequest();
-        if (Array.isArray(response.data)) {
-          setCategories(response.data);
-        } else {
-          console.log("Error al cargar las categorías o no es un arreglo  ");
+        if (id_product) {
+          const productData = await getProduct(id_product);
+          if (productData) {
+            setInitialValues({
+              ...emptyValues,
+              ...productData,
+            });
+          }
         }
       } catch (error) {
-        console.log(error);
-        console.error("Error al cargar las categorías", error);
+        console.error("Error fetching product data:", error);
       }
     };
-    cargarCategorias();
-  }, []);
 
-  useEffect(() => {
-    const cargarProveedores = async () => {
-      try {
-        const response = await getSuppliersRequest();
-        if (Array.isArray(response.data)) {
-          setSuppliers(response.data);
-        } else {
-          console.log("Error al cargar los proveedores o no es un arreglo");
-        }
-      } catch (error) {
-        console.log(error);
-        console.error("Error al cargar los proveedores", error);
-      }
-    };
-    cargarProveedores();
-  }, []);
+    fetchProductData();
+  }, [id_product, getProduct]);
 
   return (
     <Formik
-      initialValues={{
-        name_: "",
-        category_id: "",
-        unit: "",
-        description_: "",
-        sale_price: "",
-        model: "",
-        factory_code: "",
-        supplier_id: "",
-        manufacturer_brand: "",
-        reorder_point: 1,
-        initial_stock: 1,
-        minimum_stock: 1,
-        product_image: null,
-        information_document: null,
-        sku: "",
-        sat_code: "",
-        sat_unit: "",
-      }}
+      initialValues={initialValues}
+      enableReinitialize={true}
       validationSchema={validationSchema}
       onSubmit={async (values, { resetForm }) => {
         try {
-          console.log(values);
-          await createProductRequest(values);
-          Swal.fire({
-            icon: "success",
-            title: "Producto creado",
-            showConfirmButton: false,
-            timer: 1500,
-          });
+          if (id_product) {
+            await updateProduct(id_product, values);
+            Swal.fire({
+              icon: "success",
+              title: "Producto actualizado",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          } else {
+            await createProduct(values);
+            Swal.fire({
+              icon: "success",
+              title: "Producto creado",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
           resetForm();
         } catch (error) {
           Swal.fire({
             icon: "error",
-            title: "Error al crear el producto",
+            title: "Error al guardar los datos",
             showConfirmButton: false,
             timer: 1500,
           });
+          console.error("Error al guardar los datos", error);
         }
       }}
     >
-      {({ setFieldValue, errors, isValid, dirty }) => (
+      {({ resetForm, errors, isValid, dirty, setFieldValue }) => (
         <Container className="mt-4">
           <Form>
             <p className="text-muted">
@@ -341,7 +347,7 @@ const FormularioProducto = () => {
               </Col>
             </Row>
             <hr />
-            <Row className="mb-3 mt-5">
+            {/* <Row className="mb-3 mt-5">
               <Col>
                 <label htmlFor="product_image">
                   <strong>Imagen del producto</strong>
@@ -375,7 +381,7 @@ const FormularioProducto = () => {
                   }
                 />
               </Col>
-            </Row>
+            </Row> */}
             <hr />
             <h4 className="mt-5 mb-">Más información</h4>
             <Row className="mb-3">
@@ -422,7 +428,12 @@ const FormularioProducto = () => {
               <i className="fas fa-save"></i> Guardar
             </Button>
 
-            <Button variant="danger" type="reset" className="ms-2">
+            <Button
+              variant="danger"
+              type="reset"
+              className="ms-2"
+              onClick={() => resetForm({ values: emptyValues })}
+            >
               <i className="fas fa-eraser"></i> Limpiar
             </Button>
           </Form>

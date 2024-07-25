@@ -5,6 +5,7 @@ import {
   createPersonalRequest,
   updatePersonalRequest,
   deletePersonalRequest,
+  getPersonalRoleRequest,
 } from "../api/personal.api";
 
 const PersonalContext = createContext();
@@ -19,6 +20,7 @@ export const usePersonal = () => {
 
 export const PersonalProvider = ({ children }) => {
   const [personal, setPersonal] = useState([]);
+  const [personalRole, setPersonalRole] = useState([]);
 
   useEffect(() => {
     getAllPersonal();
@@ -37,6 +39,15 @@ export const PersonalProvider = ({ children }) => {
     try {
       const response = await getPersonalRequest(id);
       return response.data;
+    } catch (error) {
+      console.error(`Error fetching personal with ID ${id}:`, error);
+    }
+  };
+
+  const getPersonalRole = async (id) => {
+    try {
+      const response = await getPersonalRoleRequest(id);
+      setPersonalRole(response.data);
     } catch (error) {
       console.error(`Error fetching personal with ID ${id}:`, error);
     }
@@ -82,11 +93,13 @@ export const PersonalProvider = ({ children }) => {
     <PersonalContext.Provider
       value={{
         personal,
+        personalRole,
         getPersonal,
         getAllPersonal,
         createPersonal,
         updatePersonal,
         deletePersonal,
+        getPersonalRole,
       }}
     >
       {children}

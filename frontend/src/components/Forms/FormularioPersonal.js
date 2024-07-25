@@ -106,7 +106,7 @@ const FormularioPersonal = ({ id_personal }) => {
         }
       }}
     >
-      {({ handleChange, handleSubmit, values, errors, isValid, dirty }) => (
+      {({ handleSubmit, errors, isValid, dirty }) => (
         <Form className="container mt-4">
           <p className="text-muted">
             Complete el formulario | (*) Campos obligatorios
