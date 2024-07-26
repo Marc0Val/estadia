@@ -22,7 +22,9 @@ const TablaInfo = ({
   const [currentPage, setCurrentPage] = useState(1);
   const [filteredData, setFilteredData] = useState(data);
   const [filters, setFilters] = useState({});
-  const [selectedFilter, setSelectedFilter] = useState(columns[0]);
+  const [selectedFilter, setSelectedFilter] = useState(
+    columns.find((col) => !hiddenColumns.includes(col))
+  );
   const [filterValue, setFilterValue] = useState("");
 
   useEffect(() => {
@@ -123,36 +125,28 @@ const TablaInfo = ({
           value={selectedFilter}
           onChange={(e) => setSelectedFilter(e.target.value)}
         >
-          {columns.map(
-            (columnName, index) =>
-              !hiddenColumns.includes(columnName) && (
-                <option key={index} value={columnName}>
-                  {customColumnNames[columnName] || columnName}
-                </option>
-              )
-          )}
+          {columns.map((column) => (
+            <option key={column} value={column}>
+              {customColumnNames[column] || column}
+            </option>
+          ))}
         </select>
         <input
           type="text"
-          placeholder={`Filtrar por ${
-            customColumnNames[selectedFilter] || selectedFilter
-          }`}
           value={filterValue}
           onChange={(e) => handleFilterChange(e.target.value)}
+          placeholder="Buscar..."
         />
       </div>
       <table className="table align-middle table-hover">
         <thead>
           <tr>
             {totalRecords > 0 ? (
-              <th
-                colSpan={Object.keys(customColumnNames).length + 1}
-                className="text-center"
-              >
+              <th colSpan={columns.length + 1} className="text-center">
                 Total de registros: {totalRecords}
               </th>
             ) : (
-              <th colSpan={Object.keys(customColumnNames).length + 1}></th>
+              <th colSpan={columns.length + 1}></th>
             )}
           </tr>
           <tr>
@@ -191,10 +185,7 @@ const TablaInfo = ({
             ))
           ) : (
             <tr>
-              <td
-                colSpan={Object.keys(customColumnNames).length + 1}
-                className="text-center"
-              >
+              <td colSpan={columns.length + 1} className="text-center">
                 <strong>Ningún dato disponible en esta tabla</strong>
               </td>
             </tr>

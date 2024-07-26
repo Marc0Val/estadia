@@ -54,7 +54,6 @@ const ClientsPage = () => {
         columns={columnNames}
         data={clients}
         totalRecords={clients.length}
-        // fetchElemento={getClients}
         hiddenColumns={["id_client"]}
         customColumnNames={{
           trade_name: "Nombre Comercial",

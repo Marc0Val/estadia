@@ -358,3 +358,43 @@ html {
   background-color: #ccc;
   cursor: not-allowed;
 }
+
+// estilos para la barra de busqueda/filtroxd
+/* Estilos para la barra de filtro */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 15px;
+  align-items: center;
+}
+
+.filter-bar select,
+.filter-bar input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.filter-bar select {
+  background-color: #f8f9fa;
+}
+
+.filter-bar input {
+  flex-grow: 1;
+}
+
+@media (max-width: 768px) {
+  .filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-bar select,
+  .filter-bar input {
+    max-width: 100%;
+  }
+}
