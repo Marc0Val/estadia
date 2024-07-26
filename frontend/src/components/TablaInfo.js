@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import BotonEditarModal from "./Buttons/BotonEditarModal";
 import FormularioClientes from "../components/Forms/FormularioClientes";
 import FormularioCategorias from "../components/Forms/FormularioCategorias";
@@ -20,6 +20,14 @@ const TablaInfo = ({
   rowsPerPage = 15,
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [filteredData, setFilteredData] = useState(data);
+  const [filters, setFilters] = useState({});
+  const [selectedFilter, setSelectedFilter] = useState(columns[0]);
+  const [filterValue, setFilterValue] = useState("");
+
+  useEffect(() => {
+    setFilteredData(data);
+  }, [data]);
 
   const obtenerIdParaFormulario = useCallback(
     (formType, row) => {
@@ -78,15 +86,61 @@ const TablaInfo = ({
     setCurrentPage(newPage);
   };
 
-  const paginatedData = data.slice(
+  const handleFilterChange = (value) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [selectedFilter]: value,
+    }));
+    setFilterValue(value);
+  };
+
+  useEffect(() => {
+    let filtered = data;
+    Object.keys(filters).forEach((column) => {
+      if (filters[column]) {
+        filtered = filtered.filter((row) =>
+          row[column]
+            .toString()
+            .toLowerCase()
+            .includes(filters[column].toLowerCase())
+        );
+      }
+    });
+    setFilteredData(filtered);
+  }, [filters, data]);
+
+  const paginatedData = filteredData.slice(
     (currentPage - 1) * rowsPerPage,
     currentPage * rowsPerPage
   );
 
-  const totalPages = Math.ceil(data.length / rowsPerPage);
+  const totalPages = Math.ceil(filteredData.length / rowsPerPage);
 
   return (
     <div className="table-responsive">
+      <div className="filter-bar">
+        <select
+          value={selectedFilter}
+          onChange={(e) => setSelectedFilter(e.target.value)}
+        >
+          {columns.map(
+            (columnName, index) =>
+              !hiddenColumns.includes(columnName) && (
+                <option key={index} value={columnName}>
+                  {customColumnNames[columnName] || columnName}
+                </option>
+              )
+          )}
+        </select>
+        <input
+          type="text"
+          placeholder={`Filtrar por ${
+            customColumnNames[selectedFilter] || selectedFilter
+          }`}
+          value={filterValue}
+          onChange={(e) => handleFilterChange(e.target.value)}
+        />
+      </div>
       <table className="table align-middle table-hover">
         <thead>
           <tr>
