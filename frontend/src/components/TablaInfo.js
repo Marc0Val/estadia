@@ -125,17 +125,22 @@ const TablaInfo = ({
           value={selectedFilter}
           onChange={(e) => setSelectedFilter(e.target.value)}
         >
-          {columns.map((column) => (
-            <option key={column} value={column}>
-              {customColumnNames[column] || column}
-            </option>
-          ))}
+          {columns.map(
+            (column) =>
+              !hiddenColumns.includes(column) && (
+                <option key={column} value={column}>
+                  {customColumnNames[column] || column}
+                </option>
+              )
+          )}
         </select>
         <input
           type="text"
           value={filterValue}
           onChange={(e) => handleFilterChange(e.target.value)}
-          placeholder="Buscar..."
+          placeholder={`Filtrar por ${
+            customColumnNames[selectedFilter] || selectedFilter
+          }`}
         />
       </div>
       <table className="table align-middle table-hover">
