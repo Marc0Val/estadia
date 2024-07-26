@@ -27,7 +27,7 @@ const FormularioPersonalLogin = () => {
     setFormData({
       name: "",
       last_name: "",
-        role_: "Empleado",
+      role_: "Empleado",
       email: "",
       cell_number: "",
       country: "",

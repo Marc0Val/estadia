@@ -51,7 +51,7 @@ const CalendarComponent = () => {
         selectable
         onSelectSlot={handleSelectSlot}
         onSelectEvent={handleSelectEvent}
-        views={["month", "week", "day", "agenda"]}
+        views={["month", "day", "agenda"]}
       />
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
