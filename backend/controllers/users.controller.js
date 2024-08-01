@@ -1,4 +1,5 @@
 import { pool } from "../db.js";
+import bcrypt from "bcryptjs";
 
 //* Get all users
 export const getUsers = async (req, res) => {
@@ -60,8 +61,12 @@ export const createUser = async (req, res) => {
       role_id,
     } = req.body;
 
+    // Encriptar la contraseña
+    const salt = await bcrypt.genSalt(10); // Generar un salt
+    const hashedPassword = await bcrypt.hash(password_, salt); // Encriptar la contraseña
+
     const [result] = await pool.query(
-      "INSERT INTO personal(name_, last_name,  title, email, cell_number, country, state_, city, phone, address_, password_,role_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      "INSERT INTO personal(name_, last_name, title, email, cell_number, country, state_, city, phone, address_, password_, role_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
         name_,
         last_name,
@@ -73,7 +78,7 @@ export const createUser = async (req, res) => {
         city,
         phone,
         address_,
-        password_,
+        hashedPassword, // Usar la contraseña encriptada
         role_id,
       ]
     );

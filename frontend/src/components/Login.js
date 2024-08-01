@@ -1,43 +1,46 @@
-import axios from "axios";
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { FaSignInAlt } from "react-icons/fa";
 import logo from "../assets/logo.png";
 import BotonModal from "./Buttons/BotonModal";
 import FormularioPersonalLogin from "./Forms/FormularioPersonalLogin";
 import FormularioRecoverContraseña from "./Forms/FormularioRecoverContraseña";
+import { useAuth } from "../context/AuthContext"; // Importar el contexto de autenticación
 
 function Login() {
-  // posible logica de inicio de sesion
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { login, isAuthenticated } = useAuth(); // Usar la función de login del contexto
+
+  if (isAuthenticated) {
+    navigate("/admin");
+  }
+
+  // Refs para los campos del formulario
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const email = emailRef.current.value;
+    const password_ = passwordRef.current.value;
+
     try {
-      const response = await axios.post("http://localhost:4000/api/login", {
-        email,
-        password,
+      await login(email, password_); // Llamar a la función de login del contexto
+      Swal.fire({
+        icon: "success",
+        title: "Login exitoso",
+        showConfirmButton: false,
+        timer: 1500,
       });
-      if (response.status === 200) {
-        Swal.fire({
-          icon: "success",
-          title: "Login exitoso",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        navigate("/home");
-      }
     } catch (error) {
       Swal.fire({
         icon: "error",
         title: "Error",
-        text: error.response.data,
+        text: error.response ? error.response.data : error.message,
       });
     }
   };
+
   return (
     <div className="login-container animated-drop">
       <div className="animated-drop">
@@ -52,8 +55,7 @@ function Login() {
             type="email"
             className="form-control"
             id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            ref={emailRef} // Asigna el ref aquí
           />
         </div>
         <div className="mb-3">
@@ -62,14 +64,12 @@ function Login() {
             type="password"
             className="form-control"
             id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            ref={passwordRef} // Asigna el ref aquí
           />
         </div>
         <button
           type="submit"
           className="btn2"
-          disabled={!email || !password}
           style={{
             hover: {
               backgroundColor: "blue",
@@ -77,7 +77,6 @@ function Login() {
           }}
           title="Iniciar sesión"
         >
-          {/* <FaSignInAlt /> */}
           Acceder
         </button>
       </form>

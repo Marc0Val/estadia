@@ -2,24 +2,34 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { FaHome, FaSignOutAlt } from "react-icons/fa";
 import Swal from "sweetalert2";
+import { useAuth } from "../context/AuthContext";
 
 const Navbar = () => {
-  // Función para cerrar sesión
-  const cerrarSesion = () => {
-    Swal.fire({
-      title: "¿Estás seguro?",
-      text: "Estás por cerrar sesión",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Sí, cerrar sesión",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        // Redireccionar a la página principal
-        window.location.href = "/";
-      }
-    });
+  const { logout } = useAuth();
+
+  const cerrarSesion = async () => {
+    try {
+      Swal.fire({
+        title: "¿Estás seguro?",
+        text: "Estás por cerrar sesión",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Sí, cerrar sesión",
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          await logout();
+          window.location.href = "/";
+        }
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: error.message,
+      });
+    }
   };
 
   return (

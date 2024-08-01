@@ -13,36 +13,39 @@ import { SuppliersProvider } from "./context/SuppliersContext";
 import { ServicesProvider } from "./context/ServicesContext";
 import { ProductsProvider } from "./context/ProductsContext";
 import { ClientsAssetsProvider } from "./context/ClientsAssetsContext";
+import { AuthProvider } from "./context/AuthContext";
 
 function App() {
   return (
-    <ClientsProvider>
-      <CategoriesProvider>
-        <RolesProvider>
-          <EventProvider>
-            <PersonalProvider>
-              <ContactsProvider>
-                <SuppliersProvider>
-                  <ServicesProvider>
-                    <ProductsProvider>
-                      <ClientsAssetsProvider>
-                        <Router>
-                          <Routes>
-                            <Route path="/" element={<LoginPage />} />
-                            <Route path="/admin/*" element={<Admin />} />
-                            <Route path="*" element={<NotFoundPage />} />
-                          </Routes>
-                        </Router>
-                      </ClientsAssetsProvider>
-                    </ProductsProvider>
-                  </ServicesProvider>
-                </SuppliersProvider>
-              </ContactsProvider>
-            </PersonalProvider>
-          </EventProvider>
-        </RolesProvider>
-      </CategoriesProvider>
-    </ClientsProvider>
+    <AuthProvider>
+      <ClientsProvider>
+        <CategoriesProvider>
+          <RolesProvider>
+            <EventProvider>
+              <PersonalProvider>
+                <ContactsProvider>
+                  <SuppliersProvider>
+                    <ServicesProvider>
+                      <ProductsProvider>
+                        <ClientsAssetsProvider>
+                          <Router>
+                            <Routes>
+                              <Route path="/" element={<LoginPage />} />
+                              <Route path="/admin/*" element={<Admin />} />
+                              <Route path="*" element={<NotFoundPage />} />
+                            </Routes>
+                          </Router>
+                        </ClientsAssetsProvider>
+                      </ProductsProvider>
+                    </ServicesProvider>
+                  </SuppliersProvider>
+                </ContactsProvider>
+              </PersonalProvider>
+            </EventProvider>
+          </RolesProvider>
+        </CategoriesProvider>
+      </ClientsProvider>
+    </AuthProvider>
   );
 }
 

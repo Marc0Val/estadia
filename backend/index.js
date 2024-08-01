@@ -1,6 +1,7 @@
 import express from "express";
 import { PORT } from "./config.js";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 import indexRoutes from "./routes/index.routes.js";
 import usersRoutes from "./routes/users.routes.js";
@@ -15,6 +16,7 @@ import quotesRoutes from "./routes/quotes.routes.js";
 import purchaseOrdersRoutes from "./routes/purchase_orders.routes.js";
 import clientAssetsRoutes from "./routes/client_assets.routes.js";
 import taskRoutes from "./routes/task.routes.js";
+import authRoutes from "./routes/auth.routes.js";
 
 import rolesRoutes from "./routes/role.routes.js";
 
@@ -28,6 +30,7 @@ app.use(
 );
 
 app.use(express.json());
+app.use(cookieParser());
 
 // Add all the routes with "/api" prefix
 app.use("/api", indexRoutes);
@@ -44,6 +47,7 @@ app.use("/api", purchaseOrdersRoutes);
 app.use("/api", clientAssetsRoutes);
 app.use("/api", rolesRoutes);
 app.use("/api", taskRoutes);
+app.use("/api", authRoutes);
 
 app.listen(PORT);
 console.log("Server is running on port", PORT);
