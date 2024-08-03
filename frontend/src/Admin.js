@@ -49,10 +49,15 @@ const Admin = () => {
           <Route path="/servicios" element={<ServicesPage />} />
           {/* <Route path="/ordenes-de-compra" element={<ServiceOrdersPage />} /> */}
           <Route path="/ordenes-servicio" element={<ServiceOrdersPage />} />
+          <Route path="/ordenes-servicio" element={<ServiceOrdersPage />} />
           <Route path="/configuraciones" element={<SettingsPage />} />
           <Route path="/roles" element={<RolPage />} />
           <Route
             path="/formulario-orden-servicio"
+            element={<FormularioOrdenServicio />}
+          />
+          <Route
+            path="/formulario-orden-servicio/:id"
             element={<FormularioOrdenServicio />}
           />
           <Route

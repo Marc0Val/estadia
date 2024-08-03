@@ -20,7 +20,14 @@ const Navbar = () => {
       }).then(async (result) => {
         if (result.isConfirmed) {
           await logout();
-          window.location.href = "/";
+          Swal.fire({
+            icon: "success",
+            title: "Logout exitoso",
+            showConfirmButton: false,
+            timer: 1500,
+          }).then(() => {
+            window.location.href = "/";
+          });
         }
       });
     } catch (error) {

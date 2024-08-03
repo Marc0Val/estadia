@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Form,
   Button,
@@ -14,8 +14,18 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import FormularioClientes from "../../components/Forms/FormularioClientes";
 import BotonModal from "../../components/Buttons/BotonModal";
+import { useServiceOrders } from "../../context/ServiceOrdersContext";
+import { useClients } from "../../context/ClientsContext";
+import { useServices } from "../../context/ServicesContext";
+import { useProducts } from "../../context/ProductsContext";
 
-const FormularioOrdenServicio = () => {
+const FormularioOrdenServicio = ({ id_orden_servicio }) => {
+  const { getServiceOrderById, createServiceOrder, updateServiceOrder } =
+    useServiceOrders();
+  const { getClients, clients } = useClients();
+  const { getServices, services } = useServices();
+  const { getProducts, products } = useProducts();
+
   const [formData, setFormData] = useState({
     cliente: "",
     celular: "",
@@ -34,7 +44,51 @@ const FormularioOrdenServicio = () => {
     notas: "",
     nivelSatisfaccion: "",
     direccion: "",
+    estado: "Creada",
   });
+
+  useEffect(() => {
+    if (id_orden_servicio) {
+      getServiceOrderById(id_orden_servicio).then((data) => {
+        setFormData({
+          ...data,
+          fechaProgramada: new Date(data.fechaProgramada),
+        });
+      });
+    }
+  }, [id_orden_servicio, getServiceOrderById]);
+
+  useEffect(() => {
+    getClients();
+    getServices();
+    getProducts();
+  }, []);
+
+  useEffect(() => {
+    if (formData.cliente) {
+      console.log(formData.cliente);
+      const selectedClient = clients.find(
+        (client) => client.id_client.toString() === formData.cliente.toString()
+      );
+
+      if (selectedClient) {
+        setFormData((prevData) => ({
+          ...prevData,
+          celular: selectedClient.phone_or_cell || "",
+          contacto: selectedClient.contact_name || "",
+          correo: selectedClient.email || "",
+        }));
+      } else {
+        console.log("Cliente no encontrado:", formData.cliente);
+        setFormData((prevData) => ({
+          ...prevData,
+          celular: "",
+          contacto: "",
+          correo: "",
+        }));
+      }
+    }
+  }, [formData.cliente]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -60,7 +114,15 @@ const FormularioOrdenServicio = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Datos del formulario:", formData);
+    if (id_orden_servicio) {
+      updateServiceOrder(id_orden_servicio, formData).then(() => {
+        console.log("Orden de servicio actualizada:", formData);
+      });
+    } else {
+      createServiceOrder(formData).then(() => {
+        console.log("Orden de servicio creada:", formData);
+      });
+    }
   };
 
   const handleReset = () => {
@@ -82,6 +144,7 @@ const FormularioOrdenServicio = () => {
       notas: "",
       nivelSatisfaccion: "",
       direccion: "",
+      estado: "Creada",
     });
   };
 
@@ -113,7 +176,12 @@ const FormularioOrdenServicio = () => {
                     value={formData.cliente}
                     onChange={handleChange}
                   >
-                    <option>Selecciona un cliente</option>
+                    <option>-- Selecciona un cliente-- </option>
+                    {clients.map((client) => (
+                      <option key={client.id_client} value={client.id_client}>
+                        {client.trade_name}
+                      </option>
+                    ))}
                   </Form.Control>
                 </Form.Group>
               </Col>
@@ -169,7 +237,17 @@ const FormularioOrdenServicio = () => {
                     value={formData.servicio}
                     onChange={handleChange}
                     required
-                  ></Form.Control>
+                  >
+                    <option>-- Selecciona un servicio-- </option>
+                    {services.map((service) => (
+                      <option
+                        key={service.id_service}
+                        value={service.id_service}
+                      >
+                        {service.name_}
+                      </option>
+                    ))}
+                  </Form.Control>
                 </Form.Group>
               </Col>
               <Col>
@@ -243,10 +321,12 @@ const FormularioOrdenServicio = () => {
                 value={formData.producto}
                 onChange={handleChange}
               >
-                
-                <option>
-                  Productos - Refacciones - Materiales para servicio
-                </option>
+                <option>-- Productos Disponibles --</option>
+                {products.map((product) => (
+                  <option key={product.id_product} value={product.id_product}>
+                    {product.name_}
+                  </option>
+                ))}
               </Form.Control>
               <Button variant="primary">Agregar</Button>
             </InputGroup>

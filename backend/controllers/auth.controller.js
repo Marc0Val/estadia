@@ -59,13 +59,15 @@ export const login = async (req, res) => {
 //* Logout user
 export const logout = async (req, res) => {
   try {
-    res.cookie("token", "", {
+    res.clearCookie("token", {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // Solo si estás en producción y usas HTTPS
-      expires: new Date(0), // Expira el token inmediatamente
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "None",
     });
-    res.sendStatus(200);
+    console.log("aaaa");
+    res.status(200).json({ message: "Logout successful" });
   } catch (error) {
+    console.error("Logout error:", error.message);
     return res.status(500).json({ message: error.message });
   }
 };

@@ -15,18 +15,4 @@ export const loginRequest = async (userData) => {
   }
 };
 
-export const logoutRequest = async () => {
-  try {
-    const response = await axios.post(
-      `${route}/logout`,
-      {},
-      {
-        withCredentials: true,
-      }
-    );
-    return response;
-  } catch (error) {
-    console.error("Error en la solicitud de logout:", error);
-    throw error;
-  }
-};
+export const logoutRequest = () => axios.post(`${route}/logout`);

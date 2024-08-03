@@ -1,19 +1,24 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import logo from "../assets/logo.png";
 import BotonModal from "./Buttons/BotonModal";
 import FormularioPersonalLogin from "./Forms/FormularioPersonalLogin";
 import FormularioRecoverContraseña from "./Forms/FormularioRecoverContraseña";
-import { useAuth } from "../context/AuthContext"; // Importar el contexto de autenticación
+import { useAuth } from "../context/AuthContext";
 
 function Login() {
   const navigate = useNavigate();
-  const { login, isAuthenticated } = useAuth(); // Usar la función de login del contexto
+  const { login, isAuthenticated } = useAuth();
 
-  if (isAuthenticated) {
-    navigate("/admin");
-  }
+  console.log(isAuthenticated);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      console.log("ye");
+      navigate("/admin");
+    }
+  }, [isAuthenticated, navigate]);
 
   // Refs para los campos del formulario
   const emailRef = useRef(null);
@@ -25,7 +30,7 @@ function Login() {
     const password_ = passwordRef.current.value;
 
     try {
-      await login(email, password_); // Llamar a la función de login del contexto
+      await login(email, password_);
       Swal.fire({
         icon: "success",
         title: "Login exitoso",

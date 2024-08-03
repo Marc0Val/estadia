@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import { loginRequest, logoutRequest } from "../api/auth.api";
 import Cookies from "js-cookie";
 
@@ -32,7 +32,6 @@ export const AuthProvider = ({ children }) => {
     setIsAuthenticated(false);
     try {
       await logoutRequest();
-      Cookies.remove("token");
       setUser(null);
       setIsAuthenticated(false);
       window.location.href = "/";
