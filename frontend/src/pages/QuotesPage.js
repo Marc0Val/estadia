@@ -61,7 +61,14 @@ const QuotesPage = () => {
           </a>
         }
       />
-      <TablaInfo columns={columnNames} data={data} totalRecords={data.length} />
+      <TablaInfo
+        columns={columnNames}
+        data={data}
+        totalRecords={data.length}
+        // formType={"quote"}
+        specialPages={true}
+        baseUrl={"/admin/formulario-cotizacion"}
+      />
     </div>
   );
 };

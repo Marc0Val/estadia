@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useEffect } from "react";
-// Importación de los componentes de formulario
 import BotonEditarModal from "./Buttons/BotonEditarModal";
+import BotonUrl from "./Buttons/BotonUrl";
 import FormularioClientes from "../components/Forms/FormularioClientes";
 import FormularioCategorias from "../components/Forms/FormularioCategorias";
 import FormularioRoles from "../components/Forms/FormularioRoles";
@@ -11,30 +11,29 @@ import FormularioServicio from "./Forms/FormularioServicios";
 import FormularioProductos from "./Forms/FormularioProductos";
 import FormularioActivoCliente from "./Forms/FormularioActivoCliente";
 
-// Componente TablaInfo para mostrar y gestionar una tabla de información
 const TablaInfo = ({
-  columns, // Columnas de la tabla
-  data, // Datos a mostrar en la tabla
-  totalRecords, // Número total de registros
-  hiddenColumns = [], // Columnas ocultas
-  customColumnNames = {}, // Nombres personalizados de las columnas
-  formType, // Tipo de formulario para edición
-  rowsPerPage = 15, // Filas por página
+  columns,
+  data,
+  totalRecords,
+  hiddenColumns = [],
+  customColumnNames = {},
+  formType,
+  rowsPerPage = 15,
+  specialPages = false,
+  baseUrl = "",
 }) => {
-  const [currentPage, setCurrentPage] = useState(1); // Página actual
-  const [filteredData, setFilteredData] = useState(data); // Datos filtrados
-  const [filters, setFilters] = useState({}); // Filtros aplicados
+  const [currentPage, setCurrentPage] = useState(1);
+  const [filteredData, setFilteredData] = useState(data);
+  const [filters, setFilters] = useState({});
   const [selectedFilter, setSelectedFilter] = useState(
-    columns.find((col) => !hiddenColumns.includes(col)) // Filtro seleccionado
+    columns.find((col) => !hiddenColumns.includes(col))
   );
-  const [filterValue, setFilterValue] = useState(""); // Valor del filtro
+  const [filterValue, setFilterValue] = useState("");
 
-  // Actualiza los datos filtrados cuando los datos cambian
   useEffect(() => {
     setFilteredData(data);
   }, [data]);
 
-  // Función para obtener el ID para el formulario según el tipo de formulario
   const obtenerIdParaFormulario = useCallback(
     (formType, row) => {
       switch (formType) {
@@ -63,7 +62,6 @@ const TablaInfo = ({
     [formType]
   );
 
-  // Función para obtener el componente de formulario según el tipo de formulario e ID
   const obtenerComponenteFormulario = useCallback((formType, id) => {
     switch (formType) {
       case "clients":
@@ -89,12 +87,10 @@ const TablaInfo = ({
     }
   }, []);
 
-  // Maneja el cambio de página
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
 
-  // Maneja el cambio de valor del filtro
   const handleFilterChange = (value) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
@@ -103,7 +99,6 @@ const TablaInfo = ({
     setFilterValue(value);
   };
 
-  // Filtra los datos según los filtros aplicados
   useEffect(() => {
     let filtered = data;
     Object.keys(filters).forEach((column) => {
@@ -119,19 +114,16 @@ const TablaInfo = ({
     setFilteredData(filtered);
   }, [filters, data]);
 
-  // Datos paginados para la tabla
   const paginatedData = filteredData.slice(
     (currentPage - 1) * rowsPerPage,
     currentPage * rowsPerPage
   );
 
-  // Total de páginas
   const totalPages = Math.ceil(filteredData.length / rowsPerPage);
 
   return (
     <div className="table-responsive">
       <div className="filter-bar">
-        {/* Selector de filtros */}
         <select
           value={selectedFilter}
           onChange={(e) => setSelectedFilter(e.target.value)}
@@ -145,7 +137,6 @@ const TablaInfo = ({
               )
           )}
         </select>
-        {/* Input de valor del filtro */}
         <input
           type="text"
           value={filterValue}
@@ -155,11 +146,9 @@ const TablaInfo = ({
           }`}
         />
       </div>
-      {/* Tabla de datos */}
       <table className="table align-middle table-hover">
         <thead>
           <tr>
-            {/* Cabecera con el total de registros */}
             {totalRecords > 0 ? (
               <th colSpan={columns.length + 1} className="text-center">
                 Total de registros: {totalRecords}
@@ -169,7 +158,6 @@ const TablaInfo = ({
             )}
           </tr>
           <tr>
-            {/* Cabecera de columnas */}
             {columns.map((columnName, index) =>
               hiddenColumns.includes(columnName) ? null : (
                 <th key={index}>
@@ -181,7 +169,6 @@ const TablaInfo = ({
           </tr>
         </thead>
         <tbody>
-          {/* Filas de datos */}
           {totalRecords > 0 ? (
             paginatedData.map((row, rowIndex) => (
               <tr key={rowIndex} className="table-row">
@@ -191,17 +178,27 @@ const TablaInfo = ({
                   )
                 )}
                 <td>
-                  {/* Botón para editar con el modal correspondiente */}
-                  <BotonEditarModal
-                    nombreBoton="Editar"
-                    icono="bi bi-pencil"
-                    contenidoModal={() =>
-                      obtenerComponenteFormulario(
+                  {specialPages ? (
+                    <BotonUrl
+                      nombreBoton="Editar"
+                      icono="bi bi-pencil"
+                      url={`${baseUrl}/${obtenerIdParaFormulario(
                         formType,
-                        obtenerIdParaFormulario(formType, row)
-                      )
-                    }
-                  />
+                        row
+                      )}`}
+                    />
+                  ) : (
+                    <BotonEditarModal
+                      nombreBoton="Editar"
+                      icono="bi bi-pencil"
+                      contenidoModal={() =>
+                        obtenerComponenteFormulario(
+                          formType,
+                          obtenerIdParaFormulario(formType, row)
+                        )
+                      }
+                    />
+                  )}
                 </td>
               </tr>
             ))
@@ -214,7 +211,6 @@ const TablaInfo = ({
           )}
         </tbody>
       </table>
-      {/* Paginación */}
       <div className="pagination">
         <button
           onClick={() => handlePageChange(currentPage - 1)}

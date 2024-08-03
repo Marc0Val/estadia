@@ -1,3 +1,4 @@
+// frontend/src/pages/PurchaseOrderPage.js
 import React, { useEffect, useState } from "react";
 import TablaInfo from "../components/TablaInfo";
 import Header from "../components/Header";
@@ -5,11 +6,12 @@ import Header from "../components/Header";
 const PurchaseOrderPage = () => {
   const [data, setData] = useState([]);
   const columnNames = ["Fecha", "Proveedor", "Total", "Estado", "PDF"];
-  // informacion de prueba
+
   useEffect(() => {
     const fetchData = async () => {
       setData([
         {
+          id: 1,
           Fecha: "2021-08-01",
           Proveedor: "Proveedor 1",
           Total: "100.00",
@@ -17,6 +19,7 @@ const PurchaseOrderPage = () => {
           PDF: "PDF 1",
         },
         {
+          id: 2,
           Fecha: "2021-08-02",
           Proveedor: "Proveedor 2",
           Total: "200.00",
@@ -24,6 +27,7 @@ const PurchaseOrderPage = () => {
           PDF: "PDF 2",
         },
         {
+          id: 3,
           Fecha: "2021-08-03",
           Proveedor: "Proveedor 3",
           Total: "300.00",
@@ -31,6 +35,7 @@ const PurchaseOrderPage = () => {
           PDF: "PDF 3",
         },
         {
+          id: 4,
           Fecha: "2021-08-04",
           Proveedor: "Proveedor 4",
           Total: "400.00",
@@ -42,6 +47,7 @@ const PurchaseOrderPage = () => {
 
     fetchData();
   }, []);
+
   return (
     <div className="contenedor container-fluid">
       <p className="subtitulo">
@@ -68,7 +74,8 @@ const PurchaseOrderPage = () => {
         columns={columnNames}
         data={data}
         totalRecords={data.length}
-        formType="purchaseOrder"
+        specialPages={true}
+        baseUrl="/admin/formulario-orden-compra"
       />
     </div>
   );

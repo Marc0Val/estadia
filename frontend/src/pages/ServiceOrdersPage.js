@@ -87,7 +87,8 @@ const ServiceOrdersPage = () => {
         columns={columnNames}
         data={data}
         totalRecords={data.length}
-        formType="serviceOrders"
+        specialPages={true}
+        baseUrl={"/admin/formulario-orden-servicio"}
       />
     </div>
   );
