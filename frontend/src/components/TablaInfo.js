@@ -19,6 +19,9 @@ const TablaInfo = ({
   customColumnNames = {},
   formType,
   rowsPerPage = 15,
+  // checa, se agregan 2 nuevas "props" para saber si es una tabla especial o no y la url base (la ruta del form)
+  // la tabla especial es para las 3 tablas que tienen un formulario de edición que no es de una modal
+  
   specialPages = false,
   baseUrl = "",
 }) => {
@@ -177,6 +180,10 @@ const TablaInfo = ({
                     <td key={colIndex}>{row[columnName]}</td>
                   )
                 )}
+                {/*checa, dependiendo del specialpages (propiedad que solo las 3 paginas tienen) pues se muestra uno de los dos componentes el de la modal o el de url  */}
+                {/* el de la url ps no se como enviaria el id para la otra pagina (el respectivo formulario) */}
+                {/* no te generará pedos en la pagina de ordenes de servicio porque en esa ya recibe el id y en las otras 2 no */}
+
                 <td>
                   {specialPages ? (
                     <BotonUrl
