@@ -36,6 +36,7 @@ const FormularioOrdenServicio = ({ id_orden_servicio }) => {
     inicio: "",
     fin: "",
     precio: "",
+    personalAsignado: "",
     cantidad: 1,
     producto: "",
     actividades: "",
@@ -136,6 +137,7 @@ const FormularioOrdenServicio = ({ id_orden_servicio }) => {
       inicio: "",
       fin: "",
       precio: "",
+      personalAsignado: "",
       cantidad: 1,
       producto: "",
       actividades: "",
@@ -302,6 +304,20 @@ const FormularioOrdenServicio = ({ id_orden_servicio }) => {
                     value={formData.precio}
                     onChange={handleChange}
                   />
+                </Form.Group>
+              </Col>
+
+              <Col>
+                <Form.Group controlId="formPersonalAsignado">
+                  <Form.Label>
+                    <strong>Personal Asignado</strong>
+                  </Form.Label>
+                  <Form.Control as="select" name="personalAsignado">
+                    <option>-- Selecciona un personal-- </option>
+                    <option>Personal 1</option>
+                    <option>Personal 2</option>
+                    <option>Personal 3</option>
+                  </Form.Control>
                 </Form.Group>
               </Col>
             </Row>
