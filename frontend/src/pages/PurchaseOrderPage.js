@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import TablaInfo from "../components/TablaInfo";
 import Header from "../components/Header";
+import { Link } from "react-router-dom";
 
 const PurchaseOrderPage = () => {
   const [data, setData] = useState([]);
@@ -56,8 +57,8 @@ const PurchaseOrderPage = () => {
       <hr />
       <Header
         botonAgregar={
-          <a
-            href="/admin/formulario-orden-compra"
+          <Link
+            to="/admin/formulario-orden-compra"
             className="btn btn-info"
             role="button"
             style={{
@@ -67,7 +68,7 @@ const PurchaseOrderPage = () => {
             title="Crear Nueva Orden"
           >
             <i className="fas fa-plus"></i> Nueva Orden
-          </a>
+          </Link>
         }
       />
       <TablaInfo

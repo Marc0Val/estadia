@@ -15,6 +15,8 @@ import { ProductsProvider } from "./context/ProductsContext";
 import { ClientsAssetsProvider } from "./context/ClientsAssetsContext";
 import { AuthProvider } from "./context/AuthContext";
 import { ServiceOrdersProvider } from "./context/ServiceOrdersContext";
+import { QuotesProvider } from "./context/QuotesContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -30,13 +32,18 @@ function App() {
                       <ProductsProvider>
                         <ClientsAssetsProvider>
                           <ServiceOrdersProvider>
-                            <Router>
-                              <Routes>
-                                <Route path="/" element={<LoginPage />} />
-                                <Route path="/admin/*" element={<Admin />} />
-                                <Route path="*" element={<NotFoundPage />} />
-                              </Routes>
-                            </Router>
+                            <QuotesProvider>
+                              <Router>
+                                <Routes>
+                                  <Route path="/" element={<LoginPage />} />
+                                  <Route
+                                    path="/admin/*"
+                                    element={<ProtectedRoute element={Admin} />}
+                                  />
+                                  <Route path="*" element={<NotFoundPage />} />
+                                </Routes>
+                              </Router>
+                            </QuotesProvider>
                           </ServiceOrdersProvider>
                         </ClientsAssetsProvider>
                       </ProductsProvider>

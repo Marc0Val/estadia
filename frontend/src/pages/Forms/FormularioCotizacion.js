@@ -1,27 +1,15 @@
 import React, { useState, useEffect } from "react";
-import {
-  Form,
-  Button,
-  Row,
-  Col,
-  Container,
-  InputGroup,
-  FormControl,
-} from "react-bootstrap";
+import { Form, Button, Row, Col } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import axios from "axios";
-import { Table } from "react-bootstrap";
+import { useClients } from "../../context/ClientsContext";
+import { useProducts } from "../../context/ProductsContext";
 import FormularioClientes from "../../components/Forms/FormularioClientes";
 import BotonModal from "../../components/Buttons/BotonModal";
 
 const FormularioCotizacion = () => {
   const today = new Date();
   const [startDate, setStartDate] = useState(today);
-  const [clients, setClients] = useState([]);
-  const [products, setProducts] = useState([]);
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [formData, setFormData] = useState({
     cliente: "",
@@ -33,6 +21,46 @@ const FormularioCotizacion = () => {
     productoImpuesto: 16,
     vigencia: "",
   });
+
+  // Contextos
+  const { clients, getClients } = useClients();
+  const { products, getProducts } = useProducts();
+
+  useEffect(() => {
+    getClients();
+    getProducts();
+  }, [getClients, getProducts]);
+
+  useEffect(() => {
+    if (formData.cliente) {
+      const selectedClient = clients.find(
+        (client) => client.id_client.toString() === formData.cliente.toString()
+      );
+      if (selectedClient) {
+        setFormData((prevState) => ({
+          ...prevState,
+          contacto: selectedClient.contact_name || "",
+        }));
+      }
+    }
+  }, [formData.cliente, clients]);
+
+  useEffect(() => {
+    if (formData.productoSeleccionado) {
+      const selectedProduct = products.find(
+        (product) =>
+          product.id_product.toString() ===
+          formData.productoSeleccionado.toString()
+      );
+      if (selectedProduct) {
+        setFormData((prevState) => ({
+          ...prevState,
+          productoPrecio: selectedProduct.sale_price || 0,
+        }));
+      }
+    }
+  }, [formData.productoSeleccionado, products]);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -40,7 +68,7 @@ const FormularioCotizacion = () => {
 
   const handleAddProduct = () => {
     const product = products.find(
-      (p) => p.id === formData.productoSeleccionado
+      (p) => p.id_product === formData.productoSeleccionado
     );
     setSelectedProducts([
       ...selectedProducts,
@@ -86,7 +114,6 @@ const FormularioCotizacion = () => {
                     <strong>Cliente: </strong>
                   </Form.Label>
                   <BotonModal
-                    // nombreBoton="Nuevo Cliente"
                     icono="fas fa-user-plus"
                     contenidoModal={<FormularioClientes />}
                     titulo="Nuevo Cliente"
@@ -99,8 +126,8 @@ const FormularioCotizacion = () => {
                   >
                     <option>Seleccione</option>
                     {clients.map((client) => (
-                      <option key={client.id} value={client.id}>
-                        {client.name}
+                      <option key={client.id_client} value={client.id_client}>
+                        {client.trade_name}
                       </option>
                     ))}
                   </Form.Control>
@@ -151,8 +178,11 @@ const FormularioCotizacion = () => {
                   >
                     <option>Seleccione</option>
                     {products.map((product) => (
-                      <option key={product.id} value={product.id}>
-                        {product.name}
+                      <option
+                        key={product.id_product}
+                        value={product.id_product}
+                      >
+                        {product.name_}
                       </option>
                     ))}
                   </Form.Control>
@@ -168,6 +198,7 @@ const FormularioCotizacion = () => {
                     name="productoPrecio"
                     value={formData.productoPrecio}
                     onChange={handleInputChange}
+                    readOnly // Precio solo para mostrar, no editable por el usuario
                   />
                 </Form.Group>
               </Col>
@@ -284,32 +315,11 @@ const FormularioCotizacion = () => {
             </div>
             <div className="card-footer">
               <div className="d-grid gap-2">
-                <Button
-                  variant="info"
-                  disabled={!formData.cliente || selectedProducts.length === 0}
-                >
-                  <i className="fas fa-save"></i> Guardar
+                <Button variant="primary" type="submit">
+                  Guardar Cotización
                 </Button>
-                <Button
-                  variant="warning"
-                  onClick={() =>
-                    setFormData({
-                      ...formData,
-                      cliente: "",
-                      contacto: "",
-                      vigencia: "",
-                      notas: "",
-                      terminos: "",
-                    })
-                  }
-                >
-                  <i className="fas fa-undo-alt"></i> Limpiar
-                </Button>
-                <NavLink
-                  to="/admin/cotizaciones"
-                  className="btn btn-outline-secondary"
-                >
-                  <i className="fas fa-arrow-left"></i> Regresar
+                <NavLink to="/admin/cotizaciones">
+                  <Button variant="secondary">Volver</Button>
                 </NavLink>
               </div>
             </div>

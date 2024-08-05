@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import TablaInfo from "../components/TablaInfo";
 import Header from "../components/Header";
+import { Link } from "react-router-dom";
 
 const QuotesPage = () => {
   const [data, setData] = useState([]);
@@ -47,8 +48,8 @@ const QuotesPage = () => {
       <hr />
       <Header
         botonAgregar={
-          <a
-            href="/admin/formulario-cotizacion"
+          <Link
+            to="/admin/formulario-cotizacion"
             className="btn btn-info"
             role="button"
             style={{
@@ -58,7 +59,7 @@ const QuotesPage = () => {
             title="Crear Nueva Orden"
           >
             <i className="fas fa-plus"></i> Nueva Cotizacion
-          </a>
+          </Link>
         }
       />
       <TablaInfo
