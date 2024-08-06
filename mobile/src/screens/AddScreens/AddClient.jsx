@@ -1,0 +1,222 @@
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  StyleSheet,
+  Alert,
+  ScrollView,
+} from "react-native";
+import { Picker } from "@react-native-picker/picker"
+import { saveClient } from "../../api/Clients_api";
+
+const AddClient = ({ navigation }) => {
+  const [client, setClient] = useState({
+    trade_name: "",
+    business_type: "Por definir",
+    phone_or_cell: "",
+    email: "",
+    street: "",
+    number_: "",
+    neigborhood: "",
+    postal_code: "",
+    city: "",
+    country: "México",
+    state_: "",
+    notes: "",
+    contact_name: "",
+    contact_title: "",
+    contact_area_or_position: "",
+    contact_cell_phone: "",
+    contact_email: "",
+  });
+
+  const handleChange = (name, value) => {
+    setClient({ ...client, [name]: value });
+  };
+
+  const handleSubmit = async () => {
+    if (
+      !client.trade_name ||
+      !client.business_type ||
+      !client.email ||
+      !client.street ||
+      !client.number_ ||
+      !client.city ||
+      !client.country ||
+      !client.state_ ||
+      !client.contact_name ||
+      !client.contact_cell_phone ||
+      !client.contact_email
+    ) {
+      Alert.alert("Error", "Por favor, rellene todos los campos obligatorios.");
+      return;
+    }
+
+    try {
+      await saveClient(client);
+      navigation.navigate("Clientes");
+    } catch (error) {
+      console.error(error);
+      Alert.alert("Error", "Ocurrió un error al guardar el cliente.");
+    }
+  };
+
+  const isFormValid = () => {
+    return (
+      client.trade_name &&
+      client.business_type &&
+      client.email &&
+      client.street &&
+      client.number_ &&
+      client.city &&
+      client.country &&
+      client.state_ &&
+      client.contact_name &&
+      client.contact_cell_phone &&
+      client.contact_email
+    );
+  };
+
+  return (
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <Text style={styles.title}>Nuevo Cliente</Text>
+      <View style={styles.container}>
+        <TextInput
+          style={styles.input}
+          placeholder="Nombre Comercial"
+          value={client.trade_name}
+          onChangeText={(text) => handleChange("trade_name", text)}
+        />
+        <Picker
+          selectedValue={client.business_type}
+          style={styles.picker}
+          onValueChange={(itemValue) =>
+            handleChange("business_type", itemValue)
+          }
+        >
+          <Picker.Item label="Por definir" value="Por definir" />
+          <Picker.Item label="Comercial" value="Comercial" />
+          <Picker.Item label="Equipo médico" value="Equipo médico" />
+          <Picker.Item label="Industrial" value="Industrial" />
+          <Picker.Item label="Restaurantero" value="Restaurantero" />
+          <Picker.Item label="Servicios" value="Servicios" />
+        </Picker>
+        <TextInput
+          style={styles.input}
+          placeholder="Teléfono/Celular"
+          value={client.phone_or_cell}
+          onChangeText={(text) => handleChange("phone_or_cell", text)}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Correo Electrónico"
+          value={client.email}
+          onChangeText={(text) => handleChange("email", text)}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Calle"
+          value={client.street}
+          onChangeText={(text) => handleChange("street", text)}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Número"
+          value={client.number_}
+          onChangeText={(text) => handleChange("number_", text)}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Colonia"
+          value={client.neigborhood}
+          onChangeText={(text) => handleChange("neigborhood", text)}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Código Postal"
+          value={client.postal_code}
+          onChangeText={(text) => handleChange("postal_code", text)}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Ciudad"
+          value={client.city}
+          onChangeText={(text) => handleChange("city", text)}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Estado"
+          value={client.state_}
+          onChangeText={(text) => handleChange("state_", text)}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Notas"
+          value={client.notes}
+          onChangeText={(text) => handleChange("notes", text)}
+        />
+        <Text style={styles.infoTitle}>Info de Contacto</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Nombre de Contacto"
+          value={client.contact_name}
+          onChangeText={(text) => handleChange("contact_name", text)}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Teléfono de Contacto"
+          value={client.contact_cell_phone}
+          onChangeText={(text) => handleChange("contact_cell_phone", text)}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Correo de Contacto"
+          value={client.contact_email}
+          onChangeText={(text) => handleChange("contact_email", text)}
+        />
+        <Button
+          title="Guardar Cliente"
+          onPress={handleSubmit}
+          disabled={!isFormValid()}
+        />
+      </View>
+    </ScrollView>
+  );
+};
+
+const styles = StyleSheet.create({
+  title: {
+    fontSize: 24,
+    textAlign: "center",
+    marginTop: "1%",
+    marginBottom: 20,
+  },
+  scrollContainer: {
+    flexGrow: 1,
+    justifyContent: "center",
+  },
+  container: {
+    padding: 20,
+    width: "100%",
+  },
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+  },
+  picker: {
+    height: 50,
+    width: "100%",
+    margin: 12,
+  },
+  infoTitle: {
+    fontSize: 18,
+    textAlign: "center",
+    marginVertical: 10,
+  },
+});
+
+export default AddClient;

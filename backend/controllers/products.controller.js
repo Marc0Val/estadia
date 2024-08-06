@@ -12,50 +12,6 @@ export const getProducts = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
-// get all products v2 (traer el nombre del proveedor en vez del id del mismo)
-// CREATE TABLE
-//     products (
-//         id_product INTEGER PRIMARY KEY AUTO_INCREMENT,
-//         name_ VARCHAR(255) NOT NULL,
-//         category_id INT NOT NULL,
-//         unit VARCHAR(100) NOT NULL,
-//         description_ TEXT NOT NULL,
-//         sale_price DECIMAL(10, 2) NOT NULL,
-//         model VARCHAR(100),
-//         factory_code VARCHAR(100),
-//         supplier_id INT NOT NULL,
-//         manufacturer_brand VARCHAR(255),
-//         reorder_point INT NOT NULL,
-//         initial_stock INT NOT NULL,
-//         minimum_stock INT NOT NULL,
-//         FOREIGN KEY (category_id) REFERENCES categories (id_category),
-//         FOREIGN KEY (supplier_id) REFERENCES suppliers (id_supplier)
-//     );
-// CREATE TABLE
-//     suppliers (
-//         id_supplier INTEGER PRIMARY KEY AUTO_INCREMENT,
-//         trade_name VARCHAR(255) NOT NULL,
-//         business_type VARCHAR(255) NOT NULL,
-//         cell_number VARCHAR(100) NOT NULL,
-//         email VARCHAR(255),
-//         country VARCHAR(100) NOT NULL,
-//         state_ VARCHAR(100) NOT NULL,
-//         address_ TEXT,
-//         city VARCHAR(100) NOT NULL,
-//         postal_code VARCHAR(20),
-//         location_ TEXT,
-//         website VARCHAR(255),
-//         bank_accounts TEXT,
-//         billing_name VARCHAR(255),
-//         billing_number VARCHAR(100),
-//         billing_address TEXT,
-//         notes TEXT,
-//         contact_name VARCHAR(255) NOT NULL,
-//         contact_title VARCHAR(100),
-//         contact_area_or_position VARCHAR(100),
-//         contact_cell_phone VARCHAR(100) NOT NULL,
-//         contact_email VARCHAR(255)
-//     );
 export const getProductsProvider = async (req, res) => {
   try {
     const [result] = await pool.query(
