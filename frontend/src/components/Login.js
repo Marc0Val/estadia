@@ -60,7 +60,7 @@ function Login() {
             type="email"
             className="form-control"
             id="email"
-            ref={emailRef} // Asigna el ref aquí
+            ref={emailRef}
           />
         </div>
         <div className="mb-3">
@@ -69,7 +69,7 @@ function Login() {
             type="password"
             className="form-control"
             id="password"
-            ref={passwordRef} // Asigna el ref aquí
+            ref={passwordRef}
           />
         </div>
         <button

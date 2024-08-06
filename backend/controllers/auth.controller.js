@@ -26,8 +26,6 @@ export const login = async (req, res) => {
     }
 
     const user = result[0];
-    console.log("Password from request:", password_);
-    console.log("Password from database:", user.password_); // Verifica que `user.password` sea el correcto
 
     // Comparar la contraseña ingresada con la almacenada en la base de datos
     const passwordIsValid = bcrypt.compareSync(password_, user.password_);

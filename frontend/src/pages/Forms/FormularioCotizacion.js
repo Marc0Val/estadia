@@ -46,7 +46,7 @@ const FormularioCotizacion = () => {
   useEffect(() => {
     getClients();
     getProducts();
-  }, [getClients, getProducts]);
+  }, []);
 
   useEffect(() => {
     if (formData.client_id) {

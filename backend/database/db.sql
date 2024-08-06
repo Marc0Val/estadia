@@ -140,25 +140,30 @@ CREATE TABLE
     services_orders (
         id_service_order INTEGER PRIMARY KEY AUTO_INCREMENT,
         client_id INTEGER NOT NULL,
-        contact_id INTEGER NOT NULL,
         service_id INTEGER NOT NULL,
         personal_id INTEGER NOT NULL,
+        product_id INTEGER NOT NULL,
+        contact_name VARCHAR(100) NOT NULL,
+        contact_phone VARCHAR(100) NOT NULL,
+        contact_email VARCHAR(100) NOT NULL,
         scheduled_date DATE NOT NULL,
         start_time TIME NOT NULL,
         end_time TIME NOT NULL,
         price DECIMAL(10, 2) NOT NULL,
         quantity INTEGER NOT NULL,
-        product_id INTEGER NOT NULL,
         additional_info VARCHAR(100) NOT NULL,
         activities VARCHAR(4000) NOT NULL,
         recomendations VARCHAR(4000) NOT NULL,
-        files VARCHAR(50) NOT NULL,
-        notes VARCHAR(100) NOT NULL,
+        files VARCHAR(50),
+        notes VARCHAR(100),
+        state_ VARCHAR(50) NOT NULL,
         FOREIGN KEY (client_id) REFERENCES clients (id_client),
-        FOREIGN KEY (contact_id) REFERENCES contacts (id_contact),
         FOREIGN KEY (service_id) REFERENCES services (id_service),
         FOREIGN KEY (personal_id) REFERENCES personal (id_personal),
-        FOREIGN KEY (product_id) REFERENCES products (id_product)
+        FOREIGN KEY (product_id) REFERENCES products (id_product),
+        FOREIGN KEY (contact_name) REFERENCES client (contact_name),
+        FOREIGN KEY (contact_phone) REFERENCES client (contact_cell_phone),
+        FOREIGN KEY (contact_email) REFERENCES client (contact_email)
     );
 
 CREATE TABLE

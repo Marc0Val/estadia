@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import TablaInfo from "../components/TablaInfo";
 import Header from "../components/Header";
 import { Link } from "react-router-dom";
+import { useServiceOrders } from "../context/ServiceOrdersContext";
 
 const ServiceOrdersPage = () => {
-  const [data, setData] = useState([]);
+  const { serviceOrders, getServiceOrders, loading, error } =
+    useServiceOrders();
+
   const columnNames = [
     "Programada",
     "Inicio",
@@ -12,53 +15,23 @@ const ServiceOrdersPage = () => {
     "Cliente",
     "Personal",
     "Estado",
-    "PDF",
+    // "PDF",
   ];
-  // informacion de prueba
-  useEffect(() => {
-    const fetchData = async () => {
-      setData([
-        {
-          Programada: "2021-08-01",
-          Inicio: "2021-08-01 08:00",
-          Fin: "2021-08-01 09:00",
-          Cliente: "Cliente 1",
-          Personal: "Personal 1",
-          Estado: "Activa",
-          PDF: "PDF 1",
-        },
-        {
-          Programada: "2021-08-02",
-          Inicio: "2021-08-02 08:00",
-          Fin: "2021-08-02 09:00",
-          Cliente: "Cliente 2",
-          Personal: "Personal 2",
-          Estado: "Activa",
-          PDF: "PDF 2",
-        },
-        {
-          Programada: "2021-08-03",
-          Inicio: "2021-08-03 08:00",
-          Fin: "2021-08-03 09:00",
-          Cliente: "Cliente 3",
-          Personal: "Personal 3",
-          Estado: "Activa",
-          PDF: "PDF 3",
-        },
-        {
-          Programada: "2021-08-04",
-          Inicio: "2021-08-04 08:00",
-          Fin: "2021-08-04 09:00",
-          Cliente: "Cliente 4",
-          Personal: "Personal 4",
-          Estado: "Activa",
-          PDF: "PDF 4",
-        },
-      ]);
-    };
 
-    fetchData();
+  useEffect(() => {
+    getServiceOrders();
   }, []);
+
+  // Map the serviceOrders data to the format expected by TablaInfo
+  const data = serviceOrders.map((order) => ({
+    Programada: order.scheduled_date,
+    Inicio: order.start_time,
+    Fin: order.end_time,
+    Cliente: order.client_id,
+    Personal: order.personal_id,
+    Estado: order.state_,
+    // PDF: order.pdfLink,
+  }));
 
   return (
     <div className="contenedor container-fluid">

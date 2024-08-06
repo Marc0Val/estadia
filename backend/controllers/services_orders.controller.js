@@ -36,44 +36,50 @@ export const createServiceOrder = async (req, res) => {
   try {
     const {
       client_id,
-      contact_id,
       service_id,
       personal_id,
+      product_id,
+      contact_name,
+      contact_phone,
+      contact_email,
       scheduled_date,
       start_time,
       end_time,
       price,
       quantity,
-      product_id,
       additional_info,
       activities,
       recomendations,
       files,
       notes,
+      state_,
     } = req.body;
 
     const [result] = await pool.query(
-      "INSERT INTO services_orders (client_id, contact_id, service_id, personal_id, scheduled_date, start_time, end_time, price, quantity, product_id, additional_info, activities, recomendations, files, notes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      "INSERT INTO services_orders (client_id, service_id, personal_id, product_id, contact_name, contact_phone, contact_email, scheduled_date, start_time, end_time, price, quantity, additional_info, activities, recomendations, files, notes, state_) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
         client_id,
-        contact_id,
         service_id,
         personal_id,
+        product_id,
+        contact_name,
+        contact_phone,
+        contact_email,
         scheduled_date,
         start_time,
         end_time,
         price,
         quantity,
-        product_id,
         additional_info,
         activities,
         recomendations,
         files,
         notes,
+        state_,
       ]
     );
 
-    res.json({ id: result.insertId, scheduled_date, additional_info });
+    res.json({ id: result.insertId, scheduled_date, additional_info, state_ });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }

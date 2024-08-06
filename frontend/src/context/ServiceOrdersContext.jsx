@@ -32,8 +32,10 @@ export const ServiceOrdersProvider = ({ children }) => {
     setLoading(true);
     try {
       const response = await getServiceOrdersRequest();
+      console.log(response);
       setServiceOrders(response.data);
     } catch (err) {
+      console.log(err);
       setError(err);
     } finally {
       setLoading(false);
@@ -44,6 +46,7 @@ export const ServiceOrdersProvider = ({ children }) => {
     setLoading(true);
     try {
       const response = await getServiceOrderRequest(id);
+      console.log(response);
       return response.data;
     } catch (err) {
       setError(err);
@@ -60,6 +63,7 @@ export const ServiceOrdersProvider = ({ children }) => {
       getServiceOrders();
     } catch (err) {
       setError(err);
+      console.log(err);
     } finally {
       setLoading(false);
     }
@@ -77,6 +81,7 @@ export const ServiceOrdersProvider = ({ children }) => {
       getServiceOrders();
     } catch (err) {
       setError(err);
+      console.log(err);
     } finally {
       setLoading(false);
     }
@@ -92,6 +97,7 @@ export const ServiceOrdersProvider = ({ children }) => {
       getServiceOrders();
     } catch (err) {
       setError(err);
+      console.log(err);
     } finally {
       setLoading(false);
     }
