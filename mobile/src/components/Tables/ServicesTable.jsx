@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import ServicesItem from "../items/ServicesItem";
-import { getServices } from "../../api/Services_api";
+import { getServices, deleteService } from "../../api/Services_api";
 
 const ServicesTable = () => {
   const [services, setServices] = useState([]);
@@ -34,9 +34,14 @@ const ServicesTable = () => {
     loadServices();
   }, []);
 
+  const handleDelete = async (id) => {
+    await deleteService(id);
+    await loadServices();
+  };
+
   // función para renderizar cada ítem de la lista
   const renderItem = ({ item }) => {
-    return <ServicesItem service={item} />;
+    return <ServicesItem service={item} handleDelete={handleDelete} />;
   };
 
   const onRefresh = useCallback(async () => {

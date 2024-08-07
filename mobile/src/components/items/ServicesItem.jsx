@@ -1,9 +1,13 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
-const ServicesItem = ({ service }) => {
+const ServicesItem = ({ service, handleDelete }) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() => {
+        console.log("Edit service", service.id_service);
+      }}
+    >
       <View style={styles.tableRow}>
         <Text style={styles.tableCell}>{service.id_service}</Text>
         <Text style={styles.tableCell}>{service.name_}</Text>
@@ -11,7 +15,8 @@ const ServicesItem = ({ service }) => {
         <TouchableOpacity
           style={styles.deleteButton}
           onPress={() => {
-            console.log("Edit service", service.id_service);
+            console.log("Deleting", service.id_service);
+            handleDelete(service.id_service);
           }}
         >
           <Text style={styles.tableCell}>Eliminar</Text>

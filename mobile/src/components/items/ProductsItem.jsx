@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
-const ProductsItem = ({ product }) => {
+const ProductsItem = ({ product, handleDelete }) => {
   return (
     <TouchableOpacity>
       <View style={styles.tableRow}>
@@ -14,7 +14,8 @@ const ProductsItem = ({ product }) => {
         <TouchableOpacity
           style={styles.deleteButton}
           onPress={() => {
-            console.log("Edit product", product.id_product);
+            console.log("Deleting", product.id_product);
+            handleDelete(product.id_product);
           }}
         >
           <Text style={styles.tableCell}>Eliminar</Text>

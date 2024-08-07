@@ -16,3 +16,9 @@ export const saveProduct = async (newProduct) => {
   });
   return await res.json();
 };
+
+export const deleteProduct = async (id) => {
+  await fetch(`${API}/${id}`, {
+    method: "DELETE",
+  });
+};

@@ -7,8 +7,8 @@ import {
   RefreshControl,
   ActivityIndicator,
 } from "react-native";
-import ClietnsItem from "../items/ClientsItem";
-import { getClients } from "../../api/Clients_api";
+import ClientsItem from "../items/ClientsItem";
+import { getClients, deleteClient } from "../../api/Clients_api";
 
 const ClientsTable = () => {
   const [clients, setClients] = useState([]);
@@ -33,9 +33,13 @@ const ClientsTable = () => {
     loadClients();
   }, []);
 
+  const handleDelete = async (id) => {
+    await deleteClient(id);
+    await loadClients();
+  };
   // función para renderizar cada ítem de la lista
   const renderItem = ({ item }) => {
-    return <ClietnsItem client={item} />;
+    return <ClientsItem client={item} handleDelete={handleDelete} />;
   };
 
   const onRefresh = useCallback(async () => {
@@ -52,7 +56,7 @@ const ClientsTable = () => {
           <Text style={styles.tableHeaderCell}>Nombre</Text>
           <Text style={styles.tableHeaderCell}>Contacto</Text>
           <Text style={styles.tableHeaderCell}>Celular</Text>
-          <Text style={styles.tableHeaderCell}>Accion</Text>
+          <Text style={styles.tableHeaderCell}>Acción</Text>
         </View>
       </View>
       {loading ? (

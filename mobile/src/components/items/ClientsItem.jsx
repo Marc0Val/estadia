@@ -1,19 +1,27 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
-const ClientsItem = ({ client }) => {
+const ClientsItem = ({ client, handleDelete }) => {
+  const navigation = useNavigation();
+
+  const handleEditClient = () => {
+    console.log("Edit client", client.id_client);
+    navigation.navigate("AddTask", { clientId: client.id_client });
+  };
+
   return (
-    <TouchableOpacity onPress={console.log("Edit client", client.id_client)}>
+    <TouchableOpacity onPress={handleEditClient}>
       <View style={styles.tableRow}>
         <Text style={styles.tableCell}>{client.id_client}</Text>
         <Text style={styles.tableCell}>{client.trade_name}</Text>
         <Text style={styles.tableCell}>{client.contact_name}</Text>
         <Text style={styles.tableCell}>{client.contact_cell_phone}</Text>
-        
         <TouchableOpacity
           style={styles.deleteButton}
           onPress={() => {
-            console.log("Edit client", client.id_client);
+            console.log("Deleting", client.id_client);
+            handleDelete(client.id_client);
           }}
         >
           <Text style={styles.tableCell}>Eliminar</Text>

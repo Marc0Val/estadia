@@ -16,3 +16,9 @@ export const saveClient = async (newClient) => {
   });
   return await res.json();
 };
+
+export const deleteClient = async (id) => {
+  await fetch(`${API}/${id}`, {
+    method: "DELETE",
+  });
+};

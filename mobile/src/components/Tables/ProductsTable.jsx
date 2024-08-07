@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import Productsitem from "../items/ProductsItem";
-import { getProducts } from "../../api/Products_api";
+import { getProducts, deleteProduct } from "../../api/Products_api";
 
 const ProductsTable = () => {
   const [products, setProducts] = useState([]);
@@ -33,9 +33,14 @@ const ProductsTable = () => {
     loadProducts();
   }, []);
 
+  const handleDelete = async (id) => {
+    await deleteProduct(id);
+    await loadProducts();
+  };
+
   // función para renderizar cada ítem de la lista
   const renderItem = ({ item }) => {
-    return <Productsitem product={item} />;
+    return <Productsitem product={item} handleDelete={handleDelete} />;
   };
 
   const onRefresh = useCallback(async () => {
