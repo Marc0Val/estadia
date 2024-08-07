@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -8,10 +8,10 @@ import {
   Alert,
   ScrollView,
 } from "react-native";
-import { Picker } from "@react-native-picker/picker"
-import { saveClient } from "../../api/Clients_api";
+import { Picker } from "@react-native-picker/picker";
+import { saveClient, getClient, updateClient } from "../../api/Clients_api";
 
-const AddClient = ({ navigation }) => {
+const AddClient = ({ navigation, route }) => {
   const [client, setClient] = useState({
     trade_name: "",
     business_type: "Por definir",
@@ -32,30 +32,24 @@ const AddClient = ({ navigation }) => {
     contact_email: "",
   });
 
+  const [editing, setEditing] = useState(false);
+
   const handleChange = (name, value) => {
     setClient({ ...client, [name]: value });
   };
 
   const handleSubmit = async () => {
-    if (
-      !client.trade_name ||
-      !client.business_type ||
-      !client.email ||
-      !client.street ||
-      !client.number_ ||
-      !client.city ||
-      !client.country ||
-      !client.state_ ||
-      !client.contact_name ||
-      !client.contact_cell_phone ||
-      !client.contact_email
-    ) {
+    if (!isFormValid()) {
       Alert.alert("Error", "Por favor, rellene todos los campos obligatorios.");
       return;
     }
 
     try {
-      await saveClient(client);
+      if (!editing) {
+        await saveClient(client);
+      } else {
+        await updateClient(route.params.clientId, client);
+      }
       navigation.navigate("Clientes");
     } catch (error) {
       console.error(error);
@@ -79,9 +73,22 @@ const AddClient = ({ navigation }) => {
     );
   };
 
+  useEffect(() => {
+    if (route.params && route.params.clientId) {
+      navigation.setOptions({ title: "Editar Cliente" });
+      setEditing(true);
+      (async () => {
+        const client = await getClient(route.params.clientId);
+        setClient(client);
+      })();
+    }
+  }, []);
+
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
-      <Text style={styles.title}>Nuevo Cliente</Text>
+      <Text style={styles.title}>
+        {editing ? "Editar Cliente" : "Nuevo Cliente"}
+      </Text>
       <View style={styles.container}>
         <TextInput
           style={styles.input}
@@ -177,7 +184,7 @@ const AddClient = ({ navigation }) => {
           onChangeText={(text) => handleChange("contact_email", text)}
         />
         <Button
-          title="Guardar Cliente"
+          title={editing ? "Actualizar Cliente" : "Guardar Cliente"}
           onPress={handleSubmit}
           disabled={!isFormValid()}
         />

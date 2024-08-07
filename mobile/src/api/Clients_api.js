@@ -5,6 +5,11 @@ export const getClients = async () => {
   return await response.json();
 };
 
+export const getClient = async (id) => {
+  const response = await fetch(`${API}/${id}`);
+  return await response.json();
+};
+
 export const saveClient = async (newClient) => {
   const res = await fetch(API, {
     method: "POST",
@@ -21,4 +26,16 @@ export const deleteClient = async (id) => {
   await fetch(`${API}/${id}`, {
     method: "DELETE",
   });
+};
+
+export const updateClient = async (id, client) => {
+  const res = await fetch(`${API}/${id}`, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(client),
+  });
+  return await res.json();
 };

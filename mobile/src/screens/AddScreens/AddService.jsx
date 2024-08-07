@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -9,9 +9,9 @@ import {
   ScrollView,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
-import { saveService } from "../../api/Services_api";
+import { saveService, getService, updateService } from "../../api/Services_api";
 
-const AddService = ({ navigation }) => {
+const AddService = ({ navigation, route }) => {
   const [service, setService] = useState({
     name_: "",
     category_id: "",
@@ -20,6 +20,9 @@ const AddService = ({ navigation }) => {
     sat_unit: "",
     sat_code: "",
   });
+
+  const [editing, setEditing] = useState(false);
+
   const handleChange = (name, value) => {
     setService({ ...service, [name]: value });
   };
@@ -36,9 +39,12 @@ const AddService = ({ navigation }) => {
     }
 
     try {
-      await saveService(service);
+      if (editing) {
+        await updateService(route.params.serviceId, service);
+      } else {
+        await saveService(service);
+      }
       navigation.navigate("Servicios");
-      console.log("Service saved", service);
     } catch (error) {
       console.error("Error saving service", error);
     }
@@ -52,9 +58,23 @@ const AddService = ({ navigation }) => {
       service.description_
     );
   };
+
+  useEffect(() => {
+    if (route.params && route.params.serviceId) {
+      navigation.setOptions({ title: "Editar Servicio" });
+      setEditing(true);
+      (async () => {
+        const service = await getService(route.params.serviceId);
+        setService(service);
+      })();
+    }
+  }, []);
+
   return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.title}>Agregar Servicio</Text>
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <Text style={styles.title}>
+        {editing ? "Editar Servicio" : "Nuevo Servicio"}
+      </Text>
       <TextInput
         style={styles.input}
         placeholder="Nombre"
@@ -98,7 +118,7 @@ const AddService = ({ navigation }) => {
         onChangeText={(text) => handleChange("sat_code", text)}
       />
       <Button
-        title="Guardar"
+        title={editing ? "Actualizar" : "Guardar"}
         onPress={handleSubmit}
         disabled={!isFormValid()}
       />
@@ -116,7 +136,6 @@ const styles = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,
     justifyContent: "center",
-    backgroundColor: "red",
   },
   container: {
     padding: 20,
@@ -137,10 +156,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: "center",
     marginVertical: 10,
-  },
-  label: {
-    fontSize: 16,
-    margin: 12,
   },
 });
 

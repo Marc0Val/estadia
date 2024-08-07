@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -9,29 +9,27 @@ import {
   ScrollView,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
-import { saveProduct } from "../../api/Products_api";
+import { saveProduct, getProduct, updateProduct } from "../../api/Products_api";
 
-const AddProduct = ({ navigation }) => {
+const AddProduct = ({ navigation, route }) => {
   const [product, setProduct] = useState({
     name_: "",
     category_id: "1",
     unit: "Por definir",
     description_: "",
-    sale_price: "1", // Valor inicial
+    sale_price: "1",
     model: "",
     factory_code: "",
     supplier_id: "4",
     manufacturer_brand: "",
-    reorder_point: "1", // Valor inicial
-    initial_stock: "1", // Valor inicial
-    minimum_stock: "1", // Valor inicial
-    // sku: "",
-    // sat_code: "",
-    // sat_unit: "",
+    reorder_point: "1",
+    initial_stock: "1",
+    minimum_stock: "1",
   });
 
+  const [editing, setEditing] = useState(false);
+
   const handleChange = (name, value) => {
-    // Validar campos numéricos para asegurarse de que solo se ingresen números
     if (
       name === "sale_price" ||
       name === "reorder_point" ||
@@ -46,23 +44,18 @@ const AddProduct = ({ navigation }) => {
   };
 
   const handleSubmit = async () => {
-    const { name_, category_id, unit, description_, sale_price, supplier_id } =
-      product;
-    if (
-      !name_ ||
-      !category_id ||
-      !unit ||
-      !description_ ||
-      !sale_price ||
-      !supplier_id
-    ) {
+    if (!isFormValid()) {
       Alert.alert("Error", "Por favor, rellene todos los campos obligatorios.");
       return;
     }
+
     try {
-      await saveProduct(product);
+      if (!editing) {
+        await saveProduct(product);
+      } else {
+        await updateProduct(route.params.productId, product);
+      }
       navigation.navigate("Productos");
-      console.log(product);
     } catch (error) {
       console.error(error);
       Alert.alert("Error", "No se pudo guardar el producto.");
@@ -77,9 +70,22 @@ const AddProduct = ({ navigation }) => {
     );
   };
 
+  useEffect(() => {
+    if (route.params && route.params.productId) {
+      navigation.setOptions({ title: "Editar Producto" });
+      setEditing(true);
+      (async () => {
+        const product = await getProduct(route.params.productId);
+        setProduct(product);
+      })();
+    }
+  }, []);
+
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
-      <Text style={styles.title}>Nuevo Producto</Text>
+      <Text style={styles.title}>
+        {editing ? "Editar Producto" : "Nuevo Producto"}
+      </Text>
       <View style={styles.container}>
         <TextInput
           style={styles.input}
@@ -100,7 +106,6 @@ const AddProduct = ({ navigation }) => {
           selectedValue={product.unit}
           onValueChange={(itemValue) => handleChange("unit", itemValue)}
         >
-
           <Picker.Item label="Por definir" value="Por definir" />
           <Picker.Item label="Unidad" value="Unidad" />
           <Picker.Item label="Conjunto" value="Conjunto" />
@@ -129,7 +134,7 @@ const AddProduct = ({ navigation }) => {
           placeholder="Precio de venta"
           value={product.sale_price}
           onChangeText={(text) => handleChange("sale_price", text)}
-          keyboardType="numeric" // Asegura que se use el teclado numérico
+          keyboardType="numeric"
         />
         <TextInput
           style={styles.input}
@@ -163,7 +168,7 @@ const AddProduct = ({ navigation }) => {
           placeholder="Punto de pedido"
           value={product.reorder_point}
           onChangeText={(text) => handleChange("reorder_point", text)}
-          keyboardType="numeric" // Asegura que se use el teclado numérico
+          keyboardType="numeric"
         />
         <Text style={styles.label}>Stock inicial</Text>
         <TextInput
@@ -171,7 +176,7 @@ const AddProduct = ({ navigation }) => {
           placeholder="Stock inicial"
           value={product.initial_stock}
           onChangeText={(text) => handleChange("initial_stock", text)}
-          keyboardType="numeric" // Asegura que se use el teclado numérico
+          keyboardType="numeric"
         />
         <Text style={styles.label}>Stock mínimo</Text>
         <TextInput
@@ -179,7 +184,7 @@ const AddProduct = ({ navigation }) => {
           placeholder="Stock mínimo"
           value={product.minimum_stock}
           onChangeText={(text) => handleChange("minimum_stock", text)}
-          keyboardType="numeric" // Asegura que se use el teclado numérico
+          keyboardType="numeric"
         />
         <Text style={styles.infoTitle}>Más información</Text>
         <TextInput
@@ -202,7 +207,7 @@ const AddProduct = ({ navigation }) => {
         />
 
         <Button
-          title="Guardar Producto"
+          title={editing ? "Actualizar" : "Guardar"}
           onPress={handleSubmit}
           disabled={!isFormValid()}
         />
