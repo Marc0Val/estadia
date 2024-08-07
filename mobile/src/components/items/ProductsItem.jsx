@@ -1,9 +1,16 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const ProductsItem = ({ product, handleDelete }) => {
+  const navigation = useNavigation();
   return (
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() => {
+        console.log("Edit product", product.id_product);
+        navigation.navigate("AddProduct", { productId: product.id_product });
+      }}
+    >
       <View style={styles.tableRow}>
         {/* <Text style={styles.tableCell}>{product.id_product}</Text> */}
         <Text style={styles.tableCell}>{product.unit}</Text>

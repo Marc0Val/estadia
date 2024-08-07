@@ -1,11 +1,15 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const ServicesItem = ({ service, handleDelete }) => {
+  const navigation = useNavigation();
+
   return (
     <TouchableOpacity
       onPress={() => {
         console.log("Edit service", service.id_service);
+        navigation.navigate("AddService", { serviceId: service.id_service });
       }}
     >
       <View style={styles.tableRow}>
