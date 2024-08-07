@@ -1,9 +1,16 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
-const TaskItem = ({ task }) => {
+const TaskItem = ({ task, handleDelete }) => {
+  const navigation = useNavigation();
   return (
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() => {
+        console.log("Edit task", task.id_task);
+        navigation.navigate("AddTask", { taskId: task.id_task });
+      }}
+    >
       <View style={styles.tableRow}>
         <Text style={styles.tableCell}>{task.start_time}</Text>
         <Text style={styles.tableCell}>{task.client_id}</Text>
@@ -12,7 +19,8 @@ const TaskItem = ({ task }) => {
         <TouchableOpacity
           style={styles.deleteButton}
           onPress={() => {
-            console.log("Edit task", task.id_task);
+            console.log("Deleting", task.id_task);
+            handleDelete(task.id_task);
           }}
         >
           <Text style={styles.tableCell}>Eliminar</Text>

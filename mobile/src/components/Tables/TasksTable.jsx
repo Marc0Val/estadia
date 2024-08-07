@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import TaskItem from "../items/TasksItem";
 import { useIsFocused } from "@react-navigation/native";
-import { getTasks } from "../../api/Task_api";
+import { getTasks, deleteTask } from "../../api/Task_api";
 
 const TasksTable = ({ selectedDate }) => {
   const [tasks, setTasks] = useState([]);
@@ -36,6 +36,11 @@ const TasksTable = ({ selectedDate }) => {
     loadTasks();
   }, [isFocused]);
 
+  const handleDelete = async (id) => {
+    await deleteTask(id);
+    await loadTasks();
+  };
+
   // Función para filtrar las tareas por la fecha seleccionada
   const filteredTasks = tasks.filter((task) => {
     const taskDate = new Date(task.date_);
@@ -44,7 +49,7 @@ const TasksTable = ({ selectedDate }) => {
 
   // Función para renderizar cada ítem de la lista
   const renderItem = ({ item }) => {
-    return <TaskItem task={item} />;
+    return <TaskItem task={item} handleDelete={handleDelete} />;
   };
 
   const onRefresh = React.useCallback(async () => {

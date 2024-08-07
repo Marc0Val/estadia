@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { saveTask } from "../../api/Task_api";
+import { saveTask, getTask, updateTask } from "../../api/Task_api";
 
-const AddTask = ({ navigation }) => {
+const AddTask = ({ navigation, route }) => {
   const [task, setTask] = useState({
     title: "",
     client_id: "",
@@ -16,6 +16,8 @@ const AddTask = ({ navigation }) => {
     status_: "Pendiente",
   });
 
+  const [editing, setEditing] = useState(false);
+
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showStartTimePicker, setShowStartTimePicker] = useState(false);
   const [showEndTimePicker, setShowEndTimePicker] = useState(false);
@@ -24,18 +26,41 @@ const AddTask = ({ navigation }) => {
     setTask({ ...task, [name]: value });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     try {
-      saveTask(task);
-      navigation.navigate("HomeScreen");
+      if (editing) {
+        await updateTask(route.params.taskId, task);
+      } else {
+        await saveTask(task);
+      }
+      navigation.navigate("Home");
     } catch (error) {
       console.error("Error saving task", error);
     }
   };
 
+  useEffect(() => {
+    if (route.params && route.params.taskId) {
+      navigation.setOptions({ title: "Editar Asignación" });
+      setEditing(true);
+      (async () => {
+        const task = await getTask(route.params.taskId);
+        // Asegúrate de que las fechas sean instancias de Date
+        setTask({
+          ...task,
+          date_: new Date(task.date_),
+          start_time: new Date(task.start_time),
+          end_time: new Date(task.end_time),
+        });
+      })();
+    }
+  }, [route.params]);
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Nueva Asignación</Text>
+      <Text style={styles.title}>
+        {editing ? "Editar Asignación" : "Nueva Asignación"}
+      </Text>
 
       <TextInput
         style={styles.input}
@@ -49,8 +74,8 @@ const AddTask = ({ navigation }) => {
         style={styles.picker}
         onValueChange={(value) => handleChange("client_id", value)}
       >
-        <Picker.Item label="Cliente 1" value="3" />
-        <Picker.Item label="Cliente 2" value="3" />
+        <Picker.Item label="Cliente 1" value="1" />
+        <Picker.Item label="Cliente 2" value="2" />
         <Picker.Item label="Cliente 3" value="3" />
       </Picker>
 
@@ -125,7 +150,7 @@ const AddTask = ({ navigation }) => {
         <Picker.Item label="Terminada" value="Terminada" />
       </Picker>
       <Button
-        title="Guardar"
+        title={editing ? "Actualizar" : "Guardar"}
         onPress={handleSubmit}
         disabled={
           !task.title ||
