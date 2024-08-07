@@ -8,12 +8,14 @@ import {
   ActivityIndicator,
 } from "react-native";
 import Productsitem from "../items/ProductsItem";
+import { useIsFocused } from "@react-navigation/native";
 import { getProducts, deleteProduct } from "../../api/Products_api";
 
 const ProductsTable = () => {
   const [products, setProducts] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(false);
+  const isFocused = useIsFocused();
 
   // función para cargar los productos
   const loadProducts = async () => {
@@ -31,7 +33,7 @@ const ProductsTable = () => {
   // efecto para cargar los productos cuando el componente se monta
   useEffect(() => {
     loadProducts();
-  }, []);
+  }, [isFocused]);
 
   const handleDelete = async (id) => {
     await deleteProduct(id);

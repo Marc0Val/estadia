@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -9,12 +9,14 @@ import {
   TouchableOpacity,
 } from "react-native";
 import TaskItem from "../items/TasksItem";
+import { useIsFocused } from "@react-navigation/native";
 import { getTasks } from "../../api/Task_api";
 
 const TasksTable = ({ selectedDate }) => {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const isFocused = useIsFocused();
 
   // Función para cargar las tareas
   const loadTasks = async () => {
@@ -32,7 +34,7 @@ const TasksTable = ({ selectedDate }) => {
   // Efecto para cargar las tareas cuando el componente se monta
   useEffect(() => {
     loadTasks();
-  }, []);
+  }, [isFocused]);
 
   // Función para filtrar las tareas por la fecha seleccionada
   const filteredTasks = tasks.filter((task) => {
@@ -49,7 +51,7 @@ const TasksTable = ({ selectedDate }) => {
     setRefreshing(true);
     await loadTasks();
     setRefreshing(false);
-  }, []);
+  }, [isFocused]);
 
   return (
     <View style={styles.container}>

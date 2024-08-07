@@ -4,7 +4,6 @@ import { useNavigation } from "@react-navigation/native";
 
 const ServicesItem = ({ service, handleDelete }) => {
   const navigation = useNavigation();
-
   return (
     <TouchableOpacity
       onPress={() => {

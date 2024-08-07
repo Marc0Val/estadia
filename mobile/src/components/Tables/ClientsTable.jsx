@@ -8,12 +8,14 @@ import {
   ActivityIndicator,
 } from "react-native";
 import ClientsItem from "../items/ClientsItem";
+import { useIsFocused } from "@react-navigation/native";
 import { getClients, deleteClient } from "../../api/Clients_api";
 
 const ClientsTable = () => {
   const [clients, setClients] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(false);
+  const isFocused = useIsFocused();
 
   // función para cargar los clientes
   const loadClients = async () => {
@@ -31,7 +33,7 @@ const ClientsTable = () => {
   // efecto para cargar los clientes cuando el componente se monta
   useEffect(() => {
     loadClients();
-  }, []);
+  }, [isFocused]);
 
   const handleDelete = async (id) => {
     await deleteClient(id);

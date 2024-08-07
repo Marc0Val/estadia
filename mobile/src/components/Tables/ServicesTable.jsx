@@ -8,12 +8,14 @@ import {
   ActivityIndicator,
 } from "react-native";
 import ServicesItem from "../items/ServicesItem";
+import { useIsFocused } from "@react-navigation/native";
 import { getServices, deleteService } from "../../api/Services_api";
 
 const ServicesTable = () => {
   const [services, setServices] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(false);
+  const isFocused = useIsFocused();
 
   // función para cargar los servicios
   const loadServices = async () => {
@@ -32,7 +34,7 @@ const ServicesTable = () => {
   // efecto para cargar los servicios cuando el componente se monta
   useEffect(() => {
     loadServices();
-  }, []);
+  }, [isFocused]);
 
   const handleDelete = async (id) => {
     await deleteService(id);

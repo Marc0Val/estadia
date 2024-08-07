@@ -8,12 +8,14 @@ import {
   ActivityIndicator,
 } from "react-native";
 import ServiceOrdersItem from "../items/ServiceOrdersItem";
+import { useIsFocused } from "@react-navigation/native";
 import { getServiceOrders } from "../../api/OrderServices_api";
 
 const ServiceOrdersTable = () => {
   const [serviceOrders, setServiceOrders] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(false);
+  const isFocused = useIsFocused();
 
   // función para cargar las ordenes de servicio
   const loadServiceOrders = async () => {
@@ -31,7 +33,7 @@ const ServiceOrdersTable = () => {
   // efecto para cargar las ordenes de servicio cuando el componente se monta
   useEffect(() => {
     loadServiceOrders();
-  }, []);
+  }, [isFocused]);
 
   // función para renderizar cada ítem de la lista
   const renderItem = ({ item }) => {
