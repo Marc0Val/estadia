@@ -27,6 +27,9 @@ export const login = async (req, res) => {
 
     const user = result[0];
 
+    console.log(user.id_personal);
+    console.log(user.role_id);
+
     // Comparar la contraseña ingresada con la almacenada en la base de datos
     const passwordIsValid = bcrypt.compareSync(password_, user.password_);
 
@@ -35,9 +38,14 @@ export const login = async (req, res) => {
     }
 
     // Generar el token
-    const token = jwt.sign({ id: user.id }, "secret", {
-      expiresIn: 86400, // 24 horas
-    });
+    const token = jwt.sign(
+      { id_personal: user.id_personal, role: user.role_id },
+      "secret",
+      {
+        expiresIn: 86400, // 24 horas
+      }
+    );
+    console.log(token);
 
     // Enviar el token como una cookie
     res.cookie("token", token, {
@@ -47,7 +55,7 @@ export const login = async (req, res) => {
       maxAge: 86400 * 1000,
     });
 
-    res.status(200).json({ message: "Login successful" });
+    res.status(200).json({ message: "Login successful", token });
   } catch (error) {
     console.error("Login error:", error.message); // Agregar log para errores
     return res.status(500).json({ message: error.message });

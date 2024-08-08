@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { loginRequest, logoutRequest } from "../api/auth.api";
 import Cookies from "js-cookie";
+import jwt_decode from "jsonwebtoken";
 
 const AuthContext = createContext();
 
@@ -16,11 +17,28 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
 
+  useEffect(() => {
+    const token = Cookies.get("token");
+    if (token) {
+      try {
+        const decoded = jwt_decode(token, "secret"); // Decodificar el token
+        console.log(decoded);
+        setUser({ id_personal: decoded.id_personal, role: decoded.role });
+        setIsAuthenticated(true);
+      } catch (error) {
+        console.error("Token decoding error:", error);
+      }
+    }
+  }, []);
+
   const login = async (email, password_) => {
     try {
       const response = await loginRequest({ email, password_ });
       setIsAuthenticated(true);
-      setUser(response.data.user);
+      const token = response.data.token;
+      Cookies.set("token", token);
+      const decoded = jwt_decode(token, "secret");
+      setUser({ id_personal: decoded.id_personal, role: decoded.role });
       return response;
     } catch (error) {
       console.error("Error en el login:", error);
@@ -32,6 +50,7 @@ export const AuthProvider = ({ children }) => {
     setIsAuthenticated(false);
     try {
       await logoutRequest();
+      Cookies.remove("token");
       setUser(null);
       setIsAuthenticated(false);
       window.location.href = "/";
