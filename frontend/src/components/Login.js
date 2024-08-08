@@ -41,7 +41,7 @@ function Login() {
       Swal.fire({
         icon: "error",
         title: "Error",
-        text: error.response ? error.response.data : error.message,
+        text: "Credenciales incorrectas. Inetnte de nuevo",
       });
     }
   };
@@ -85,7 +85,7 @@ function Login() {
           Acceder
         </button>
       </form>
-      <div className="links d-flex justify-content-between">
+      {/* <div className="links d-flex justify-content-between">
         <BotonModal
           icono="fas fa-key"
           contenidoModal={<FormularioRecoverContraseña />}
@@ -96,7 +96,7 @@ function Login() {
           contenidoModal={<FormularioPersonalLogin />}
           titulo="Registro"
         />
-      </div>
+      </div> */}
     </div>
   );
 }
