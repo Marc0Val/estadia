@@ -48,12 +48,12 @@ export const login = async (req, res) => {
     console.log(token);
 
     // Enviar el token como una cookie
-    res.cookie("token", token, {
-      httpOnly: true,
-      sameSite: "None",
-      secure: true, // Asegúrate de usar HTTPS en producción
-      maxAge: 86400 * 1000,
-    });
+    // res.cookie("token", token, {
+    //   httpOnly: true,
+    //   sameSite: "None",
+    //   secure: true, // Asegúrate de usar HTTPS en producción
+    //   maxAge: 86400 * 1000,
+    // });
 
     res.status(200).json({ message: "Login successful", token });
   } catch (error) {

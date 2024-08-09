@@ -14,19 +14,24 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import FormularioClientes from "../../components/Forms/FormularioClientes";
 import BotonModal from "../../components/Buttons/BotonModal";
+import Swal from "sweetalert2";
+import { useParams } from "react-router-dom";
 import { useServiceOrders } from "../../context/ServiceOrdersContext";
 import { useClients } from "../../context/ClientsContext";
 import { useServices } from "../../context/ServicesContext";
 import { useProducts } from "../../context/ProductsContext";
 import { usePersonal } from "../../context/PersonalContext";
 
-const FormularioOrdenServicio = ({ id_orden_servicio }) => {
-  const { getServiceOrderById, createServiceOrder, updateServiceOrder } =
+const FormularioOrdenServicio = () => {
+  const { getServiceOrder, createServiceOrder, updateServiceOrder } =
     useServiceOrders();
   const { getClients, clients } = useClients();
   const { getServices, services } = useServices();
   const { getProducts, products } = useProducts();
   const { getAllPersonal, personal } = usePersonal();
+
+  const { id } = useParams();
+  console.log(id);
 
   const [formData, setFormData] = useState({
     client_id: "",
@@ -50,15 +55,18 @@ const FormularioOrdenServicio = ({ id_orden_servicio }) => {
   });
 
   useEffect(() => {
-    if (id_orden_servicio) {
-      getServiceOrderById(id_orden_servicio).then((data) => {
+    if (id) {
+      console.log(id);
+      getServiceOrder(id).then((data) => {
         setFormData({
           ...data,
           scheduled_date: new Date(data.scheduled_date),
         });
       });
+    } else {
+      console.log("ne");
     }
-  }, [id_orden_servicio, getServiceOrderById]);
+  }, [id, getServiceOrder]);
 
   useEffect(() => {
     getClients();
@@ -128,13 +136,23 @@ const FormularioOrdenServicio = ({ id_orden_servicio }) => {
       scheduled_date: formData.scheduled_date.toISOString().split("T")[0],
     };
 
-    if (id_orden_servicio) {
-      updateServiceOrder(id_orden_servicio, formattedData).then(() => {
-        console.log("Orden de servicio actualizada:", formattedData);
+    if (id) {
+      updateServiceOrder(id, formattedData).then(() => {
+        Swal.fire({
+          icon: "success",
+          title: "Orden de Servicio actualizada",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       });
     } else {
       createServiceOrder(formattedData).then(() => {
-        console.log("Orden de servicio creada:", formattedData);
+        Swal.fire({
+          icon: "success",
+          title: "Orden de Servicio creada",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       });
     }
   };

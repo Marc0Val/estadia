@@ -2,11 +2,15 @@ import React, { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { Collapse } from "react-bootstrap";
 import logo from "../assets/logo.png";
+import { useAuth } from "../context/AuthContext";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const { user, isAuthenticated } = useAuth();
   const location = useLocation();
+
+  // console.log(user.role);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -42,6 +46,7 @@ const Sidebar = () => {
               Calendario
             </li>
           </NavLink>
+
           <NavLink to="/admin/personal  " className="lii">
             <li
               onClick={() => window.innerWidth <= 768 && toggleSidebar()}
@@ -165,22 +170,26 @@ const Sidebar = () => {
               Activos de Clientes
             </li>
           </NavLink>
-          <button className="btn btn-link" onClick={toggleDropdown}>
-            <i className="fas fa-cogs"></i>Configuraciones
-          </button>
-          <Collapse in={isDropdownOpen}>
-            <ul className="list-unstyled sub-options">
-              <NavLink to="/admin/roles" className="lii">
-                <li
-                  className={
-                    location.pathname === "/admin/roles" ? "active" : ""
-                  }
-                >
-                  <i className="fas fa-cog"></i>Roles y Permisos
-                </li>
-              </NavLink>
-            </ul>
-          </Collapse>
+          {isAuthenticated && user.role === 99 && (
+            <div>
+              <button className="btn btn-link" onClick={toggleDropdown}>
+                <i className="fas fa-cogs"></i>Configuraciones
+              </button>
+              <Collapse in={isDropdownOpen}>
+                <ul className="list-unstyled sub-options">
+                  <NavLink to="/admin/roles" className="lii">
+                    <li
+                      className={
+                        location.pathname === "/admin/roles" ? "active" : ""
+                      }
+                    >
+                      <i className="fas fa-cog"></i>Roles y Permisos
+                    </li>
+                  </NavLink>
+                </ul>
+              </Collapse>
+            </div>
+          )}
         </ul>
       </div>
     </div>

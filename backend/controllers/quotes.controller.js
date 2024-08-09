@@ -3,9 +3,7 @@ import { pool } from "../db.js";
 //* Get all quotes
 export const getQuotes = async (req, res) => {
   try {
-    const [result] = await pool.query(
-      "SELECT * FROM quotes ORDER BY validity DESC"
-    );
+    const [result] = await pool.query("SELECT * FROM quotes");
 
     res.json(result);
   } catch (error) {
@@ -36,6 +34,7 @@ export const createQuote = async (req, res) => {
   try {
     const {
       client_id,
+      contact_name,
       quantity,
       product_id,
       price,
@@ -44,12 +43,14 @@ export const createQuote = async (req, res) => {
       validity,
       files,
       notes,
+      total,
     } = req.body;
 
     const [result] = await pool.query(
-      "INSERT INTO quotes (client_id, quantity, product_id, price, discount, iva, validity, files, notes) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      "INSERT INTO quotes (client_id, contact_name, quantity, product_id, price, discount, iva, validity, files, notes, total) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
         client_id,
+        contact_name,
         quantity,
         product_id,
         price,
@@ -58,6 +59,7 @@ export const createQuote = async (req, res) => {
         validity,
         files,
         notes,
+        total,
       ]
     );
 

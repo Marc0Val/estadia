@@ -76,6 +76,7 @@ const PurchaseOrderPage = () => {
         data={data}
         totalRecords={data.length}
         specialPages={true}
+        formType={"purchase-orders"}
         baseUrl="/admin/formulario-orden-compra"
       />
     </div>

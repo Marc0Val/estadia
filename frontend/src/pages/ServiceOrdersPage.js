@@ -5,10 +5,11 @@ import { Link } from "react-router-dom";
 import { useServiceOrders } from "../context/ServiceOrdersContext";
 
 const ServiceOrdersPage = () => {
-  const { serviceOrders, getServiceOrders, loading, error } =
-    useServiceOrders();
+  const { serviceOrders, getServiceOrders } = useServiceOrders();
+  // console.log(serviceOrders);
 
   const columnNames = [
+    "id_service_order",
     "Programada",
     "Inicio",
     "Fin",
@@ -24,6 +25,7 @@ const ServiceOrdersPage = () => {
 
   // Map the serviceOrders data to the format expected by TablaInfo
   const data = serviceOrders.map((order) => ({
+    id_service_order: order.id_service_order,
     Programada: order.scheduled_date,
     Inicio: order.start_time,
     Fin: order.end_time,
@@ -61,7 +63,9 @@ const ServiceOrdersPage = () => {
         columns={columnNames}
         data={data}
         totalRecords={data.length}
+        hiddenColumns={["id_service_order"]}
         specialPages={true}
+        formType="service-orders"
         baseUrl={"/admin/formulario-orden-servicio"}
       />
     </div>

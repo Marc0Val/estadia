@@ -32,7 +32,7 @@ export const ServiceOrdersProvider = ({ children }) => {
     setLoading(true);
     try {
       const response = await getServiceOrdersRequest();
-      console.log(response);
+      // console.log(response);
       setServiceOrders(response.data);
     } catch (err) {
       console.log(err);

@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { loginRequest, logoutRequest } from "../api/auth.api";
 import Cookies from "js-cookie";
-import jwt_decode from "jsonwebtoken";
+import { jwtDecode } from "jwt-decode";
 
 const AuthContext = createContext();
 
@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
     const token = Cookies.get("token");
     if (token) {
       try {
-        const decoded = jwt_decode(token, "secret"); // Decodificar el token
+        const decoded = jwtDecode(token);
         console.log(decoded);
         setUser({ id_personal: decoded.id_personal, role: decoded.role });
         setIsAuthenticated(true);
@@ -37,7 +37,8 @@ export const AuthProvider = ({ children }) => {
       setIsAuthenticated(true);
       const token = response.data.token;
       Cookies.set("token", token);
-      const decoded = jwt_decode(token, "secret");
+      const decoded = jwtDecode(token);
+      console.log(decoded);
       setUser({ id_personal: decoded.id_personal, role: decoded.role });
       return response;
     } catch (error) {

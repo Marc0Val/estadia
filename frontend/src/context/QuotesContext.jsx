@@ -30,6 +30,7 @@ export const QuotesProvider = ({ children }) => {
     setLoading(true);
     try {
       const response = await getQuotesRequest();
+      // console.log(response);
       setQuotes(response.data);
     } catch (err) {
       setError(err);

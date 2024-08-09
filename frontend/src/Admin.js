@@ -52,6 +52,7 @@ const Admin = () => {
           <Route path="/ordenes-servicio" element={<ServiceOrdersPage />} />
           <Route path="/configuraciones" element={<SettingsPage />} />
           <Route path="/roles" element={<RolPage />} />
+
           <Route
             path="/formulario-orden-servicio"
             element={<FormularioOrdenServicio />}
@@ -60,14 +61,25 @@ const Admin = () => {
             path="/formulario-orden-servicio/:id"
             element={<FormularioOrdenServicio />}
           />
+
           <Route
             path="/formulario-cotizacion"
             element={<FormularioCotizacion />}
           />
           <Route
+            path="/formulario-cotizacion/:id"
+            element={<FormularioCotizacion />}
+          />
+
+          <Route
             path="/formulario-orden-compra"
             element={<FormularioOrdenCompra />}
           />
+          <Route
+            path="/formulario-orden-compra/:id"
+            element={<FormularioOrdenCompra />}
+          />
+
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>

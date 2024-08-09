@@ -169,6 +169,7 @@ CREATE TABLE
 CREATE TABLE
     quotes (
         id_quote INTEGER PRIMARY KEY AUTO_INCREMENT,
+        contact_name VARCHAR(200) NOT NULL,
         client_id INTEGER NOT NULL,
         quantity INTEGER NOT NULL,
         product_id INTEGER NOT NULL,

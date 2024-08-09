@@ -21,7 +21,7 @@ const TablaInfo = ({
   rowsPerPage = 15,
   // checa, se agregan 2 nuevas "props" para saber si es una tabla especial o no y la url base (la ruta del form)
   // la tabla especial es para las 3 tablas que tienen un formulario de edición que no es de una modal
-  
+
   specialPages = false,
   baseUrl = "",
 }) => {
@@ -58,6 +58,12 @@ const TablaInfo = ({
           return row.id_product;
         case "clients_assets":
           return row.id_client_asset;
+        case "service-orders":
+          return row.id_service_order;
+        case "purchase-orders":
+          return row.id_purchase_order;
+        case "quotes":
+          return row.id_quote;
         default:
           return null;
       }
@@ -85,6 +91,7 @@ const TablaInfo = ({
         return <FormularioProductos id_product={id} />;
       case "clients_assets":
         return <FormularioActivoCliente id_client_asset={id} />;
+
       default:
         return null;
     }
