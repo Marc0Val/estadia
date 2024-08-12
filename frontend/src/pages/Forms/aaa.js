@@ -36,6 +36,7 @@ const FormularioOrdenServicio = () => {
     client_id: "",
     service_id: "",
     personal_id: "",
+    product_id: "",
     contact_name: "",
     contact_phone: "",
     contact_email: "",
@@ -43,13 +44,13 @@ const FormularioOrdenServicio = () => {
     start_time: "",
     end_time: "",
     price: "",
+    quantity: 1,
+    additional_info: "",
     activities: "",
     recomendations: "",
     files: null,
-    notes: "",
+    notes: null,
     state_: "Creada",
-    products: [],
-    quantity: 1,
   });
 
   // Nuevo estado para productos agregados
@@ -58,33 +59,13 @@ const FormularioOrdenServicio = () => {
   useEffect(() => {
     if (id) {
       getServiceOrder(id).then((data) => {
-        // console.log("Datos de la orden de servicio:", data);
-
         setFormData({
           ...data,
           scheduled_date: new Date(data.scheduled_date),
         });
-
-        // Manejo de productos
-        if (typeof data.products === "string" && data.products) {
-          try {
-            const productsArray = JSON.parse(data.products);
-            if (Array.isArray(productsArray)) {
-              console.log("Productos cargados (array):", productsArray);
-              setAddedProducts(productsArray);
-            } else {
-              console.log("El contenido de data.products no es un array.");
-              setAddedProducts([]);
-            }
-          } catch (error) {
-            console.error("Error al parsear data.products:", error);
-            setAddedProducts([]);
-          }
-        } else if (Array.isArray(data.products)) {
-          console.log("Productos cargados (array):", data.products);
+        // Cargar productos si los hay en la orden
+        if (data.products) {
           setAddedProducts(data.products);
-        } else {
-          setAddedProducts([]); // Maneja productos como un array vacío si no hay datos
         }
       });
     }
@@ -152,9 +133,9 @@ const FormularioOrdenServicio = () => {
       setAddedProducts((prevProducts) => [
         ...prevProducts,
         {
-          name_: product.name_, // Solo el nombre del producto
-          quantity: parseInt(formData.quantity), // Solo la cantidad
-          additional_info: formData.additional_info, // Solo la información adicional
+          ...product,
+          quantity: parseInt(formData.quantity),
+          additional_info: formData.additional_info,
         },
       ]);
       // Limpiar los campos después de agregar
@@ -176,11 +157,10 @@ const FormularioOrdenServicio = () => {
       service_id: parseInt(formData.service_id, 10),
       personal_id: parseInt(formData.personal_id, 10),
       price: parseFloat(formData.price),
+      quantity: parseInt(formData.quantity, 10),
       scheduled_date: formData.scheduled_date.toISOString().split("T")[0],
       products: addedProducts,
     };
-
-    console.log("Datos a enviar:", formattedData);
 
     if (id) {
       updateServiceOrder(id, formattedData).then(() => {
@@ -208,6 +188,7 @@ const FormularioOrdenServicio = () => {
       client_id: "",
       service_id: "",
       personal_id: "",
+      product_id: "",
       contact_name: "",
       contact_phone: "",
       contact_email: "",
@@ -216,12 +197,12 @@ const FormularioOrdenServicio = () => {
       end_time: "",
       price: "",
       quantity: 1,
+      additional_info: "",
       activities: "",
       recomendations: "",
       files: null,
       notes: null,
       state_: "Creada",
-      products: [],
     });
     setAddedProducts([]);
   };
@@ -339,270 +320,253 @@ const FormularioOrdenServicio = () => {
                   <DatePicker
                     selected={formData.scheduled_date}
                     onChange={handleDateChange}
-                    dateFormat="dd/MM/yyyy"
+                    dateFormat="yyyy/MM/dd"
                     className="form-control"
+                    required
                   />
                 </Form.Group>
               </Col>
               <Col>
-                <Form.Group controlId="formInicio">
+                <Form.Group controlId="formHoraInicio">
                   <Form.Label>
-                    <strong>Inicio *</strong>
+                    <strong>Hora inicio</strong>
                   </Form.Label>
                   <Form.Control
                     type="time"
                     name="start_time"
                     value={formData.start_time}
                     onChange={handleChange}
-                    required
                   />
                 </Form.Group>
               </Col>
               <Col>
-                <Form.Group controlId="formFin">
+                <Form.Group controlId="formHoraFin">
                   <Form.Label>
-                    <strong>Fin *</strong>
+                    <strong>Hora fin</strong>
                   </Form.Label>
                   <Form.Control
                     type="time"
                     name="end_time"
                     value={formData.end_time}
                     onChange={handleChange}
-                    required
                   />
                 </Form.Group>
               </Col>
+            </Row>
+            <Row className="mb-3">
               <Col>
                 <Form.Group controlId="formPrecio">
                   <Form.Label>
-                    <strong>Precio $</strong>
+                    <strong>Precio *</strong>
                   </Form.Label>
                   <Form.Control
                     type="number"
                     name="price"
                     value={formData.price}
                     onChange={handleChange}
+                    step="0.01"
+                    required
                   />
                 </Form.Group>
               </Col>
-
               <Col>
-                <Form.Group controlId="formPersonalAsignado">
+                <Form.Group controlId="formProducto">
                   <Form.Label>
-                    <strong>Personal Asignado</strong>
+                    <strong>Producto *</strong>
                   </Form.Label>
                   <Form.Control
                     as="select"
-                    name="personal_id"
-                    value={formData.personal_id}
+                    name="product_id"
+                    value={formData.product_id}
                     onChange={handleChange}
+                    required
                   >
-                    <option value="">-- Selecciona un personal --</option>
-                    {personal.map((person) => (
+                    <option>-- Selecciona un producto-- </option>
+                    {products.map((product) => (
                       <option
-                        key={person.id_personal}
-                        value={person.id_personal}
+                        key={product.id_product}
+                        value={product.id_product}
                       >
-                        {person.name_}
+                        {product.name_}
                       </option>
                     ))}
                   </Form.Control>
                 </Form.Group>
               </Col>
+              <Col>
+                <Form.Group controlId="formCantidad">
+                  <Form.Label>
+                    <strong>Cantidad</strong>
+                  </Form.Label>
+                  <Form.Control
+                    type="number"
+                    name="quantity"
+                    value={formData.quantity}
+                    onChange={handleChange}
+                    min="1"
+                  />
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group controlId="formInfoAdicional">
+                  <Form.Label>
+                    <strong>Info Adicional</strong>
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="additional_info"
+                    value={formData.additional_info}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
+              </Col>
+              <Col>
+                <Button
+                  variant="primary"
+                  className="mt-4"
+                  onClick={handleAddProduct}
+                >
+                  Agregar Producto
+                </Button>
+              </Col>
+            </Row>
+            <Row className="mb-3">
+              <Col>
+                <Form.Group controlId="formActividades">
+                  <Form.Label>
+                    <strong>Actividades</strong>
+                  </Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows={3}
+                    name="activities"
+                    value={formData.activities}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group controlId="formRecomendaciones">
+                  <Form.Label>
+                    <strong>Recomendaciones</strong>
+                  </Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows={3}
+                    name="recomendations"
+                    value={formData.recomendations}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group controlId="formArchivos">
+                  <Form.Label>
+                    <strong>Archivos</strong>
+                  </Form.Label>
+                  <Form.Control
+                    type="file"
+                    name="files"
+                    onChange={handleFileChange}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row className="mb-3">
+              <Col>
+                <Form.Group controlId="formNotas">
+                  <Form.Label>
+                    <strong>Notas</strong>
+                  </Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows={3}
+                    name="notes"
+                    value={formData.notes}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group controlId="formEstado">
+                  <Form.Label>
+                    <strong>Estado</strong>
+                  </Form.Label>
+                  <Form.Control
+                    as="select"
+                    name="state_"
+                    value={formData.state_}
+                    onChange={handleChange}
+                  >
+                    <option value="Creada">Creada</option>
+                    <option value="En Progreso">En Progreso</option>
+                    <option value="Finalizada">Finalizada</option>
+                    <option value="Cancelada">Cancelada</option>
+                  </Form.Control>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <Button
+                  variant="primary"
+                  className="me-2"
+                  onClick={handleSubmit}
+                >
+                  {id ? "Actualizar Orden" : "Crear Orden"}
+                </Button>
+                <Button variant="secondary" onClick={handleReset}>
+                  Limpiar
+                </Button>
+              </Col>
             </Row>
           </div>
+          <hr />
+          <p className="subtitulo">Productos Agregados</p>
           <div className="shadow p-3 mb-3 bg-body rounded">
-            <InputGroup className="mb-3">
-              <FormControl
-                type="number"
-                min="1"
-                name="quantity"
-                value={formData.quantity}
-                onChange={handleChange}
-              />
-              <Form.Control
-                as="select"
-                name="product_id"
-                value={formData.product_id}
-                onChange={handleChange}
-              >
-                <option>-- Productos Disponibles --</option>
-                {products.map((product) => (
-                  <option key={product.id_product} value={product.id_product}>
-                    {product.name_}
-                  </option>
-                ))}
-              </Form.Control>
-              <Button
-                variant="primary"
-                className="mt-4"
-                onClick={handleAddProduct}
-              >
-                Agregar
-              </Button>
-            </InputGroup>
-            <Form.Group controlId="formInformacionAdicional" className="mb-3">
-              <Form.Label>
-                <strong>Información adicional</strong>
-              </Form.Label>
-              <Form.Control
-                type="text"
-                name="additional_info"
-                value={formData.additional_info}
-                onChange={handleChange}
-              />
-            </Form.Group>
-          </div>
-          <div className="shadow p-3 mb-3 bg-body rounded">
-            <p className="subtitulo">
-              <i className="fas fa-box-open"></i>Productos - Refacciones -
-              Materiales para servicio
-            </p>
-            <div className="shadow p-3 mb-3 bg-body rounded">
-              <Row>
-                <Col>
-                  <table className="table">
-                    <thead>
-                      <tr>
-                        <th>Producto</th>
-                        <th>Cantidad</th>
-                        <th>Info Adicional</th>
-                        <th>Acciones</th>
+            <Row>
+              <Col>
+                <table className="table">
+                  <thead>
+                    <tr>
+                      <th>Producto</th>
+                      <th>Cantidad</th>
+                      <th>Info Adicional</th>
+                      <th>Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {addedProducts.map((product, index) => (
+                      <tr key={index}>
+                        <td>{product.name_}</td>
+                        <td>{product.quantity}</td>
+                        <td>{product.additional_info}</td>
+                        <td>
+                          <Button
+                            variant="danger"
+                            onClick={() =>
+                              setAddedProducts((prevProducts) =>
+                                prevProducts.filter((_, i) => i !== index)
+                              )
+                            }
+                          >
+                            Eliminar
+                          </Button>
+                        </td>
                       </tr>
-                    </thead>
-                    <tbody>
-                      {Array.isArray(addedProducts) &&
-                        addedProducts.map((product, index) => (
-                          <tr key={index}>
-                            <td>{product.name_}</td>
-                            <td>{product.quantity}</td>
-                            <td>{product.additional_info}</td>
-                            <td>
-                              <Button
-                                variant="danger"
-                                onClick={() =>
-                                  setAddedProducts((prevProducts) =>
-                                    prevProducts.filter((_, i) => i !== index)
-                                  )
-                                }
-                              >
-                                Eliminar
-                              </Button>
-                            </td>
-                          </tr>
-                        ))}
-                    </tbody>
-                  </table>
-                </Col>
-              </Row>
-            </div>
-            <hr />
-          </div>
-          <div className="shadow p-3 mb-5 bg-body rounded">
-            <Col>
-              <Form.Group controlId="formActividades" className="mb-3">
-                <Form.Label>
-                  <strong>Actividades</strong>
-                </Form.Label>
-                <Form.Control
-                  as="textarea"
-                  rows={3}
-                  name="activities"
-                  value={formData.activities}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-            </Col>
-            <Col>
-              <Form.Group controlId="formRecomendaciones" className="mb-3">
-                <Form.Label>
-                  <strong>Recomendaciones</strong>
-                </Form.Label>
-                <Form.Control
-                  as="textarea"
-                  rows={3}
-                  name="recomendations"
-                  value={formData.recomendations}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-            </Col>
+                    ))}
+                  </tbody>
+                </table>
+              </Col>
+            </Row>
           </div>
         </div>
         <div className="col-3">
-          <div class="card">
-            <div className="card-header">
-              <p className="subtitulo">Orden de Servicio</p>
-            </div>
-            <div class="card-body">
-              <p className="text-center subtitulo">
-                <i className="fas fa-calendar-alt"></i>
-                {formData.scheduled_date.toDateString()}
-              </p>
-              <p className="text-center">
-                <i className="fas fa-tasks"></i>Estado
-              </p>
-              <Row className="mb-3">
-                <Col>
-                  <Form.Group controlId="formEstado">
-                    <Form.Label>
-                      <strong>Estado</strong>
-                    </Form.Label>
-                    <Form.Control
-                      as="select"
-                      name="state_"
-                      value={formData.state_}
-                      onChange={handleChange}
-                    >
-                      <option>Creada</option>
-                      <option>Asignada</option>
-                      <option>Proceso</option>
-                      <option>Terminada</option>
-                      <option>Facturada</option>
-                    </Form.Control>
-                  </Form.Group>
-                </Col>
-              </Row>
-              <div className="d-grid gap-2">
-                <Button
-                  variant="info"
-                  onClick={handleSubmit}
-                  disabled={
-                    formData.servicio === "" ||
-                    formData.fechaProgramada === "" ||
-                    formData.inicio === "" ||
-                    formData.fin === ""
-                  }
-                >
-                  <i className="fas fa-save"></i> Guardar
-                </Button>
-                <Button variant="warning" onClick={handleReset}>
-                  <i className="fas fa-undo-alt"></i> Limpiar
-                </Button>
-                {/* regresar btn btn-outline-secondary */}
-                <NavLink
-                  to="/admin/ordenes-servicio"
-                  className="btn btn-outline-secondary"
-                >
-                  <i className="fas fa-arrow-left"></i> Regresar
-                </NavLink>
-              </div>
-            </div>
-            <div class="card-footer">
-              <Form.Group controlId="formNotas" className="mb-3">
-                <Form.Label>
-                  <strong>Notas</strong>
-                </Form.Label>
-                <Form.Control
-                  as="textarea"
-                  rows={3}
-                  name="notes"
-                  value={formData.notes}
-                  onChange={handleChange}
-                />
-              </Form.Group>
-            </div>
-          </div>
+          <NavLink to="/servicio">
+            <Button variant="outline-secondary" className="mt-4">
+              Regresar
+            </Button>
+          </NavLink>
         </div>
       </div>
     </div>
