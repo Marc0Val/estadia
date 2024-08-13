@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Alert,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { saveService, getService, updateService } from "../../api/Services_api";
@@ -68,94 +69,137 @@ const AddService = ({ navigation, route }) => {
         setService(service);
       })();
     }
-  }, []);
+  }, [route.params]);
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
-      <Text style={styles.title}>
-        {editing ? "Editar Servicio" : "Nuevo Servicio"}
-      </Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Nombre"
-        value={service.name_}
-        onChangeText={(text) => handleChange("name_", text)}
-      />
-      <Picker
-        selectedValue={service.category_id}
-        style={styles.picker}
-        onValueChange={(itemValue) => handleChange("category_id", itemValue)}
-      >
-        <Picker.Item label="Categoría 1" value="1" />
-        <Picker.Item label="Categoría 2" value="2" />
-        <Picker.Item label="Categoría 3" value="3" />
-      </Picker>
+      <View style={styles.container}>
+        <Text style={styles.title}>
+          {editing ? "Editar Servicio" : "Nuevo Servicio"}
+        </Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Nombre"
+          value={service.name_}
+          onChangeText={(text) => handleChange("name_", text)}
+        />
+        <Picker
+          selectedValue={service.category_id}
+          style={styles.picker}
+          onValueChange={(itemValue) => handleChange("category_id", itemValue)}
+        >
+          <Picker.Item label="Elija una Categoria" value="" />
+          <Picker.Item label="Categoría 1" value="1" />
+          <Picker.Item label="Categoría 2" value="2" />
+          <Picker.Item label="Categoría 3" value="3" />
+        </Picker>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Precio de venta"
-        value={service.sale_price}
-        onChangeText={(text) => handleChange("sale_price", text)}
-        keyboardType="numeric"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Descripción"
-        value={service.description_}
-        onChangeText={(text) => handleChange("description_", text)}
-      />
-      <Text style={styles.infoTitle}>Información SAT</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Unidad SAT"
-        value={service.sat_unit}
-        onChangeText={(text) => handleChange("sat_unit", text)}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Código SAT"
-        value={service.sat_code}
-        onChangeText={(text) => handleChange("sat_code", text)}
-      />
-      <Button
-        title={editing ? "Actualizar" : "Guardar"}
-        onPress={handleSubmit}
-        disabled={!isFormValid()}
-      />
+        <TextInput
+          style={styles.input}
+          placeholder="Precio de venta"
+          value={service.sale_price}
+          onChangeText={(text) => handleChange("sale_price", text)}
+          keyboardType="numeric"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Descripción"
+          value={service.description_}
+          onChangeText={(text) => handleChange("description_", text)}
+        />
+        <Text style={styles.infoTitle}>Información SAT</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Unidad SAT"
+          value={service.sat_unit}
+          onChangeText={(text) => handleChange("sat_unit", text)}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Código SAT"
+          value={service.sat_code}
+          onChangeText={(text) => handleChange("sat_code", text)}
+        />
+
+        <TouchableOpacity
+          style={[
+            styles.button,
+            { backgroundColor: isFormValid() ? "#28b4ec" : "#ccc" },
+          ]}
+          onPress={handleSubmit}
+          disabled={!isFormValid()}
+        >
+          <Text style={styles.buttonText}>
+            {editing ? "Actualizar" : "Guardar"}
+          </Text>
+        </TouchableOpacity>
+      </View>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: 24,
-    textAlign: "center",
-    marginTop: "1%",
-    marginBottom: 20,
-  },
   scrollContainer: {
     flexGrow: 1,
     justifyContent: "center",
+    padding: 20,
+    backgroundColor: "#eaf4f9",
   },
   container: {
-    padding: 20,
     width: "100%",
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    padding: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 5,
+  },
+  title: {
+    fontSize: 26,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: 20,
+    color: "#333",
   },
   input: {
-    height: 40,
-    margin: 12,
+    height: 45,
+    marginVertical: 10,
     borderWidth: 1,
-    padding: 10,
+    borderColor: "#ddd",
+    paddingHorizontal: 15,
+    borderRadius: 8,
+    backgroundColor: "#f9f9f9",
+    fontSize: 16,
   },
   picker: {
     height: 50,
-    width: "100%",
-    margin: 12,
+    borderWidth: 1,
+    borderColor: "#ddd",
+    borderRadius: 8,
+    backgroundColor: "#f9f9f9",
+    marginVertical: 10,
+    color: "#333",
   },
   infoTitle: {
-    fontSize: 18,
+    fontSize: 20,
+    fontWeight: "600",
     textAlign: "center",
-    marginVertical: 10,
+    marginVertical: 15,
+    color: "#555",
+  },
+  button: {
+    height: 50,
+    borderRadius: 8,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 20,
+  },
+  buttonText: {
+    fontSize: 18,
+    color: "#fff",
+    fontWeight: "bold",
   },
 });
 

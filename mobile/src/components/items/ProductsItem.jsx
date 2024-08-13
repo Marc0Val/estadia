@@ -7,7 +7,7 @@ const ProductsItem = ({ product, handleDelete }) => {
   return (
     <TouchableOpacity
       onPress={() => {
-        console.log("Edit product", product.id_product);
+        // console.log("Edit product", product.id_product);
         navigation.navigate("AddProduct", { productId: product.id_product });
       }}
     >
@@ -21,7 +21,7 @@ const ProductsItem = ({ product, handleDelete }) => {
         <TouchableOpacity
           style={styles.deleteButton}
           onPress={() => {
-            console.log("Deleting", product.id_product);
+            // console.log("Deleting", product.id_product);
             handleDelete(product.id_product);
           }}
         >

@@ -7,7 +7,7 @@ const TaskItem = ({ task, handleDelete }) => {
   return (
     <TouchableOpacity
       onPress={() => {
-        console.log("Edit task", task.id_task);
+        // console.log("Edit task", task.id_task);
         navigation.navigate("AddTask", { taskId: task.id_task });
       }}
     >
@@ -19,7 +19,7 @@ const TaskItem = ({ task, handleDelete }) => {
         <TouchableOpacity
           style={styles.deleteButton}
           onPress={() => {
-            console.log("Deleting", task.id_task);
+            // console.log("Deleting", task.id_task);
             handleDelete(task.id_task);
           }}
         >

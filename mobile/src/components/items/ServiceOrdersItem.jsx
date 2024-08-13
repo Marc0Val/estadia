@@ -11,7 +11,7 @@ const ServiceOrdersItem = ({ serviceOrder }) => {
         <TouchableOpacity
           style={styles.deleteButton}
           onPress={() => {
-            console.log("Edit service order", serviceOrder.id_service_order);
+            // console.log("Edit service order", serviceOrder.id_service_order);
           }}
         >
           <Text style={styles.tableCell}>Eliminar</Text>

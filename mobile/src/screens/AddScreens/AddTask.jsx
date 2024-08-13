@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { saveTask, getTask, updateTask } from "../../api/Task_api";
@@ -22,16 +29,43 @@ const AddTask = ({ navigation, route }) => {
   const [showStartTimePicker, setShowStartTimePicker] = useState(false);
   const [showEndTimePicker, setShowEndTimePicker] = useState(false);
 
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedStartTime, setSelectedStartTime] = useState(new Date());
+  const [selectedEndTime, setSelectedEndTime] = useState(new Date());
+
   const handleChange = (name, value) => {
-    setTask({ ...task, [name]: value });
+    setTask((prevTask) => ({
+      ...prevTask,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = async () => {
     try {
+      if (
+        !task.date_ ||
+        !task.start_time ||
+        !task.end_time ||
+        isNaN(task.date_.getTime()) ||
+        isNaN(task.start_time.getTime()) ||
+        isNaN(task.end_time.getTime())
+      ) {
+        console.error("Invalid date values");
+        return;
+      }
+
+      // Convertir las fechas y horas a formato ISO 8601
+      const taskToSend = {
+        ...task,
+        date_: task.date_.toISOString(),
+        start_time: task.start_time.toISOString(),
+        end_time: task.end_time.toISOString(),
+      };
+
       if (editing) {
-        await updateTask(route.params.taskId, task);
+        await updateTask(route.params.taskId, taskToSend);
       } else {
-        await saveTask(task);
+        await saveTask(taskToSend);
       }
       navigation.navigate("Home");
     } catch (error) {
@@ -41,17 +75,25 @@ const AddTask = ({ navigation, route }) => {
 
   useEffect(() => {
     if (route.params && route.params.taskId) {
-      navigation.setOptions({ title: "Editar Asignación" });
+      navigation.setOptions({ title: "" });
       setEditing(true);
       (async () => {
         const task = await getTask(route.params.taskId);
-        // Asegúrate de que las fechas sean instancias de Date
+
+        // Parsear las fechas y horas al formato Date
+        const date_ = new Date(task.date_);
+        const start_time = new Date(task.start_time);
+        const end_time = new Date(task.end_time);
+
         setTask({
           ...task,
-          date_: new Date(task.date_),
-          start_time: new Date(task.start_time),
-          end_time: new Date(task.end_time),
+          date_: date_,
+          start_time: start_time,
+          end_time: end_time,
         });
+        setSelectedDate(date_);
+        setSelectedStartTime(start_time);
+        setSelectedEndTime(end_time);
       })();
     }
   }, [route.params]);
@@ -74,9 +116,8 @@ const AddTask = ({ navigation, route }) => {
         style={styles.picker}
         onValueChange={(value) => handleChange("client_id", value)}
       >
-        <Picker.Item label="Cliente 1" value="1" />
-        <Picker.Item label="Cliente 2" value="2" />
-        <Picker.Item label="Cliente 3" value="3" />
+        <Picker.Item label="Cliente 1" value="3" />
+        <Picker.Item label="Cliente 2" value="4" />
       </Picker>
 
       <TextInput
@@ -86,10 +127,14 @@ const AddTask = ({ navigation, route }) => {
         onChangeText={(value) => handleChange("description_", value)}
       />
 
-      <Button
-        title="Selecciona una fecha"
+      <TouchableOpacity
+        style={styles.button}
         onPress={() => setShowDatePicker(true)}
-      />
+      >
+        <Text
+          style={styles.buttonText}
+        >{`Fecha seleccionada: ${selectedDate.toDateString()}`}</Text>
+      </TouchableOpacity>
       {showDatePicker && (
         <DateTimePicker
           value={task.date_}
@@ -97,15 +142,21 @@ const AddTask = ({ navigation, route }) => {
           display="default"
           onChange={(event, selectedDate) => {
             setShowDatePicker(false);
-            handleChange("date_", selectedDate || task.date_);
+            const date = selectedDate || task.date_;
+            handleChange("date_", date);
+            setSelectedDate(date);
           }}
         />
       )}
 
-      <Button
-        title="Hora de inicio"
+      <TouchableOpacity
+        style={styles.button}
         onPress={() => setShowStartTimePicker(true)}
-      />
+      >
+        <Text style={styles.buttonText}>{`Hora de inicio seleccionada: ${
+          selectedStartTime.toTimeString().split(" ")[0]
+        }`}</Text>
+      </TouchableOpacity>
       {showStartTimePicker && (
         <DateTimePicker
           value={task.start_time}
@@ -113,12 +164,21 @@ const AddTask = ({ navigation, route }) => {
           display="default"
           onChange={(event, selectedTime) => {
             setShowStartTimePicker(false);
-            handleChange("start_time", selectedTime || task.start_time);
+            const time = selectedTime || task.start_time;
+            handleChange("start_time", time);
+            setSelectedStartTime(time);
           }}
         />
       )}
 
-      <Button title="Hora de fin" onPress={() => setShowEndTimePicker(true)} />
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => setShowEndTimePicker(true)}
+      >
+        <Text style={styles.buttonText}>{`Hora de fin seleccionada: ${
+          selectedEndTime.toTimeString().split(" ")[0]
+        }`}</Text>
+      </TouchableOpacity>
       {showEndTimePicker && (
         <DateTimePicker
           value={task.end_time}
@@ -126,7 +186,9 @@ const AddTask = ({ navigation, route }) => {
           display="default"
           onChange={(event, selectedTime) => {
             setShowEndTimePicker(false);
-            handleChange("end_time", selectedTime || task.end_time);
+            const time = selectedTime || task.end_time;
+            handleChange("end_time", time);
+            setSelectedEndTime(time);
           }}
         />
       )}
@@ -149,8 +211,25 @@ const AddTask = ({ navigation, route }) => {
         <Picker.Item label="En proceso" value="En proceso" />
         <Picker.Item label="Terminada" value="Terminada" />
       </Picker>
-      <Button
-        title={editing ? "Actualizar" : "Guardar"}
+
+      <TouchableOpacity
+        style={[
+          styles.button,
+          styles.submitButton,
+          {
+            backgroundColor:
+              task.title &&
+              task.client_id &&
+              task.description_ &&
+              task.date_ &&
+              task.start_time &&
+              task.end_time &&
+              task.assigned_to &&
+              task.status_
+                ? "#28b4ec"
+                : "gray",
+          },
+        ]}
         onPress={handleSubmit}
         disabled={
           !task.title ||
@@ -162,7 +241,11 @@ const AddTask = ({ navigation, route }) => {
           !task.assigned_to ||
           !task.status_
         }
-      />
+      >
+        <Text style={styles.submitButtonText}>
+          {editing ? "Actualizar" : "Guardar"}
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -171,24 +254,46 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    width: "100%",
+    backgroundColor: "#f8f8f8",
   },
   title: {
     fontSize: 24,
     textAlign: "center",
-    marginTop: "1%",
     marginBottom: 20,
+    color: "#28b4ec",
   },
   input: {
     height: 40,
-    borderColor: "gray",
+    borderColor: "#28b4ec",
     borderWidth: 1,
     marginBottom: 10,
     paddingLeft: 10,
+    borderRadius: 5,
   },
   picker: {
     height: 50,
     marginBottom: 10,
+    borderColor: "#28b4ec",
+    borderWidth: 1,
+    borderRadius: 5,
+  },
+  button: {
+    padding: 10,
+    borderRadius: 5,
+    backgroundColor: "#28b4ec",
+    marginBottom: 10,
+  },
+  buttonText: {
+    color: "#ffffff",
+    textAlign: "center",
+  },
+  submitButton: {
+    marginTop: 20,
+  },
+  submitButtonText: {
+    color: "#ffffff",
+    textAlign: "center",
+    fontSize: 18,
   },
 });
 

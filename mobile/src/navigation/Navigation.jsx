@@ -1,20 +1,38 @@
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import LoginScreen from '../screens/LoginScreen';
-import HomeScreen from '../screens/HomeScreen';
+import React from "react";
+import { View, Text, Button, StyleSheet } from "react-native";
+import {
+  DrawerContentScrollView,
+  DrawerItemList,
+} from "@react-navigation/drawer";
+import { useAuth } from "../context/AuthContext";
 
-const Stack = createStackNavigator();
+const CustomDrawerContent = (props) => {
+  const { logout } = useAuth();
 
-const Navigation = () => {
+  const handleLogout = async () => {
+    try {
+      await logout(); // Cierra la sesión
+      props.navigation.navigate("Login"); // Navega de regreso a la pantalla de login
+    } catch (error) {
+      console.error("Error al cerrar sesión:", error);
+    }
+  };
+
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Home" component={HomeScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <DrawerContentScrollView {...props}>
+      <View style={styles.container}>
+        <DrawerItemList {...props} />
+        <Button title="Cerrar sesión" onPress={handleLogout} color="#ff0000" />
+      </View>
+    </DrawerContentScrollView>
   );
 };
 
-export default Navigation;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "space-between",
+  },
+});
+
+export default CustomDrawerContent;
