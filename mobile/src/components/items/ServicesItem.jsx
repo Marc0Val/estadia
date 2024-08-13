@@ -7,7 +7,7 @@ const ServicesItem = ({ service, handleDelete }) => {
   return (
     <TouchableOpacity
       onPress={() => {
-        console.log("Edit service", service.id_service);
+        // console.log("Edit service", service.id_service);
         navigation.navigate("AddService", { serviceId: service.id_service });
       }}
     >
@@ -18,7 +18,7 @@ const ServicesItem = ({ service, handleDelete }) => {
         <TouchableOpacity
           style={styles.deleteButton}
           onPress={() => {
-            console.log("Deleting", service.id_service);
+            // console.log("Deleting", service.id_service);
             handleDelete(service.id_service);
           }}
         >

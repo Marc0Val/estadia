@@ -7,7 +7,7 @@ const ClientsItem = ({ client, handleDelete }) => {
   return (
     <TouchableOpacity
       onPress={() => {
-        console.log("Edit client", client.id_client);
+        // console.log("Edit client", client.id_client);
         navigation.navigate("AddClient", { clientId: client.id_client });
       }}
     >
@@ -19,7 +19,7 @@ const ClientsItem = ({ client, handleDelete }) => {
         <TouchableOpacity
           style={styles.deleteButton}
           onPress={() => {
-            console.log("Deleting", client.id_client);
+            // console.log("Deleting", client.id_client);
             handleDelete(client.id_client);
           }}
         >

@@ -210,6 +210,7 @@ const AddProduct = ({ navigation, route }) => {
           title={editing ? "Actualizar" : "Guardar"}
           onPress={handleSubmit}
           disabled={!isFormValid()}
+          color="#fff"
         />
       </View>
     </ScrollView>
@@ -219,37 +220,56 @@ const AddProduct = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   title: {
     fontSize: 24,
+    fontWeight: "bold",
     textAlign: "center",
-    marginTop: "1%",
-    marginBottom: 20,
+    marginVertical: 20,
+    color: "#28b4ec",
   },
   scrollContainer: {
     flexGrow: 1,
     justifyContent: "center",
+    backgroundColor: "#f5f5f5",
   },
   container: {
     padding: 20,
-    width: "100%",
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 3,
+    margin: 15,
   },
   input: {
-    height: 40,
-    margin: 12,
+    height: 45,
+    marginVertical: 10,
     borderWidth: 1,
-    padding: 10,
+    borderColor: "#28b4ec",
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    backgroundColor: "#fff",
+    fontSize: 16,
   },
   picker: {
     height: 50,
-    width: "100%",
-    margin: 12,
+    marginVertical: 10,
+    borderWidth: 1,
+    borderColor: "#28b4ec",
+    borderRadius: 5,
+    backgroundColor: "#fff",
   },
   infoTitle: {
     fontSize: 18,
+    fontWeight: "bold",
     textAlign: "center",
-    marginVertical: 10,
+    marginVertical: 15,
+    color: "#333",
   },
   label: {
     fontSize: 16,
-    margin: 12,
+    marginVertical: 5,
+    color: "#333",
   },
 });
 

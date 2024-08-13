@@ -23,7 +23,7 @@ const ServicesTable = () => {
     try {
       const data = await getServices();
       setServices(data);
-      console.log(data);
+      // console.log(data);
     } catch (error) {
       console.error("Error loading services", error);
     } finally {
