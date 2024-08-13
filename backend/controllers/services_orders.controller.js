@@ -27,6 +27,7 @@ export const getServiceOrder = async (req, res) => {
 
     // Convertir 'products' a un objeto si es una cadena
     const serviceOrder = result[0];
+    console.log(serviceOrder.products);
     if (serviceOrder.products && typeof serviceOrder.products === "string") {
       try {
         serviceOrder.products = JSON.parse(serviceOrder.products);
@@ -82,6 +83,9 @@ export const createServiceOrder = async (req, res) => {
       return res.status(400).json({ error: "Faltan campos obligatorios" });
     }
 
+    // Verificar si 'products' debe ser convertido a JSON para la base de datos
+    const productsJson = JSON.stringify(products);
+
     // Inserción en la base de datos
     const [result] = await pool.query(
       "INSERT INTO services_orders (client_id, service_id, personal_id, contact_name, contact_phone, contact_email, scheduled_date, start_time, end_time, price, activities, recomendations, files, notes, state_, products) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
@@ -101,7 +105,7 @@ export const createServiceOrder = async (req, res) => {
         files || null,
         notes || null,
         state_,
-        products ? products : null,
+        productsJson ? productsJson : null,
       ]
     );
 

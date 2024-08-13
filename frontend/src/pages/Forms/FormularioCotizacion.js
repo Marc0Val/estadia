@@ -14,28 +14,23 @@ import { useParams } from "react-router-dom";
 
 const validationSchema = Yup.object({
   client_id: Yup.string().required("El cliente es obligatorio"),
-  quantity: Yup.number().required("La cantidad es obligatoria"),
-  product_id: Yup.string().required("El producto es obligatorio"),
-  price: Yup.number().required("El precio es obligatorio"),
-  discount: Yup.number().required("El descuento es obligatorio"),
-  iva: Yup.number().required("El impuesto es obligatorio"),
-  // files: Yup.string().required("El archivo es obligatorio"),
-  // notes: Yup.string().required("Las notas son obligatorias"),
+  validity: Yup.string().required("La vigencia es obligatoria"),
 });
 
 const FormularioCotizacion = () => {
   const today = new Date();
   const formattedDate = today.toISOString().split("T")[0];
   const [startDate, setStartDate] = useState(today);
-  const [selectedProducts, setSelectedProducts] = useState([]);
 
   const { id } = useParams();
 
+  const [addedProducts, setAddedProducts] = useState([]);
+
   const [formData, setFormData] = useState({
     client_id: "",
+    product_id: "",
     contact_name: "",
     quantity: 1,
-    product_id: "",
     price: 0,
     discount: 0,
     iva: 16,
@@ -43,6 +38,9 @@ const FormularioCotizacion = () => {
     files: "",
     notes: "",
     total: 0,
+    subtotal: 0,
+    totalIva: 0,
+    products: [],
   });
 
   // Contextos
@@ -59,9 +57,80 @@ const FormularioCotizacion = () => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value,
+      [name]:
+        name === "quantity" ||
+        name === "price" ||
+        name === "discount" ||
+        name === "iva"
+          ? parseFloat(value) || 0
+          : value,
     });
   };
+
+  useEffect(() => {
+    console.log("Datos de productos añadidos:", addedProducts);
+  }, [addedProducts]);
+
+  const handleAddProduct = () => {
+    const product = products.find(
+      (p) => p.id_product === parseInt(formData.product_id, 10)
+    );
+    if (product) {
+      setAddedProducts((prevProducts) => [
+        ...prevProducts,
+        {
+          name_: product.name_,
+          quantity: parseFloat(formData.quantity) || 1,
+          discount: parseFloat(formData.discount) || 0,
+          price: parseFloat(formData.price) || 0,
+          iva: parseFloat(formData.iva) || 16,
+        },
+      ]);
+      // Limpiar los campos después de agregar
+      setFormData((prevData) => ({
+        ...prevData,
+        product_id: "",
+        quantity: 1,
+        price: 0,
+        discount: 0,
+      }));
+    }
+  };
+
+  useEffect(() => {
+    if (id) {
+      getQuote(id).then((data) => {
+        console.log(data);
+
+        setFormData({
+          ...data,
+          validity: new Date(data.validity),
+        });
+
+        // Manejo de productos
+        if (typeof data.products === "string" && data.products) {
+          try {
+            const productsArray = JSON.parse(data.products);
+            if (Array.isArray(productsArray)) {
+              console.log("Productos cargados (array):", productsArray);
+              setAddedProducts(productsArray);
+            } else {
+              console.log("El contenido de data.products no es un array.");
+              setAddedProducts([]);
+            }
+          } catch (error) {
+            console.error("Error al parsear data.products:", error);
+            setAddedProducts([]);
+          }
+        } else if (Array.isArray(data.products)) {
+          console.log("Productos cargados (array):", data.products);
+          setAddedProducts(data.products);
+        } else {
+          setAddedProducts([]); // Maneja productos como un array vacío si no hay datos
+        }
+      });
+    }
+  }, [id, getQuote]);
 
   useEffect(() => {
     if (formData.client_id) {
@@ -109,32 +178,29 @@ const FormularioCotizacion = () => {
     }
   }, [id, getQuote]);
 
-  const handleAddProduct = () => {
-    const product = products.find((p) => p.id_product === formData.product_id);
-    setSelectedProducts([
-      ...selectedProducts,
-      {
-        ...product,
-        quantity: formData.quantity,
-        price: formData.price,
-        discount: formData.discount,
-        iva: formData.iva,
-      },
-    ]);
-  };
-
   const calculateTotals = () => {
     let subTotal = 0;
     let totalIva = 0;
-    selectedProducts.forEach((product) => {
-      const productTotal = product.price * product.quantity;
-      const discountAmount = (productTotal * product.discount) / 100;
+    addedProducts.forEach((product) => {
+      const productTotal =
+        (Number.isFinite(product.price) ? product.price : 0) *
+        (Number.isFinite(product.quantity) ? product.quantity : 1);
+      const discountAmount =
+        (productTotal *
+          (Number.isFinite(product.discount) ? product.discount : 0)) /
+        100;
       const taxableAmount = productTotal - discountAmount;
-      const ivaAmount = (taxableAmount * product.iva) / 100;
+      const ivaAmount =
+        (taxableAmount * (Number.isFinite(product.iva) ? product.iva : 16)) /
+        100;
       subTotal += taxableAmount;
       totalIva += ivaAmount;
     });
-    return { subTotal, totalIva, total: subTotal + totalIva };
+    return {
+      subTotal: parseFloat(subTotal.toFixed(2)),
+      totalIva: parseFloat(totalIva.toFixed(2)),
+      total: parseFloat((subTotal + totalIva).toFixed(2)),
+    };
   };
 
   const totals = calculateTotals();
@@ -148,8 +214,13 @@ const FormularioCotizacion = () => {
       price: parseFloat(formData.price),
       quantity: parseInt(formData.quantity, 10),
       validity: formData.validity,
-      total: totals.total,
+      total: parseFloat(totals.total.toFixed(2)),
+      subtotal: parseFloat(totals.subTotal.toFixed(2)),
+      totalIva: parseFloat(totals.totalIva.toFixed(2)),
+      products: addedProducts,
     };
+
+    console.log("Datos a enviar:", formattedData);
 
     if (id) {
       console.log(id);
@@ -366,6 +437,53 @@ const FormularioCotizacion = () => {
                   <p className="subtitulo">
                     <i className="fas fa-box"></i> Productos o Servicios
                   </p>
+                  <div className="shadow p-3 mb-3 bg-body rounded">
+                    <Row>
+                      <Col>
+                        <table className="table">
+                          <thead>
+                            <tr>
+                              <th>Producto</th>
+                              <th>Cantidad</th>
+                              <th>Precio Unitario</th>
+                              <th>Descuento</th>
+                              <th>Acciones</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {Array.isArray(addedProducts) &&
+                              addedProducts.map((product, index) => {
+                                console.log("Producto en la tabla:", product); // Verifica los datos del producto
+                                return (
+                                  <tr key={index}>
+                                    <td>{product.name_ || "Desconocido"}</td>
+                                    <td>{product.quantity || 0}</td>
+                                    <td>${(product.price || 0).toFixed(2)}</td>
+                                    <td>
+                                      {(product.discount || 0).toFixed(2)}
+                                    </td>
+                                    <td>
+                                      <Button
+                                        variant="danger"
+                                        onClick={() =>
+                                          setAddedProducts((prevProducts) =>
+                                            prevProducts.filter(
+                                              (_, i) => i !== index
+                                            )
+                                          )
+                                        }
+                                      >
+                                        Eliminar
+                                      </Button>
+                                    </td>
+                                  </tr>
+                                );
+                              })}
+                          </tbody>
+                        </table>
+                      </Col>
+                    </Row>
+                  </div>
                   <hr />
                 </div>
                 <div className="shadow p-3 mb-5 bg-body rounded">

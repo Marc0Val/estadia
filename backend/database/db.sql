@@ -163,18 +163,16 @@ CREATE TABLE
 CREATE TABLE
     quotes (
         id_quote INTEGER PRIMARY KEY AUTO_INCREMENT,
-        contact_name VARCHAR(200) NOT NULL,
         client_id INTEGER NOT NULL,
-        quantity INTEGER NOT NULL,
-        product_id INTEGER NOT NULL,
-        price DECIMAL(10, 2) NOT NULL,
-        discount INTEGER NOT NULL,
-        iva INTEGER NOT NULL,
+        contact_name VARCHAR(200) NOT NULL,
         validity DATE NOT NULL,
-        files VARCHAR(50) NOT NULL,
+        files VARCHAR(50),
         notes VARCHAR(100) NOT NULL,
-        FOREIGN KEY (client_id) REFERENCES clients (id_client),
-        FOREIGN KEY (product_id) REFERENCES products (id_product)
+        total INTEGER NOT NULL,
+        subtotal INTEGER NOT NULL,
+        totalIva INTEGER NOT NULL,
+        products JSON NOT NULL,
+        FOREIGN KEY (client_id) REFERENCES clients (id_client)
     );
 
 CREATE TABLE

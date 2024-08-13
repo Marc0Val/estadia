@@ -63,6 +63,7 @@ const FormularioOrdenServicio = () => {
         setFormData({
           ...data,
           scheduled_date: new Date(data.scheduled_date),
+          quantity: 1,
         });
 
         // Manejo de productos
@@ -130,13 +131,13 @@ const FormularioOrdenServicio = () => {
     });
   };
 
-  const handleFileChange = (e) => {
+  /*   const handleFileChange = (e) => {
     setFormData({
       ...formData,
       files: e.target.files[0],
     });
   };
-
+ */
   const handleDateChange = (date) => {
     setFormData({
       ...formData,

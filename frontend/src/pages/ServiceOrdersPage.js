@@ -1,11 +1,64 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import TablaInfo from "../components/TablaInfo";
 import Header from "../components/Header";
 import { Link } from "react-router-dom";
 import { useServiceOrders } from "../context/ServiceOrdersContext";
+import { useClients } from "../context/ClientsContext";
+import { usePersonal } from "../context/PersonalContext";
 
 const ServiceOrdersPage = () => {
   const { serviceOrders, getServiceOrders } = useServiceOrders();
+  const { clients } = useClients();
+  const { personal } = usePersonal();
+
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await getServiceOrders(); // Asegúrate de que serviceOrders están disponibles aquí
+
+      // Mapear IDs a nombres para clientes y personal
+      const clientMap = new Map(
+        clients.map((client) => [client.id_client, client.contact_name])
+      );
+      const personalMap = new Map(
+        personal.map((person) => [person.id_personal, person.name_])
+      );
+
+      // Transformar los datos
+      const transformedData = serviceOrders.map((order) => {
+        const clientName = clientMap.get(order.client_id) || "Desconocido";
+        const personalName =
+          personalMap.get(order.personal_id) || "Desconocido";
+
+        return {
+          id_service_order: order.id_service_order,
+          Programada: formatDate(order.scheduled_date),
+          Inicio: order.start_time,
+          Fin: order.end_time,
+          Cliente: clientName,
+          Personal: personalName,
+          Estado: order.state_,
+          // PDF: order.pdfLink,
+        };
+      });
+
+      setData(transformedData);
+    };
+
+    fetchData();
+  }, [serviceOrders, getServiceOrders, clients, personal]);
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return isNaN(date.getTime())
+      ? "Fecha inválida"
+      : new Intl.DateTimeFormat("es-MX", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+        }).format(date);
+  };
 
   const columnNames = [
     "id_service_order",
@@ -18,29 +71,12 @@ const ServiceOrdersPage = () => {
     // "PDF",
   ];
 
-  useEffect(() => {
-    getServiceOrders();
-  }, []);
-
-  // Map the serviceOrders data to the format expected by TablaInfo
-  const data = serviceOrders.map((order) => ({
-    id_service_order: order.id_service_order,
-    Programada: order.scheduled_date,
-    Inicio: order.start_time,
-    Fin: order.end_time,
-    Cliente: order.client_id,
-    Personal: order.personal_id,
-    Estado: order.state_,
-    // PDF: order.pdfLink,
-  }));
-
   return (
     <div className="contenedor container-fluid">
       <p className="subtitulo">
         <i className="fas fa-clipboard-list"></i> Ordenes de Servicio
       </p>
       <hr />
-
       <Header
         botonAgregar={
           <Link
@@ -57,7 +93,6 @@ const ServiceOrdersPage = () => {
           </Link>
         }
       />
-
       <TablaInfo
         columns={columnNames}
         data={data}
