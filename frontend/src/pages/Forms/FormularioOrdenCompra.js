@@ -134,30 +134,66 @@ const FormularioOrdenCompra = () => {
                       className="form-control"
                     />
                   </Col>
-                </Row>
-                <Row className="mb-3">
                   <Col>
-                    <InputGroup>
-                      <label htmlFor="quantity">
-                        <strong>Cantidad</strong>
-                      </label>
-
-                      <Field
-                        type="number"
-                        min="1"
-                        name="quantity"
-                        // value={values.quantity}
-                        className={`form-control ${
-                          errors.quantity ? "is-invalid" : "is-valid"
-                        }`}
-                      />
-                      <ErrorMessage
-                        name="quantity"
-                        component="div"
-                        className="invalid-feedback"
-                      />
-                    </InputGroup>
+                    <label htmlFor="name">
+                      <strong>Nombre</strong>
+                    </label>
+                    <Field
+                      type="text"
+                      id="name"
+                      name="name"
+                      className={`form-control ${
+                        errors.name ? "is-invalid" : "is-valid"
+                      }`}
+                    />
                   </Col>
+                </Row>
+                <Row className="mb-3"></Row>
+              </div>
+              <div className="shadow p-3 mb-3 bg-body rounded">
+                <p className="subtitulo">
+                  <i className="fas fa-box-open"></i> Productos o servicios
+                </p>
+                <Row className="mb-3">
+                  <InputGroup>
+                    <label htmlFor="quantity">
+                      <strong>Cantidad</strong>
+                    </label>
+
+                    <Field
+                      type="number"
+                      min="1"
+                      name="quantity"
+                      // value={values.quantity}
+                      className={`form-control ${
+                        errors.quantity ? "is-invalid" : "is-valid"
+                      }`}
+                    />
+                    <ErrorMessage
+                      name="quantity"
+                      component="div"
+                      className="invalid-feedback"
+                    />
+
+                    <Form.Control
+                      as="select"
+                      name="product_id"
+                      value={formData.product_id}
+                      onChange={handleChange}
+                    >
+                      <option>-- Productos Disponibles --</option>
+                      {/* todavia no tiene funcion por eso lo comente para que no de errores */}
+                      {/* {products.map((product) => (
+                      <option
+                        key={product.id_product}
+                        value={product.id_product}
+                      >
+                        {product.name_}
+                      </option>
+                    ))} */}
+                    </Form.Control>
+                    <Button variant="primary">Agregar</Button>
+                  </InputGroup>
                   <Col>
                     <InputGroup>
                       <label htmlFor="price">
@@ -199,43 +235,6 @@ const FormularioOrdenCompra = () => {
                     </InputGroup>
                   </Col>
                 </Row>
-                <Row className="mb-3">
-                  <Col>
-                    <InputGroup>
-                      <Field
-                        as="select"
-                        name="product_id"
-                        // value={values.product_id}
-                        className="form-control"
-                      >
-                        <option>Producto o servicio</option>
-                        {/* ejemplo */}
-                        <option>Producto 1</option>
-                      </Field>
-                      <Field
-                        type="text"
-                        placeholder="Costo $"
-                        name="price"
-                        // value={values.price}
-
-                        className="form-control"
-                      />
-                      <Field
-                        type="number"
-                        placeholder="Impuestos %"
-                        name="iva"
-                        // value={values.iva}
-                        className="form-control"
-                      />
-                      <Button variant="primary">Agregar</Button>
-                    </InputGroup>
-                  </Col>
-                </Row>
-              </div>
-              <div className="shadow p-3 mb-3 bg-body rounded">
-                <p className="subtitulo">
-                  <i className="fas fa-box-open"></i> Productos o servicios
-                </p>
                 <hr />
               </div>
               {/* <div className="shadow p-3 mb-5 bg-body rounded">
