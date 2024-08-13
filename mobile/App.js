@@ -34,11 +34,11 @@ const DrawerNavigator = () => (
       component={HomeScreen}
       options={{ headerShown: false }}
     />
-    <Drawer.Screen
+    {/* <Drawer.Screen
       name="Perfil"
       component={ProfileScreen}
       options={{ headerShown: false }}
-    />
+    /> */}
     <Drawer.Screen
       name="Clientes"
       component={ClientsScreen}
@@ -59,11 +59,11 @@ const DrawerNavigator = () => (
       component={ServicesScreen}
       options={{ headerShown: false }}
     />
-    <Drawer.Screen
+    {/* <Drawer.Screen
       name="Fotos"
       component={PhotosScreen}
       options={{ headerShown: false }}
-    />
+    /> */}
   </Drawer.Navigator>
 );
 
@@ -73,7 +73,11 @@ const App = () => {
       <AuthProvider>
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Login">
-            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen
+              name="Login"
+              component={LoginScreen}
+              options={{ headerShown: false }}
+            />
             <Stack.Screen
               name="Home"
               component={DrawerNavigator}

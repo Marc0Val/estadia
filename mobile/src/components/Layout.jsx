@@ -16,22 +16,14 @@ const Layout = ({ children }) => {
           <Text style={styles.menuIcon}>☰</Text>
         </TouchableOpacity>
         <Text style={styles.appbarTitle}>Microred</Text>
-        <View style={styles.rightSpace}>
-          <TouchableOpacity
-            onPress={() => {
-              /* lógica para la campana */
-            }}
-          >
+        {/* <View style={styles.rightSpace}>
+          <TouchableOpacity onPress={() => {}}>
             <Text style={styles.icon}>🔔</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              /* lógica para la configuración */
-            }}
-          >
+          <TouchableOpacity onPress={() => {}}>
             <Text style={styles.icon}>⚙️</Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
       </View>
       {/* Contenido de la pantalla */}
       <View style={styles.content}>{children}</View>
@@ -62,20 +54,21 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
   appbarTitle: {
+    // centrar todo
+    textAlign: "left",
     color: "white",
     fontSize: 20,
     fontWeight: "bold",
-    textAlign: "center",
   },
-  rightSpace: {
-    flexDirection: "row",
-    width: 60,
-    justifyContent: "space-between",
-  },
-  icon: {
-    color: "white",
-    fontSize: 24,
-  },
+  // rightSpace: {
+  //   flexDirection: "row",
+  //   width: 60,
+  //   justifyContent: "space-between",
+  // },
+  // icon: {
+  //   color: "white",
+  //   fontSize: 24,
+  // },
   content: {
     flex: 1,
     alignItems: "center",
