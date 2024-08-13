@@ -21,11 +21,22 @@ export const getServiceOrder = async (req, res) => {
       [req.params.id]
     );
 
-    if (result.length == 0) {
+    if (result.length === 0) {
       return res.status(404).json({ message: "Service order not found" });
     }
 
-    res.json(result[0]);
+    // Convertir 'products' a un objeto si es una cadena
+    const serviceOrder = result[0];
+    if (serviceOrder.products && typeof serviceOrder.products === "string") {
+      try {
+        serviceOrder.products = JSON.parse(serviceOrder.products);
+      } catch (error) {
+        console.error("Error al parsear products:", error);
+        serviceOrder.products = []; // O manejar de otra manera si el JSON no es válido
+      }
+    }
+
+    res.json(serviceOrder);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -38,7 +49,6 @@ export const createServiceOrder = async (req, res) => {
       client_id,
       service_id,
       personal_id,
-      product_id,
       contact_name,
       contact_phone,
       contact_email,
@@ -46,56 +56,100 @@ export const createServiceOrder = async (req, res) => {
       start_time,
       end_time,
       price,
-      quantity,
-      additional_info,
       activities,
       recomendations,
       files,
       notes,
       state_,
+      products,
     } = req.body;
 
+    console.log("Productos recibidos:", products);
+
+    // Validación de datos (opcional, pero recomendado)
+    if (
+      !client_id ||
+      !service_id ||
+      !personal_id ||
+      !scheduled_date ||
+      !start_time ||
+      !end_time ||
+      !price ||
+      !activities ||
+      !recomendations ||
+      !state_
+    ) {
+      return res.status(400).json({ error: "Faltan campos obligatorios" });
+    }
+
+    // Inserción en la base de datos
     const [result] = await pool.query(
-      "INSERT INTO services_orders (client_id, service_id, personal_id, product_id, contact_name, contact_phone, contact_email, scheduled_date, start_time, end_time, price, quantity, additional_info, activities, recomendations, files, notes, state_) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+      "INSERT INTO services_orders (client_id, service_id, personal_id, contact_name, contact_phone, contact_email, scheduled_date, start_time, end_time, price, activities, recomendations, files, notes, state_, products) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
         client_id,
         service_id,
         personal_id,
-        product_id,
-        contact_name,
-        contact_phone,
-        contact_email,
+        contact_name || null,
+        contact_phone || null,
+        contact_email || null,
         scheduled_date,
         start_time,
         end_time,
         price,
-        quantity,
-        additional_info,
         activities,
         recomendations,
-        files,
-        notes,
+        files || null,
+        notes || null,
         state_,
+        products ? products : null,
       ]
     );
 
-    res.json({ id: result.insertId, scheduled_date, additional_info, state_ });
+    // Enviar respuesta exitosa
+    res.status(201).json({
+      message: "Pedido de servicio creado exitosamente",
+      id: result.insertId,
+    });
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    // Manejo de errores
+    console.error(error);
+    res.status(500).json({ error: "Error al crear el pedido de servicio" });
   }
 };
 
 //* Update a service order
 export const updateServiceOrder = async (req, res) => {
   try {
-    const result = await pool.query(
+    // Copiar el cuerpo de la solicitud para modificarlo
+    const dataToUpdate = { ...req.body };
+
+    // Eliminar los campos quantity, product_id y additional_info si están presentes, ya que pertenecen al objeto products
+    delete dataToUpdate.quantity;
+    delete dataToUpdate.product_id;
+    delete dataToUpdate.additional_info;
+
+    // Verificar y convertir 'products' a JSON string si es un objeto
+    if (dataToUpdate.products && typeof dataToUpdate.products === "object") {
+      dataToUpdate.products = JSON.stringify(dataToUpdate.products);
+    } else if (dataToUpdate.products === null) {
+      dataToUpdate.products = null; // O mantener como una cadena vacía si es el caso
+    }
+
+    // Ejecutar la consulta de actualización
+    const [result] = await pool.query(
       "UPDATE services_orders SET ? WHERE id_service_order = ?",
-      [req.body, req.params.id]
+      [dataToUpdate, req.params.id]
     );
 
-    res.json(result);
+    // Enviar una respuesta exitosa
+    res.json({
+      message: "Orden de servicio actualizada exitosamente",
+      affectedRows: result.affectedRows,
+    });
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    // Manejo de errores
+    console.error(error);
+    res.status(500).json({ message: error.message });
   }
 };
 

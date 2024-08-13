@@ -6,7 +6,6 @@ import { useServiceOrders } from "../context/ServiceOrdersContext";
 
 const ServiceOrdersPage = () => {
   const { serviceOrders, getServiceOrders } = useServiceOrders();
-  // console.log(serviceOrders);
 
   const columnNames = [
     "id_service_order",
