@@ -21,14 +21,13 @@ import authRoutes from "./routes/auth.routes.js";
 import rolesRoutes from "./routes/role.routes.js";
 
 const app = express();
-
+// 8081 incluir para la conexion con el frontend y la aplicacion movil
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: ["http://localhost:3000", "http://localhost:8081"],
     credentials: true,
   })
 );
-
 app.use(express.json());
 app.use(cookieParser());
 
