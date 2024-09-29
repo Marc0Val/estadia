@@ -16,24 +16,27 @@ import FormularioProveedores from "../../components/Forms/FormularioProveedores"
 import BotonModal from "../../components/Buttons/BotonModal";
 import { Formik, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { usePurchaseOrders } from "../../context/PurchaseOrdersContext";
 import { useSuppliers } from "../../context/SuppliersContext"; // Importa tu contexto de proveedores
 import { useProducts } from "../../context/ProductsContext"; // Importa tu contexto de productos
 import { useServices } from "../../context/ServicesContext"; // Importa tu contexto de servicios
 
 // Validación con Yup
 const validationSchema = Yup.object({
-  supplier_id: Yup.string().required("El proveedor es obligatorio"),
+  // supplier_id: Yup.string().required("El proveedor es obligatorio"),
   product_id: Yup.string().required("El producto es obligatorio"),
   quantity: Yup.number().required("La cantidad es obligatoria"),
   price: Yup.number().required("El precio es obligatorio"),
   iva: Yup.number().required("El impuesto es obligatorio"),
   validity: Yup.date().required("La vigencia es obligatoria"),
-  notes: Yup.string().required("Las notas son obligatorias"),
+  // notes: Yup.string().required("Las notas son obligatorias"),
 });
 
 const FormularioOrdenCompra = () => {
   const today = new Date();
   const [startDate, setStartDate] = useState(today);
+
+  const [addedProducts, setAddedProducts] = useState([]);
 
   const [formData, setFormData] = useState({
     supplier_id: "",
@@ -42,7 +45,7 @@ const FormularioOrdenCompra = () => {
     quantity: 1,
     price: 0,
     iva: 16,
-    validity: new Date(today.setDate(today.getDate() + 7)),
+    validity: new Date(today.setDate(today.getDate())),
     notes: "",
   });
 
@@ -95,8 +98,65 @@ const FormularioOrdenCompra = () => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value,
+      [name]:
+        name === "quantity" ||
+        name === "price" ||
+        name === "discount" ||
+        name === "iva"
+          ? parseFloat(value) || 0
+          : value,
     });
+  };
+
+  const handleAddProduct = () => {
+    const product = products.find(
+      (p) => p.id_product === parseInt(formData.product_id, 10)
+    );
+    if (product) {
+      setAddedProducts((prevProducts) => [
+        ...prevProducts,
+        {
+          name_: product.name_,
+          quantity: parseFloat(formData.quantity) || 1,
+          discount: parseFloat(formData.discount) || 0,
+          price: parseFloat(formData.price) || 0,
+          iva: parseFloat(formData.iva) || 16,
+        },
+      ]);
+      // Limpiar los campos después de agregar
+      setFormData((prevData) => ({
+        ...prevData,
+        product_id: "",
+        quantity: 1,
+        price: 0,
+        discount: 0,
+      }));
+    }
+  };
+
+  const calculateTotals = () => {
+    let subTotal = 0;
+    let totalIva = 0;
+    addedProducts.forEach((product) => {
+      const productTotal =
+        (Number.isFinite(product.price) ? product.price : 0) *
+        (Number.isFinite(product.quantity) ? product.quantity : 1);
+      const discountAmount =
+        (productTotal *
+          (Number.isFinite(product.discount) ? product.discount : 0)) /
+        100;
+      const taxableAmount = productTotal - discountAmount;
+      const ivaAmount =
+        (taxableAmount * (Number.isFinite(product.iva) ? product.iva : 16)) /
+        100;
+      subTotal += taxableAmount;
+      totalIva += ivaAmount;
+    });
+    return {
+      subTotal: parseFloat(subTotal.toFixed(2)),
+      totalIva: parseFloat(totalIva.toFixed(2)),
+      total: parseFloat((subTotal + totalIva).toFixed(2)),
+    };
   };
 
   const handleDateChange = (date) => {
@@ -106,12 +166,14 @@ const FormularioOrdenCompra = () => {
     });
   };
 
+  const totals = calculateTotals();
+
   const handleSubmit = () => {};
 
   const handleReset = () => {
     setFormData({
       supplier_id: "",
-      contact: "",
+      contact_name: "",
       product_id: "",
       quantity: 1,
       price: 0,
@@ -148,7 +210,7 @@ const FormularioOrdenCompra = () => {
                       />
                       <Field
                         as="select"
-                        id="supplier_id"
+                        // id="supplier_id"
                         name="supplier_id"
                         value={formData.supplier_id}
                         onChange={handleChange}
@@ -174,13 +236,13 @@ const FormularioOrdenCompra = () => {
                     </Form.Group>
                   </Col>
                   <Col>
-                    <label htmlFor="contact">
+                    <label htmlFor="contact_name">
                       <strong>Contacto</strong>
                     </label>
                     <Field
                       type="text"
-                      id="contact"
-                      name="contact"
+                      id="contact_name"
+                      name="contact_name"
                       value={formData.contact_name}
                       className="form-control"
                     />
@@ -251,7 +313,9 @@ const FormularioOrdenCompra = () => {
                         </option>
                       ))}
                     </Form.Control>
-                    <Button variant="primary">Agregar</Button>
+                    <Button variant="primary" onClick={handleAddProduct}>
+                      Agregar
+                    </Button>
                   </InputGroup>
                   <Col>
                     <InputGroup>
@@ -296,11 +360,54 @@ const FormularioOrdenCompra = () => {
                 </Row>
                 <hr />
               </div>
-              <div className="shadow p-3 mb-3 bg-body rounded">
+              <div className="shadow p-3 mb-5 bg-body rounded">
                 <p className="subtitulo">
-                  <i className="fas fa-box-open"></i> Productos o servicios
-                  seleccionados
+                  <i className="fas fa-box"></i> Productos o Servicios
                 </p>
+                <div className="shadow p-3 mb-3 bg-body rounded">
+                  <Row>
+                    <Col>
+                      <table className="table">
+                        <thead>
+                          <tr>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Precio Unitario</th>
+                            <th>Acciones</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {Array.isArray(addedProducts) &&
+                            addedProducts.map((product, index) => {
+                              console.log("Producto en la tabla:", product); // Verifica los datos del producto
+                              return (
+                                <tr key={index}>
+                                  <td>{product.name_ || "Desconocido"}</td>
+                                  <td>{product.quantity || 0}</td>
+                                  <td>${(product.price || 0).toFixed(2)}</td>
+                                  <td>
+                                    <Button
+                                      variant="danger"
+                                      onClick={() =>
+                                        setAddedProducts((prevProducts) =>
+                                          prevProducts.filter(
+                                            (_, i) => i !== index
+                                          )
+                                        )
+                                      }
+                                    >
+                                      Eliminar
+                                    </Button>
+                                  </td>
+                                </tr>
+                              );
+                            })}
+                        </tbody>
+                      </table>
+                    </Col>
+                  </Row>
+                </div>
+                <hr />
               </div>
               {/* <div className="shadow p-3 mb-5 bg-body rounded">
                 <Form.Group controlId="formObservaciones" className="mb-3">
@@ -355,9 +462,16 @@ const FormularioOrdenCompra = () => {
                     <i className="fas fa-calendar-alt"></i>{" "}
                     {startDate.toLocaleDateString()}
                   </p>
-                  <p className="text-center subtitulo">Sub Total: $0.00</p>
-                  <p className="text-center subtitulo">Impuestos: $0.00</p>
-                  <p className="text-center subtitulo">Total: $0.00</p>
+
+                  <p className="text-center subtitulo">
+                    Subtotal: ${totals.subTotal.toFixed(2)}
+                  </p>
+                  <p className="text-center subtitulo">
+                    Impuestos: ${totals.totalIva.toFixed(2)}
+                  </p>
+                  <p className="text-center subtitulo">
+                    Total: ${totals.total.toFixed(2)}
+                  </p>
 
                   <Form.Group controlId="formVigencia" className="mb-3">
                     <Form.Label>
@@ -365,11 +479,14 @@ const FormularioOrdenCompra = () => {
                         <i className="fas fa-calendar-alt"></i> Vencimiento*
                       </p>
                     </Form.Label>
+
                     <DatePicker
                       selected={formData.validity}
                       onChange={handleDateChange}
                       dateFormat="dd/MM/yyyy"
-                      className="form-control"
+                      className={`form-control ${
+                        errors.validity ? "is-invalid" : "is-valid"
+                      }`}
                     />
                     <ErrorMessage
                       name="validity"
@@ -377,22 +494,6 @@ const FormularioOrdenCompra = () => {
                       className="invalid-feedback"
                     />
                   </Form.Group>
-                  <label htmlFor="validity">
-                    <strong>Vigencia</strong>
-                  </label>
-                  <DatePicker
-                    selected={formData.validity}
-                    onChange={handleDateChange}
-                    dateFormat="dd/MM/yyyy"
-                    className={`form-control ${
-                      errors.validity ? "is-invalid" : "is-valid"
-                    }`}
-                  />
-                  <ErrorMessage
-                    name="validity"
-                    component="div"
-                    className="invalid-feedback"
-                  />
                 </div>
                 <div className="card-footer">
                   <div className="d-grid gap-2">

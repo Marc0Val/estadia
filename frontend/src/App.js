@@ -16,6 +16,7 @@ import { ClientsAssetsProvider } from "./context/ClientsAssetsContext";
 import { AuthProvider } from "./context/AuthContext";
 import { ServiceOrdersProvider } from "./context/ServiceOrdersContext";
 import { QuotesProvider } from "./context/QuotesContext";
+import { PurchaseOrdersProvider } from "./context/PurchaseOrdersContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
@@ -32,18 +33,25 @@ function App() {
                       <ProductsProvider>
                         <ClientsAssetsProvider>
                           <ServiceOrdersProvider>
-                            <QuotesProvider>
-                              <Router>
-                                <Routes>
-                                  <Route path="/" element={<LoginPage />} />
-                                  <Route
-                                    path="/admin/*"
-                                    element={<ProtectedRoute element={Admin} />}
-                                  />
-                                  <Route path="*" element={<NotFoundPage />} />
-                                </Routes>
-                              </Router>
-                            </QuotesProvider>
+                            <PurchaseOrdersProvider>
+                              <QuotesProvider>
+                                <Router>
+                                  <Routes>
+                                    <Route path="/" element={<LoginPage />} />
+                                    <Route
+                                      path="/admin/*"
+                                      element={
+                                        <ProtectedRoute element={Admin} />
+                                      }
+                                    />
+                                    <Route
+                                      path="*"
+                                      element={<NotFoundPage />}
+                                    />
+                                  </Routes>
+                                </Router>
+                              </QuotesProvider>
+                            </PurchaseOrdersProvider>
                           </ServiceOrdersProvider>
                         </ClientsAssetsProvider>
                       </ProductsProvider>
