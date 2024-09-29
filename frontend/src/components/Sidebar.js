@@ -146,21 +146,19 @@ const Sidebar = () => {
               Cotizaciones
             </li>
           </NavLink>
-          {isAuthenticated && user.role === 99 && (
-            <NavLink to="/admin/ordenes-de-compra" className="lii">
-              <li
-                onClick={() => window.innerWidth <= 768 && toggleSidebar()}
-                className={
-                  location.pathname === "/admin/ordenes-de-compra"
-                    ? "active"
-                    : ""
-                }
-              >
-                <i className="fas fa-shopping-cart"></i>
-                Ordenes de Compra
-              </li>
-            </NavLink>
-          )}
+
+          <NavLink to="/admin/ordenes-de-compra" className="lii">
+            <li
+              onClick={() => window.innerWidth <= 768 && toggleSidebar()}
+              className={
+                location.pathname === "/admin/ordenes-de-compra" ? "active" : ""
+              }
+            >
+              <i className="fas fa-shopping-cart"></i>
+              Ordenes de Compra
+            </li>
+          </NavLink>
+
           <NavLink to="/admin/activos-de-clientes" className="lii">
             <li
               onClick={() => window.innerWidth <= 768 && toggleSidebar()}

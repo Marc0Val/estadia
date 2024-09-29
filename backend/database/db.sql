@@ -179,15 +179,12 @@ CREATE TABLE
     purchase_orders (
         id_purchase_order INTEGER PRIMARY KEY AUTO_INCREMENT,
         supplier_id INTEGER NOT NULL,
-        product_id INTEGER NOT NULL,
-        quantity INTEGER NOT NULL,
-        price DECIMAL(10, 2) NOT NULL,
-        iva INTEGER NOT NULL,
+        contact_name VARCHAR(200) NOT NULL,
         validity DATE NOT NULL,
         files VARCHAR(50) NOT NULL,
         notes VARCHAR(100) NOT NULL,
+        products JSON NOT NULL,
         FOREIGN KEY (supplier_id) REFERENCES suppliers (id_supplier),
-        FOREIGN KEY (product_id) REFERENCES products (id_product)
     );
 
 CREATE TABLE

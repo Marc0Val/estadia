@@ -41,7 +41,7 @@ function Login() {
       Swal.fire({
         icon: "error",
         title: "Error",
-        text: "Credenciales incorrectas. Inetnte de nuevo",
+        text: "Credenciales incorrectas. Intente de nuevo",
       });
     }
   };
