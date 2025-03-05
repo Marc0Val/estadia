@@ -8,10 +8,22 @@ Para comenzar con el proyecto, tienes que asegurarte que Node.js esté instalado
 
 ## Instalación:
 
-### Clonar el repositorio con:
+### Generamos el proyecto en nuestro equipo clonando el repositorio.
+
+#### Clonar el repositorio con:
 
 `git clone https://github.com/takashimonn/chat.git`
 
-### luego entramos a la carpeta con:
+#### Luego entramos a la carpeta del proyecto con:
 
 `cd chat`
+
+### Instalamos las dependencias.
+
+#### Instalamos las dependencias para el backend con:
+
+`npm install`
+
+#### Instalamos las dependencias para el frontend con:
+
+`cd client` ---> `npm install`
