@@ -22,6 +22,23 @@ Aquí están algunas de las dependencias que utilizaremos para este proyecto
 8. morgan (1.10.0) → Middleware para registrar peticiones HTTP.
 9. socket.io (4.8.1) → Comunicación en tiempo real con WebSockets.
 
+### Para el Frontend:
+
+1. React (^19.0.0) → Biblioteca para construir interfaces de usuario.
+2. React DOM (^19.0.0) → Conecta React con el DOM.
+3. React Router DOM (^6.30.0) → Enrutamiento para aplicaciones React.
+4. Axios (^1.8.1) → Cliente HTTP para realizar peticiones a la API.
+5. Socket.io Client (^4.8.1) → Comunicación en tiempo real con WebSockets.
+6. React Scripts (^5.0.1) → Scripts y configuración para proyectos React.
+7. Web Vitals (^2.1.4) → Métricas de rendimiento para aplicaciones web.
+
+### Testing:
+
+1. @testing-library/dom (^10.4.0) → Utilidades para probar el DOM.
+2. @testing-library/jest-dom (^6.6.3) → Extensiones para pruebas con Jest.
+3. @testing-library/react (^16.2.0) → Pruebas de componentes React.
+4. @testing-library/user-event (^13.5.0) → Simulación de interacciones del usuario en pruebas.
+
 ## Instalación:
 
 ### Generamos el proyecto en nuestro equipo clonando el repositorio.
