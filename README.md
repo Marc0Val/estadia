@@ -9,5 +9,5 @@ Para comenzar con el proyrcto, tienes que asegurarte que Node.js esté instalado
 ## Instalación:
 
 Clonar el repositorio con:
-`git clone https://github.com/takashimonn/chat.git
-cd chat`
+`git clone https://github.com/takashimonn/chat.git` ->
+`cd chat`
