@@ -45,18 +45,18 @@ Aquí están algunas de las dependencias que utilizaremos para este proyecto
 
 #### Clonar el repositorio con:
 
-`git clone https://github.com/takashimonn/chat.git`
+- `git clone https://github.com/takashimonn/chat.git`
 
 #### Luego entramos a la carpeta del proyecto con:
 
-`cd chat`
+- `cd chat`
 
 ### Instalamos las dependencias.
 
 #### Instalamos las dependencias para el backend con:
 
-`npm install`
+- `npm install`
 
 #### Instalamos las dependencias para el frontend con:
 
-`cd client` ---> `npm install`
+- `cd client` ---> `npm install`
