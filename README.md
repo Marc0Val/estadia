@@ -1,16 +1,13 @@
-instalar dependencias tanto en front como en back con npm install de manera individual.
-EL LOGIN NO FUNCIONA, DE FORMA QUE PUEDES IR DIRECTO AL DASHBOARD AGREGANDO/home EN LA URL
-LAS TABLAS PUEDEN FUNCIONAR
-hice pruebas para traer datos de la BD
+# Chat en tiempo real
 
-IMPORTANTE
-LA LOGICA DE INSERTAR VA EN LOS COMPONENTES FORMULARIOS XD
+Un chat en tiempo real construido con React, Node.js, Express y Socket.io.
 
-dependencias front:
-npm install axios
-npm install react-router-dom
-npm install react-datepicker --save
+## Requisitos:
 
-dependencias backend:
-(son las que use en pruebas, solo tomar cuenta las de frontend hasta 16/05/2024)
-npm install express mysql bcryptjs body-parser cors
+Para comenzar con el proyrcto, tienes que asegurarte que Node.js esté instalado, ya que utilizaremoz npm o yarn en nuestra linea de comandos. Puedes derscargarlo desde la página oficial de Node.js
+
+## Instalación:
+
+Clonar el repositorio con:
+`git clone https://github.com/takashimonn/chat.git
+cd chat`
