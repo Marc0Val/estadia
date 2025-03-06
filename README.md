@@ -8,9 +8,11 @@ Para comenzar con el proyecto, tienes que asegurarte que Node.js esté instalado
 
 ## Especifiaciones generales:
 
+### Dependencias.
+
 Aquí están algunas de las dependencias que utilizaremos para este proyecto
 
-### Para el Backend:
+#### Backend:
 
 - bcrypt (^5.1.1) → Cifrado de contraseñas.
 - cors (^2.8.5) → Habilita CORS en Express.
@@ -22,7 +24,7 @@ Aquí están algunas de las dependencias que utilizaremos para este proyecto
 - morgan (1.10.0) → Middleware para registrar peticiones HTTP.
 - socket.io (4.8.1) → Comunicación en tiempo real con WebSockets.
 
-### Para el Frontend:
+#### Frontend:
 
 - React (^19.0.0) → Biblioteca para construir interfaces de usuario.
 - React DOM (^19.0.0) → Conecta React con el DOM.
@@ -32,18 +34,24 @@ Aquí están algunas de las dependencias que utilizaremos para este proyecto
 - React Scripts (^5.0.1) → Scripts y configuración para proyectos React.
 - Web Vitals (^2.1.4) → Métricas de rendimiento para aplicaciones web.
 
-### Testing:
+#### Testing:
 
 - @testing-library/dom (^10.4.0) → Utilidades para probar el DOM.
 - @testing-library/jest-dom (^6.6.3) → Extensiones para pruebas con Jest.
 - @testing-library/react (^16.2.0) → Pruebas de componentes React.
 - @testing-library/user-event (^13.5.0) → Simulación de interacciones del usuario en pruebas.
 
+### Tecnologías.
+
+Aquí veremos las tecnologías utilizadas en este proyecto:
+
+#### Frontend
+
 ## Instalación:
 
 ### Generamos el proyecto en nuestro equipo clonando el repositorio.
 
-#### Clonar el repositorio con:
+#### Clonamos el repositorio con:
 
 - `git clone https://github.com/takashimonn/chat.git`
 
@@ -51,7 +59,7 @@ Aquí están algunas de las dependencias que utilizaremos para este proyecto
 
 - `cd chat`
 
-### Instalamos las dependencias.
+### Instalación de dependencias.
 
 #### Instalamos las dependencias para el backend con:
 
