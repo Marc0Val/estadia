@@ -23,13 +23,9 @@ import { useServices } from "../../context/ServicesContext"; // Importa tu conte
 
 // Validación con Yup
 const validationSchema = Yup.object({
-  // supplier_id: Yup.string().required("El proveedor es obligatorio"),
-  product_id: Yup.string().required("El producto es obligatorio"),
-  quantity: Yup.number().required("La cantidad es obligatoria"),
-  price: Yup.number().required("El precio es obligatorio"),
-  iva: Yup.number().required("El impuesto es obligatorio"),
+  supplier_id: Yup.string().required("El proveedor es obligatorio"),
   validity: Yup.date().required("La vigencia es obligatoria"),
-  // notes: Yup.string().required("Las notas son obligatorias"),
+  notes: Yup.string().required("Las notas son obligatorias"),
 });
 
 const FormularioOrdenCompra = () => {
@@ -47,6 +43,10 @@ const FormularioOrdenCompra = () => {
     iva: 16,
     validity: new Date(today.setDate(today.getDate())),
     notes: "",
+    total: 0,
+    subtotal: 0,
+    totalIva: 0,
+    products: [],
   });
 
   // Accede a los contextos
@@ -67,10 +67,13 @@ const FormularioOrdenCompra = () => {
           supplier.id_supplier.toString() === formData.supplier_id.toString()
       );
       if (selectedSupplier) {
+        console.log(selectedSupplier);
         setFormData((prevData) => ({
           ...prevData,
           contact_name: selectedSupplier.contact_name,
         }));
+      } else {
+        console.log("no hay chango");
       }
     }
   }, [formData.supplier_id, suppliers]);
@@ -103,7 +106,9 @@ const FormularioOrdenCompra = () => {
         name === "price" ||
         name === "discount" ||
         name === "iva"
-          ? parseFloat(value) || 0
+          ? value === ""
+            ? ""
+            : parseFloat(value) || 0
           : value,
     });
   };
@@ -168,7 +173,9 @@ const FormularioOrdenCompra = () => {
 
   const totals = calculateTotals();
 
-  const handleSubmit = () => {};
+  const handleSubmit = (values) => {
+    console.log(values);
+  };
 
   const handleReset = () => {
     setFormData({
@@ -210,7 +217,7 @@ const FormularioOrdenCompra = () => {
                       />
                       <Field
                         as="select"
-                        // id="supplier_id"
+                        id="supplier_id"
                         name="supplier_id"
                         value={formData.supplier_id}
                         onChange={handleChange}
@@ -379,7 +386,7 @@ const FormularioOrdenCompra = () => {
                         <tbody>
                           {Array.isArray(addedProducts) &&
                             addedProducts.map((product, index) => {
-                              console.log("Producto en la tabla:", product); // Verifica los datos del producto
+                              // console.log("Producto en la tabla:", product); // Verifica los datos del producto
                               return (
                                 <tr key={index}>
                                   <td>{product.name_ || "Desconocido"}</td>
@@ -524,23 +531,7 @@ const FormularioOrdenCompra = () => {
                       // onChange={handleFile}
                     />
                   </Form.Group> */}
-                  {/* <Form.Group controlId="formNotas" className="mb-3">
-                    <Form.Label>
-                      <strong>Notas</strong>
-                    </Form.Label>
-                    <Field
-                      as="textarea"
-                      rows={3}
-                      name="notes"
-                      value={formData.notes}
-                      className="form-control"
-                    />
-                    <ErrorMessage
-                      name="notes"
-                      component="div"
-                      className="invalid-feedback"
-                    />
-                  </Form.Group> */}
+
                   <label htmlFor="notes">
                     <strong>Notas</strong>
                   </label>
